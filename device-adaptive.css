@@ -7,6 +7,53 @@
     font-size: var(--base-font-size, 15px);
 }
 
+/* Mobile Profile Image Optimizations */
+.device-mobile .hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+}
+
+.device-mobile .hero-image {
+    order: -1; /* عرض الصورة في الأعلى */
+    margin-bottom: 1rem;
+}
+
+.device-mobile .image-container {
+    max-width: 260px;
+    margin: 0 auto;
+}
+
+.device-mobile .profile-img {
+    width: 100%;
+    max-width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 15px 35px rgba(102, 126, 234, 0.25),
+        0 8px 16px rgba(118, 75, 162, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.device-mobile .profile-img:hover {
+    transform: scale(1.02);
+    box-shadow: 
+        0 20px 45px rgba(102, 126, 234, 0.35),
+        0 12px 24px rgba(118, 75, 162, 0.25);
+}
+
+.device-mobile .floating-elements {
+    pointer-events: none; /* تجنب التداخل مع اللمس */
+}
+
+.device-mobile .floating-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+}
+
 .device-mobile .container {
     padding: 0 var(--container-padding, 16px);
     max-width: 100%;
@@ -124,6 +171,43 @@
 /* ====== TABLET DEVICE STYLES ====== */
 .device-tablet {
     font-size: var(--base-font-size, 16px);
+}
+
+/* Tablet Profile Image Optimizations */
+.device-tablet .hero-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.device-tablet .image-container {
+    max-width: 320px;
+}
+
+.device-tablet .profile-img {
+    width: 100%;
+    max-width: 320px;
+    height: 320px;
+    border-radius: var(--radius-2xl);
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 20px 45px rgba(102, 126, 234, 0.3),
+        0 10px 20px rgba(118, 75, 162, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.device-tablet .profile-img:hover {
+    transform: scale(1.03) rotate(1deg);
+    box-shadow: 
+        0 25px 55px rgba(102, 126, 234, 0.4),
+        0 15px 30px rgba(118, 75, 162, 0.3);
+}
+
+.device-tablet .floating-icon {
+    width: 55px;
+    height: 55px;
+    font-size: 18px;
 }
 
 .device-tablet .container {

@@ -1,0 +1,313 @@
+/* ==================================================
+   MOBILE PROFILE IMAGE OPTIMIZATIONS
+   تحسينات صورة البروفايل للموبايل
+================================================== */
+
+/* Base Profile Image Styles for All Devices */
+.profile-img {
+    display: block;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Mobile First Approach - تحسينات الموبايل أولاً */
+@media screen and (max-width: 768px) {
+    .hero-content {
+        flex-direction: column !important;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .hero-image {
+        order: -1; /* عرض الصورة أولاً */
+        margin-bottom: 1rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .image-container {
+        max-width: 280px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .profile-img {
+        width: 100% !important;
+        max-width: 280px !important;
+        height: 280px !important;
+        border-radius: 50% !important;
+        object-fit: cover;
+        border: 3px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 
+            0 20px 40px rgba(102, 126, 234, 0.25),
+            0 10px 20px rgba(118, 75, 162, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        
+        /* تحسينات الأداء */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+    
+    .profile-img:hover,
+    .profile-img:focus {
+        transform: scale(1.02) translateZ(0);
+        box-shadow: 
+            0 25px 50px rgba(102, 126, 234, 0.35),
+            0 15px 30px rgba(118, 75, 162, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    
+    /* تحسينات للعناصر المحيطة */
+    .floating-elements {
+        pointer-events: none;
+        opacity: 0.8;
+    }
+    
+    .floating-icon {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 16px !important;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* iPhone 15 Pro Max and similar large phones */
+@media screen and (max-width: 430px) {
+    .image-container {
+        max-width: 250px;
+    }
+    
+    .profile-img {
+        max-width: 250px !important;
+        height: 250px !important;
+    }
+    
+    .floating-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 14px !important;
+    }
+}
+
+/* iPhone 13 mini and smaller screens */
+@media screen and (max-width: 375px) {
+    .image-container {
+        max-width: 220px;
+    }
+    
+    .profile-img {
+        max-width: 220px !important;
+        height: 220px !important;
+        border: 2px solid rgba(255, 255, 255, 0.9);
+    }
+    
+    .floating-icon {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* Very small screens */
+@media screen and (max-width: 320px) {
+    .image-container {
+        max-width: 200px;
+    }
+    
+    .profile-img {
+        max-width: 200px !important;
+        height: 200px !important;
+    }
+    
+    .floating-elements {
+        opacity: 0.6;
+    }
+    
+    .floating-icon {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 10px !important;
+    }
+}
+
+/* Tablet Portrait Mode */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .profile-img {
+        max-width: 320px !important;
+        height: 320px !important;
+        border-radius: var(--radius-2xl) !important;
+    }
+    
+    .floating-icon {
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 18px !important;
+    }
+}
+
+/* Desktop and larger screens */
+@media screen and (min-width: 1025px) {
+    .hero-content {
+        flex-direction: row !important;
+        text-align: right;
+        align-items: center;
+        gap: 3rem;
+    }
+    
+    .hero-image {
+        order: 1;
+        margin-bottom: 0;
+        flex: 0 0 auto;
+    }
+    
+    .image-container {
+        max-width: 400px !important;
+        width: 400px;
+        margin: 0;
+    }
+    
+    .profile-img {
+        width: 100% !important;
+        max-width: 400px !important;
+        height: 400px !important;
+        aspect-ratio: 1;
+        border-radius: var(--radius-2xl) !important;
+        object-fit: cover;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        border: 3px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 
+            0 20px 50px rgba(0, 0, 0, 0.15),
+            0 10px 25px rgba(102, 126, 234, 0.2);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .profile-img:hover {
+        transform: scale(1.05) rotate(1deg);
+        box-shadow: 
+            0 25px 60px rgba(0, 0, 0, 0.2),
+            0 15px 35px rgba(102, 126, 234, 0.3);
+    }
+    
+    .floating-elements {
+        display: block !important;
+        opacity: 1 !important;
+    }
+      .floating-icon {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 20px !important;
+    }
+}
+
+/* Large Desktop screens - 1440px+ */
+@media screen and (min-width: 1440px) {
+    .hero-content {
+        gap: 4rem;
+    }
+    
+    .image-container {
+        max-width: 450px !important;
+        width: 450px;
+    }
+    
+    .profile-img {
+        width: 100% !important;
+        max-width: 450px !important;
+        height: 450px !important;
+    }
+    
+    .floating-icon {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 24px !important;
+    }
+}
+
+/* Ultra-wide screens */
+@media screen and (min-width: 1920px) {
+    .image-container {
+        max-width: 500px !important;
+        width: 500px;
+    }
+    
+    .profile-img {
+        width: 100% !important;
+        max-width: 500px !important;
+        height: 500px !important;
+    }
+}
+
+/* High DPI/Retina Display Optimizations */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+       screen and (min-resolution: 192dpi) {
+    .profile-img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .profile-img {
+        border-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.4),
+            0 10px 20px rgba(102, 126, 234, 0.2);
+    }
+    
+    .floating-icon {
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .profile-img {
+        transition: none;
+    }
+    
+    .profile-img:hover {
+        transform: none;
+    }
+    
+    .floating-icon {
+        animation: none;
+    }
+}
+
+/* Loading State */
+.profile-img.loading {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0.7;
+}
+
+.profile-img.loaded {
+    animation: fadeInScale 0.6s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+    .profile-img:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}

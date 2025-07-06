@@ -22,17 +22,19 @@ class ImageLoader {
         if (profileImg) {
             this.handleProfileImage(profileImg);
         }
-    }
-
-    handleProfileImage(img) {
+    }    handleProfileImage(img) {
         // تسجيل محاولة تحميل الصورة
         console.log('Loading profile image:', img.src);
+
+        // تحسينات خاصة للموبايل
+        this.optimizeForMobile(img);
 
         // إضافة معالج نجاح التحميل
         img.addEventListener('load', () => {
             console.log('Profile image loaded successfully');
             img.style.opacity = '1';
             img.classList.add('loaded');
+            this.addImageAnimations(img);
         });
 
         // إضافة معالج فشل التحميل
@@ -44,6 +46,51 @@ class ImageLoader {
         // إضافة تأثير تدريجي للظهور
         img.style.opacity = '0';
         img.style.transition = 'opacity 0.5s ease-in-out';
+    }
+
+    optimizeForMobile(img) {
+        // كشف إذا كان الجهاز موبايل
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            // تحسينات خاصة للموبايل
+            img.style.borderRadius = '50%';
+            img.style.maxWidth = '260px';
+            img.style.height = '260px';
+            
+            // تحسين جودة الصورة للشاشات عالية الدقة
+            if (window.devicePixelRatio > 1) {
+                img.style.imageRendering = 'high-quality';
+            }
+            
+            // إضافة lazy loading للموبايل
+            img.loading = 'lazy';
+            img.decoding = 'async';
+        }
+    }
+
+    addImageAnimations(img) {
+        // إضافة تأثيرات حركية للصورة
+        img.addEventListener('mouseenter', () => {
+            if (window.innerWidth > 768) {
+                img.style.transform = 'scale(1.05) rotate(2deg)';
+            } else {
+                img.style.transform = 'scale(1.02)';
+            }
+        });
+
+        img.addEventListener('mouseleave', () => {
+            img.style.transform = 'scale(1) rotate(0deg)';
+        });
+
+        // تأثير اللمس للموبايل
+        img.addEventListener('touchstart', () => {
+            img.style.transform = 'scale(0.98)';
+        });
+
+        img.addEventListener('touchend', () => {
+            img.style.transform = 'scale(1)';
+        });
     }
 
     handleImageError(img) {
