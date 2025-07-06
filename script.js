@@ -197,7 +197,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ====== Counter Animation ======
 function animateCounter(element) {
-    const target = parseInt(element.getAttribute('data-target'));
+    const targetValue = element.getAttribute('data-target');
+    const target = parseInt(targetValue);
+    const hasPlus = element.textContent.includes('+');
     const speed = 50;
     const increment = target / speed;
     let count = 0;
@@ -205,10 +207,11 @@ function animateCounter(element) {
     const updateCount = () => {
         if (count < target) {
             count += increment;
-            element.textContent = Math.floor(count);
+            const currentValue = Math.floor(count);
+            element.textContent = hasPlus ? currentValue + '+' : currentValue;
             setTimeout(updateCount, 20);
         } else {
-            element.textContent = target;
+            element.textContent = hasPlus ? target + '+' : target;
         }
     };
 
