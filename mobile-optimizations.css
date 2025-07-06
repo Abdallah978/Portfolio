@@ -1,0 +1,207 @@
+/* ====== MOBILE DEVICE COMPATIBILITY TEST ====== */
+
+/* Test responsive breakpoints for different mobile devices */
+
+/* iPhone 15 Pro Max - 430px */
+@media only screen and (max-width: 430px) {
+    .mobile-test-430 {
+        background-color: #ff6b6b;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        font-size: 12px;
+    }
+    .mobile-test-430::before {
+        content: "iPhone 15 Pro Max - 430px";
+    }
+}
+
+/* iPhone 14 Pro - 393px */
+@media only screen and (max-width: 414px) {
+    .mobile-test-414 {
+        background-color: #4ecdc4;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        font-size: 12px;
+    }
+    .mobile-test-414::before {
+        content: "iPhone 14 Pro / Standard Mobile - 414px";
+    }
+}
+
+/* iPhone 13 mini - 375px */
+@media only screen and (max-width: 375px) {
+    .mobile-test-375 {
+        background-color: #45b7d1;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        font-size: 12px;
+    }
+    .mobile-test-375::before {
+        content: "iPhone 13 mini / Compact Mobile - 375px";
+    }
+}
+
+/* iPhone SE - 320px */
+@media only screen and (max-width: 320px) {
+    .mobile-test-320 {
+        background-color: #f39c12;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        font-size: 11px;
+    }
+    .mobile-test-320::before {
+        content: "iPhone SE / Very Small Mobile - 320px";
+    }
+}
+
+/* Common mobile device optimizations */
+@media only screen and (max-width: 768px) {
+    /* Ensure proper viewport behavior */
+    html {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+    
+    /* Optimize for touch interfaces */
+    * {
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    /* Allow text selection for content areas */
+    p, h1, h2, h3, h4, h5, h6, span, div[class*="content"], div[class*="text"] {
+        -webkit-user-select: text;
+        -khtml-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+    }
+    
+    /* Improve scrolling on iOS */
+    body {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+    
+    /* Fix iOS Safari bottom bar issues */
+    .hero {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+    
+    /* Android Chrome address bar compensation */
+    @supports (-webkit-appearance: none) {
+        .hero {
+            min-height: calc(100vh - 56px);
+        }
+    }
+}
+
+/* Landscape mobile optimization */
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+    .navbar {
+        height: 50px;
+    }
+    
+    .hero {
+        min-height: calc(100vh - 50px);
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .nav-menu.active {
+        height: calc(100vh - 50px);
+        overflow-y: auto;
+    }
+}
+
+/* High DPI displays (Retina, etc.) */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi),
+       only screen and (min-resolution: 2dppx) {
+    /* Optimize images for high DPI */
+    .hero-image img,
+    .portfolio-image img,
+    .certificate-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: optimize-contrast;
+        -ms-interpolation-mode: nearest-neighbor;
+    }
+}
+
+/* Dark mode mobile adjustments */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+    .mobile-test-430,
+    .mobile-test-414,
+    .mobile-test-375,
+    .mobile-test-320 {
+        background-color: rgba(0,0,0,0.8);
+        color: white;
+    }
+}
+
+/* Accessibility improvements for mobile */
+@media (prefers-reduced-motion: reduce) and (max-width: 768px) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Samsung Galaxy and Android specific optimizations */
+@media only screen and (max-width: 768px) {
+    /* Fix for Samsung Internet browser */
+    input[type="text"], 
+    input[type="email"], 
+    input[type="tel"], 
+    textarea {
+        -webkit-appearance: none;
+        appearance: none;
+        border-radius: 0;
+    }
+    
+    /* Android Chrome tab color */
+    meta[name="theme-color"] {
+        content: "#4facfe";
+    }
+}
+
+/* Foldable device support */
+@media (max-width: 768px) and (min-width: 280px) {
+    .container {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+}
