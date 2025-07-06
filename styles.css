@@ -120,6 +120,30 @@ body {
 #loading-screen.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.9);
+}
+
+/* Mobile Loading Screen Fixes */
+@media screen and (max-width: 768px) {
+    #loading-screen {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .loader-circle {
+        width: 50px;
+        height: 50px;
+        border-width: 3px;
+        animation-duration: 0.8s;
+    }
+    
+    .loader h3 {
+        font-size: 18px;
+        font-weight: 500;
+        margin-top: 1rem;
+    }
 }
 
 .loader {

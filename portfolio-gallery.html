@@ -20,9 +20,28 @@
     <link rel="stylesheet" href="profile-mobile.css">
     <!-- Desktop Profile Optimizations -->
     <link rel="stylesheet" href="desktop-profile.css">    <!-- Certificate Display Fixes -->
-    <link rel="stylesheet" href="certificate-fixes.css">
-    <!-- Mobile Image Display Fixes -->
+    <link rel="stylesheet" href="certificate-fixes.css">    <!-- Mobile Image Display Fixes -->
     <link rel="stylesheet" href="mobile-image-fixes.css">
+    
+    <!-- Emergency Loading Screen Fix for Mobile -->
+    <script>
+        // Emergency fix for loading screen on mobile
+        (function() {
+            const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                console.log('📱 Mobile detected on gallery page');
+                
+                // Ensure no loading screen blocks content
+                document.addEventListener('DOMContentLoaded', function() {
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        loadingScreen.style.display = 'none';
+                    }
+                });
+            }
+        })();
+    </script>
 </head>
 <body>
     <!-- Navigation -->

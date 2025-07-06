@@ -28,12 +28,96 @@ function throttle(func, limit) {
 document.addEventListener('DOMContentLoaded', function() {
     const loadingScreen = document.getElementById('loading-screen');
     
-    // Hide loading screen after everything is loaded
+    // Enhanced loading screen handler for mobile compatibility
+    function hideLoadingScreen() {
+        if (loadingScreen) {
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                loadingScreen.classList.add('hidden');
+            }, 500);
+        }
+    }
+    
+    // Multiple fallback methods to ensure loading screen disappears
+    let loadingHidden = false;
+    
+    // Method 1: Standard window load event
     window.addEventListener('load', function() {
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-        }, 1000);
+        if (!loadingHidden) {
+            loadingHidden = true;
+            setTimeout(hideLoadingScreen, 800);
+        }
     });
+    
+    // Method 2: Fallback timer for mobile devices
+    setTimeout(() => {
+        if (!loadingHidden) {
+            console.log('🕐 Fallback: Hiding loading screen after timeout');
+            loadingHidden = true;
+            hideLoadingScreen();
+        }
+    }, 3000); // 3 seconds maximum loading time
+    
+    // Method 3: Document readyState check
+    if (document.readyState === 'complete') {
+        setTimeout(() => {
+            if (!loadingHidden) {
+                console.log('📄 Document already complete, hiding loading screen');
+                loadingHidden = true;
+                hideLoadingScreen();
+            }
+        }, 1000);
+    }
+    
+    // Method 4: Image loading check for mobile
+    const images = document.querySelectorAll('img');
+    let imagesLoaded = 0;
+    const totalImages = images.length;
+    
+    if (totalImages === 0) {
+        // No images, hide loading screen immediately
+        setTimeout(() => {
+            if (!loadingHidden) {
+                loadingHidden = true;
+                hideLoadingScreen();
+            }
+        }, 1500);
+    } else {
+        images.forEach(img => {
+            if (img.complete) {
+                imagesLoaded++;
+            } else {
+                img.addEventListener('load', () => {
+                    imagesLoaded++;
+                    if (imagesLoaded >= Math.min(3, totalImages) && !loadingHidden) {
+                        // Hide after first 3 images load or all images
+                        loadingHidden = true;
+                        setTimeout(hideLoadingScreen, 500);
+                    }
+                });
+                
+                img.addEventListener('error', () => {
+                    imagesLoaded++;
+                    if (imagesLoaded >= Math.min(3, totalImages) && !loadingHidden) {
+                        loadingHidden = true;
+                        setTimeout(hideLoadingScreen, 500);
+                    }
+                });
+            }
+        });
+        
+        // Check if images are already loaded
+        if (imagesLoaded >= Math.min(3, totalImages)) {
+            setTimeout(() => {
+                if (!loadingHidden) {
+                    loadingHidden = true;
+                    hideLoadingScreen();
+                }
+            }, 1000);
+        }
+    }
 });
 
 // ====== Navigation ======

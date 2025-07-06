@@ -21,9 +21,46 @@
     <link rel="stylesheet" href="profile-mobile.css">
     <!-- Desktop Profile Optimizations -->
     <link rel="stylesheet" href="desktop-profile.css">    <!-- Certificate Display Fixes -->
-    <link rel="stylesheet" href="certificate-fixes.css">
-    <!-- Mobile Image Display Fixes -->
+    <link rel="stylesheet" href="certificate-fixes.css">    <!-- Mobile Image Display Fixes -->
     <link rel="stylesheet" href="mobile-image-fixes.css">
+    
+    <!-- Emergency Loading Screen Fix for Mobile -->
+    <script>
+        // Emergency fix for loading screen on mobile
+        (function() {
+            const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                console.log('📱 Mobile detected, setting up emergency loading screen fix');
+                
+                // Force hide loading screen after maximum 4 seconds
+                setTimeout(function() {
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        console.log('🚨 Emergency: Force hiding loading screen');
+                        loadingScreen.style.display = 'none';
+                        loadingScreen.style.opacity = '0';
+                        loadingScreen.style.visibility = 'hidden';
+                        loadingScreen.classList.add('hidden');
+                    }
+                }, 4000);
+                
+                // Quick hide after DOM is ready
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(function() {
+                        const loadingScreen = document.getElementById('loading-screen');
+                        if (loadingScreen && loadingScreen.style.display !== 'none') {
+                            console.log('📱 Mobile: Quick hiding loading screen');
+                            loadingScreen.style.opacity = '0';
+                            setTimeout(function() {
+                                loadingScreen.style.display = 'none';
+                            }, 500);
+                        }
+                    }, 2000);
+                });
+            }
+        })();
+    </script>
 </head>
 <body>    <!-- Loading Screen -->
     <div id="loading-screen">

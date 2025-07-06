@@ -8,12 +8,13 @@ class MobileImageFixer {
         this.isMobile = window.innerWidth <= 768;
         this.isTouch = 'ontouchstart' in window;
         this.init();
-    }
-
-    init() {
+    }    init() {
         console.log('🔧 Mobile Image Fixer initialized');
         console.log('📱 Is Mobile:', this.isMobile);
         console.log('👆 Is Touch Device:', this.isTouch);
+
+        // Force hide loading screen on mobile if it's still visible
+        this.forceHideLoadingScreen();
 
         // تشغيل الإصلاحات بعد تحميل DOM
         if (document.readyState === 'loading') {
@@ -29,6 +30,29 @@ class MobileImageFixer {
         window.addEventListener('orientationchange', () => {
             setTimeout(() => this.fixAllImages(), 100);
         });
+    }
+
+    forceHideLoadingScreen() {
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen && this.isMobile) {
+            console.log('📱 Force hiding loading screen for mobile...');
+            
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.visibility = 'hidden';
+                loadingScreen.style.pointerEvents = 'none';
+                loadingScreen.style.display = 'none';
+                loadingScreen.classList.add('hidden');
+            }, 1000);
+            
+            // Emergency fallback
+            setTimeout(() => {
+                if (loadingScreen.style.display !== 'none') {
+                    loadingScreen.remove();
+                    console.log('🚨 Emergency: Removed loading screen');
+                }
+            }, 4000);
+        }
     }
 
     fixAllImages() {
