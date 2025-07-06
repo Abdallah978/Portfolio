@@ -23,41 +23,90 @@
     <link rel="stylesheet" href="desktop-profile.css">    <!-- Certificate Display Fixes -->
     <link rel="stylesheet" href="certificate-fixes.css">    <!-- Mobile Image Display Fixes -->
     <link rel="stylesheet" href="mobile-image-fixes.css">
-    
-    <!-- Emergency Loading Screen Fix for Mobile -->
+    <!-- Mobile Loading Screen Fix -->
+    <link rel="stylesheet" href="mobile-loading-fix.css">
+    <!-- ULTIMATE Mobile Loading Screen Killer -->
+    <script src="ultimate-mobile-fix.js"></script>
+    <!-- SUPER AGGRESSIVE Mobile Loading Screen Fix -->
     <script>
-        // Emergency fix for loading screen on mobile
+        // ULTIMATE MOBILE FIX - Immediate and multiple fallbacks
         (function() {
-            const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isMobile = window.innerWidth <= 768 || 
+                /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                'ontouchstart' in window || 
+                navigator.maxTouchPoints > 0;
+            
+            console.log('📱 ULTIMATE Mobile check:', isMobile);
+            console.log('🖥️ Screen width:', window.innerWidth);
+            console.log('👆 Touch support:', 'ontouchstart' in window);
+            console.log('🖐️ Max touch points:', navigator.maxTouchPoints);
             
             if (isMobile) {
-                console.log('📱 Mobile detected, setting up emergency loading screen fix');
+                console.log('📱 MOBILE DETECTED - AGGRESSIVE FIXES ACTIVATED');
                 
-                // Force hide loading screen after maximum 4 seconds
+                // IMMEDIATE FIX 1: Hide after 200ms (super fast)
                 setTimeout(function() {
                     const loadingScreen = document.getElementById('loading-screen');
                     if (loadingScreen) {
-                        console.log('🚨 Emergency: Force hiding loading screen');
-                        loadingScreen.style.display = 'none';
-                        loadingScreen.style.opacity = '0';
-                        loadingScreen.style.visibility = 'hidden';
-                        loadingScreen.classList.add('hidden');
+                        console.log('⚡ SUPER FAST: Hiding loading screen (200ms)');
+                        loadingScreen.style.cssText = 'display: none !important; opacity: 0 !important; visibility: hidden !important; z-index: -9999 !important;';
+                        loadingScreen.remove();
                     }
-                }, 4000);
+                }, 200);
                 
-                // Quick hide after DOM is ready
+                // IMMEDIATE FIX 2: Hide after 500ms
+                setTimeout(function() {
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        console.log('🏃‍♂️ FAST: Hiding loading screen (500ms)');
+                        loadingScreen.style.cssText = 'display: none !important; opacity: 0 !important; visibility: hidden !important;';
+                        loadingScreen.remove();
+                    }
+                }, 500);
+                
+                // IMMEDIATE FIX 3: Hide after 1 second
+                setTimeout(function() {
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        console.log('🚀 MEDIUM: Hiding loading screen (1s)');
+                        loadingScreen.style.cssText = 'display: none !important;';
+                        loadingScreen.remove();
+                    }
+                }, 1000);
+                
+                // DOM READY FIX
                 document.addEventListener('DOMContentLoaded', function() {
+                    console.log('📄 DOM Ready - Mobile aggressive hide');
                     setTimeout(function() {
                         const loadingScreen = document.getElementById('loading-screen');
-                        if (loadingScreen && loadingScreen.style.display !== 'none') {
-                            console.log('📱 Mobile: Quick hiding loading screen');
-                            loadingScreen.style.opacity = '0';
-                            setTimeout(function() {
-                                loadingScreen.style.display = 'none';
-                            }, 500);
+                        if (loadingScreen) {
+                            console.log('📄 DOM READY: Hiding loading screen');
+                            loadingScreen.style.cssText = 'display: none !important;';
+                            loadingScreen.remove();
                         }
-                    }, 2000);
+                    }, 100); // Super fast after DOM ready
                 });
+                
+                // NUCLEAR OPTION - Hide immediately when script runs
+                const nukeLoadingScreen = function() {
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        console.log('💥 NUCLEAR: Immediate loading screen removal');
+                        loadingScreen.style.cssText = 'display: none !important; opacity: 0 !important; visibility: hidden !important; z-index: -9999 !important;';
+                        loadingScreen.remove();
+                    }
+                };
+                
+                // Try to nuke it every 100ms for first 2 seconds
+                let attempts = 0;
+                const nukeInterval = setInterval(function() {
+                    attempts++;
+                    nukeLoadingScreen();
+                    if (attempts >= 20) { // 20 * 100ms = 2 seconds
+                        clearInterval(nukeInterval);
+                        console.log('💥 Nuclear interval completed after 20 attempts');
+                    }
+                }, 100);
             }
         })();
     </script>
