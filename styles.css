@@ -1010,16 +1010,16 @@ section {
     overflow: hidden;
     box-shadow: 0 4px 15px var(--shadow-light);
     transition: all var(--transition-normal);
-}
-
-.certificate-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px var(--shadow-medium);
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .certificate-image {
     height: 200px;
     overflow: hidden;
+    display: block !important;
+    position: relative;
 }
 
 .certificate-image img {
@@ -1027,68 +1027,49 @@ section {
     height: 100%;
     object-fit: cover;
     transition: all var(--transition-slow);
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-.certificate-card:hover .certificate-image img {
-    transform: scale(1.05);
+/* Specific fix for EDRAAK certificate */
+.certificate-card img[src*="EDRAAK"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    background-color: #f8f9fa !important;
 }
 
-.certificate-details {
-    padding: var(--spacing-lg);
+/* Force visibility for all EDRAAK elements */
+img[alt*="إدراك"],
+img[alt*="EDRAAK"],
+img[src*="EDRAAK/photo"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    max-width: 100% !important;
+    height: auto !important;
 }
 
-.certificate-details h4 {
-    font-size: var(--font-size-lg);
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
-    font-weight: 600;
+/* Certificate Image Container Fix */
+.certificate-image {
+    display: block !important;
+    visibility: visible !important;
+    min-height: 200px !important;
+    background: #f8f9fa !important;
+    position: relative !important;
 }
 
-.certificate-details p {
-    color: var(--text-light);
-    margin-bottom: var(--spacing-md);
-}
-
-.certificate-year {
-    background: var(--gradient-primary);
-    color: var(--text-white);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-}
-
-.certificates-summary {
-    background: var(--bg-white);
-    padding: var(--spacing-2xl);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 8px 30px var(--shadow-light);
-}
-
-.summary-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-xl);
-    text-align: center;
-}
-
-.summary-stats .stat {
-    padding: var(--spacing-lg);
-}
-
-.summary-stats .stat-number {
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: var(--spacing-sm);
-}
-
-.summary-stats .stat-label {
-    color: var(--text-light);
-    font-weight: 500;
+/* Certificate Card Enhanced Display */
+.certificate-card {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    overflow: visible !important;
 }
 
 /* ====== Contact Section ====== */

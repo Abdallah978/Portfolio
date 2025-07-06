@@ -46,17 +46,22 @@ class ImageLoader {
         // إضافة تأثير تدريجي للظهور
         img.style.opacity = '0';
         img.style.transition = 'opacity 0.5s ease-in-out';
-    }
-
-    optimizeForMobile(img) {
+    }    optimizeForMobile(img) {
         // كشف إذا كان الجهاز موبايل
         const isMobile = window.innerWidth <= 768;
         
         if (isMobile) {
+            console.log('📱 Optimizing image for mobile...');
+            
             // تحسينات خاصة للموبايل
             img.style.borderRadius = '50%';
             img.style.maxWidth = '260px';
             img.style.height = '260px';
+            img.style.display = 'block';
+            img.style.visibility = 'visible';
+            img.style.opacity = '1';
+            img.style.margin = '0 auto';
+            img.style.objectFit = 'cover';
             
             // تحسين جودة الصورة للشاشات عالية الدقة
             if (window.devicePixelRatio > 1) {
@@ -64,8 +69,20 @@ class ImageLoader {
             }
             
             // إضافة lazy loading للموبايل
-            img.loading = 'lazy';
-            img.decoding = 'async';
+            img.loading = 'eager'; // تغيير من lazy إلى eager للموبايل
+            img.decoding = 'sync';
+            
+            // تحسينات WebKit للموبايل
+            img.style.webkitBackfaceVisibility = 'hidden';
+            img.style.webkitPerspective = '1000';
+            img.style.webkitTransform = 'translate3d(0,0,0)';
+            img.style.transform = 'translate3d(0,0,0)';
+            
+            // منع إخفاء الصورة
+            img.style.filter = 'none';
+            img.style.webkitFilter = 'none';
+            img.style.clipPath = 'none';
+            img.style.webkitClipPath = 'none';
         }
     }
 

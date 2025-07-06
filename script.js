@@ -258,9 +258,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
+    console.log('Certificate tabs initialized:', tabButtons.length, 'buttons,', tabContents.length, 'contents');
+
+    // Ensure academic tab is visible initially
+    const academicTab = document.getElementById('academic');
+    const mainDegree = document.querySelector('.main-degree');
+    
+    if (academicTab) {
+        academicTab.style.display = 'block';
+        academicTab.style.visibility = 'visible';
+        academicTab.style.opacity = '1';
+        console.log('Academic tab visibility ensured on load');
+    }
+    
+    if (mainDegree) {
+        mainDegree.style.display = 'block';
+        mainDegree.style.visibility = 'visible';
+        mainDegree.style.opacity = '1';
+        console.log('Main degree visibility ensured on load');
+    }
+
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             const tabId = this.getAttribute('data-tab');
+            console.log('Switching to tab:', tabId);
 
             // Update active button
             tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -269,14 +290,40 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show corresponding content
             tabContents.forEach(content => {
                 content.classList.remove('active');
+                content.style.display = 'none';
                 if (content.id === tabId) {
                     setTimeout(() => {
+                        content.style.display = 'block';
                         content.classList.add('active');
+                        
+                        // Special handling for academic tab
+                        if (tabId === 'academic') {
+                            const mainDegreeElement = content.querySelector('.main-degree');
+                            if (mainDegreeElement) {
+                                mainDegreeElement.style.display = 'block';
+                                mainDegreeElement.style.visibility = 'visible';
+                                mainDegreeElement.style.opacity = '1';
+                                mainDegreeElement.style.animation = 'fadeInUp 0.8s ease-out';
+                                console.log('Academic certificate enhanced');
+                            }
+                        }
                     }, 150);
                 }
             });
         });
     });
+    
+    // Auto-activate academic tab if none is active
+    setTimeout(() => {
+        const activeTab = document.querySelector('.tab-content.active');
+        if (!activeTab) {
+            const academicButton = document.querySelector('[data-tab="academic"]');
+            if (academicButton) {
+                academicButton.click();
+                console.log('Auto-activated academic tab');
+            }
+        }
+    }, 500);
 });
 
 // ====== Contact Form ======

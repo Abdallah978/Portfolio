@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
       <!-- Google Fonts - Cairo -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">    <!-- Main Styles -->
-    <link rel="stylesheet" href="styles.css">    <!-- Responsive Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Responsive Styles -->
     <link rel="stylesheet" href="responsive.css">
     <!-- Mobile Optimizations -->
     <link rel="stylesheet" href="mobile-optimizations.css">
@@ -19,7 +20,10 @@
     <!-- Profile Mobile Optimizations -->
     <link rel="stylesheet" href="profile-mobile.css">
     <!-- Desktop Profile Optimizations -->
-    <link rel="stylesheet" href="desktop-profile.css">
+    <link rel="stylesheet" href="desktop-profile.css">    <!-- Certificate Display Fixes -->
+    <link rel="stylesheet" href="certificate-fixes.css">
+    <!-- Mobile Image Display Fixes -->
+    <link rel="stylesheet" href="mobile-image-fixes.css">
 </head>
 <body>    <!-- Loading Screen -->
     <div id="loading-screen">
@@ -483,7 +487,7 @@
                             <h3 data-en="Bachelor of Earth Sciences and Remote Sensing" data-ar="بكالوريوس علوم الأرض والتحسس النائي">بكالوريوس علوم الأرض والتحسس النائي</h3>
                             <p class="institution" data-en="Al-Karkh University of Science - Baghdad" data-ar="جامعة الكرخ للعلوم - بغداد">جامعة الكرخ للعلوم - بغداد</p>
                             <p class="description" data-en="Specialization in Earth Sciences, Remote Sensing, and Geographic Information Systems" data-ar="تخصص في علوم الأرض، التحسس النائي، ونظم المعلومات الجغرافية">تخصص في علوم الأرض، التحسس النائي، ونظم المعلومات الجغرافية</p>
-                            <span class="year">2020-2024</span>
+                            <span class="year">2019-2023</span>
                         </div>
                     </div>
                 </div>
@@ -499,12 +503,11 @@
                                 <p>Coursera</p>
                                 <span class="certificate-year">2024</span>
                             </div>
-                        </div>
-
-                        <div class="certificate-card">
+                        </div>                        <div class="certificate-card">
                             <div class="certificate-image">
-                                <img src="EDRAAK/photo_2025-06-30_17-31-10.jpg" alt="شهادة الأمن السيبراني" loading="lazy">
-                            </div>                            <div class="certificate-details">
+                                <img src="EDRAAK/photo_2025-06-30_17-31-10.jpg" alt="شهادة الأمن السيبراني - إدراك" loading="lazy" onerror="console.log('EDRAAK image failed to load')">
+                            </div>
+                            <div class="certificate-details">
                                 <h4 data-en="Cybersecurity" data-ar="الأمن السيبراني">الأمن السيبراني</h4>
                                 <p data-en="Edraak" data-ar="إدراك">إدراك</p>
                                 <span class="certificate-year">2024</span>
@@ -775,11 +778,15 @@
     
     <!-- Device Detection System -->
     <script src="device-detector.js"></script>
-    
-    <!-- Translation System -->
+      <!-- Translation System -->
     <script src="translation.js"></script>
     
     <!-- Image Loading Handler -->
     <script src="image-loader.js"></script>
+      <!-- Certificate Display Enhancer -->
+    <script src="certificate-enhancer.js"></script>
+    
+    <!-- Mobile Image Display Fixer -->
+    <script src="mobile-image-fixer.js"></script>
 </body>
 </html>
