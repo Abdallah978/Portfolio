@@ -38,7 +38,7 @@
     --font-size-lg: 1.125rem;
     --font-size-xl: 1.25rem;
     --font-size-2xl: 1.5rem;
-    --font-size-3xl: 2rem;
+        --font-size-3xl: 2rem;
     --font-size-4xl: 2.5rem;
     --font-size-5xl: 3rem;
     
@@ -50,6 +50,19 @@
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
     --spacing-3xl: 4rem;
+    
+    /* Device-Specific Variables */
+    --container-padding: 32px;
+    --nav-height: 80px;
+    --hero-padding: 120px 0 100px;
+    --section-padding: 100px 0;
+    --base-font-size: 16px;
+    --transition-duration: 0.3s;
+    
+    /* Responsive Variables */
+    --device-width: 100vw;
+    --device-height: 100vh;
+    --device-type: "desktop";
     
     /* Border Radius */
     --radius-sm: 0.375rem;
@@ -406,13 +419,20 @@ body {
 
 .profile-img {
     width: 100%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
     border-radius: var(--radius-2xl);
     box-shadow: 0 20px 50px var(--shadow-medium);
     transition: all var(--transition-slow);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 3px solid rgba(255, 255, 255, 0.9);
 }
 
 .profile-img:hover {
     transform: scale(1.05);
+    box-shadow: 0 25px 60px var(--shadow-dark);
 }
 
 .floating-elements {

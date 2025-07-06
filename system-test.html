@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار شامل - نظام كشف الأجهزة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+        }
+
+        .test-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #fff;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .device-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .info-card h4 {
+            margin-bottom: 15px;
+            color: #00ff88;
+            font-size: 1.2em;
+        }
+
+        .info-item {
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .profile-test {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .profile-img-test {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: block;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .profile-img-test:hover {
+            transform: scale(1.05);
+            border-color: #00ff88;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .status-success { background: #2ed573; }
+        .status-error { background: #ff4757; }
+        .status-warning { background: #ffa502; }
+        .status-info { background: #3742fa; }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+        }
+
+        .test-card h5 {
+            margin-bottom: 15px;
+            color: #00ff88;
+        }
+
+        .console-box {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            direction: ltr;
+            border: 2px solid #333;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .responsive-test {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .responsive-test {
+                grid-template-columns: 1fr;
+            }
+            
+            .device-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            z-index: 1000;
+            border: 2px solid #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 اختبار شامل للنظام الذكي</h1>
+            <p>اختبار نظام كشف الأجهزة وتحميل الصور والتصميم المتجاوب</p>
+        </div>
+
+        <!-- معلومات الجهاز -->
+        <div class="test-section">
+            <h3 class="section-title">📱 معلومات الجهاز المكتشفة</h3>
+            <div class="device-info">
+                <div class="info-card">
+                    <h4>🖥️ نوع الجهاز</h4>
+                    <div class="info-item" id="device-type">جاري الكشف...</div>
+                    <div class="info-item" id="device-class">جاري الكشف...</div>
+                </div>
+                
+                <div class="info-card">
+                    <h4>🌐 المتصفح</h4>
+                    <div class="info-item" id="browser-info">جاري الكشف...</div>
+                    <div class="info-item" id="user-agent">جاري الكشف...</div>
+                </div>
+
+                <div class="info-card">
+                    <h4>📏 الشاشة</h4>
+                    <div class="info-item" id="screen-info">جاري الكشف...</div>
+                    <div class="info-item" id="viewport-info">جاري الكشف...</div>
+                    <div class="info-item" id="orientation-info">جاري الكشف...</div>
+                </div>
+
+                <div class="info-card">
+                    <h4>⚙️ نظام التشغيل</h4>
+                    <div class="info-item" id="os-info">جاري الكشف...</div>
+                    <div class="info-item" id="platform-info">جاري الكشف...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اختبار صورة البروفايل -->
+        <div class="test-section">
+            <h3 class="section-title">🖼️ اختبار تحميل صورة البروفايل</h3>
+            <div class="profile-test">
+                <img id="profile-test" class="profile-img-test" src="images/profile.jpg" alt="صورة البروفايل">
+                <div>
+                    <span id="image-status" class="status-indicator status-warning">جاري التحميل...</span>
+                </div>
+                <div style="margin: 20px 0;">
+                    <div>المسار: <code>images/profile.jpg</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اختبار التصميم المتجاوب -->
+        <div class="test-section">
+            <h3 class="section-title">📐 اختبار التصميم المتجاوب</h3>
+            <div class="responsive-test">
+                <div class="test-card">
+                    <h5>📱 موبايل</h5>
+                    <div id="mobile-features">جاري الفحص...</div>
+                </div>
+                <div class="test-card">
+                    <h5>📟 تابلت</h5>
+                    <div id="tablet-features">جاري الفحص...</div>
+                </div>
+                <div class="test-card">
+                    <h5>🖥️ كمبيوتر</h5>
+                    <div id="desktop-features">جاري الفحص...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- سجل النشاط -->
+        <div class="test-section">
+            <h3 class="section-title">📊 سجل النشاط والأخطاء</h3>
+            <div class="console-box" id="activity-log">
+                <div>🚀 بدء الاختبار الشامل...</div>
+            </div>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn" onclick="runFullTest()">🔄 إعادة الاختبار</button>
+            <button class="btn" onclick="window.open('index.html', '_blank')">🏠 الموقع الرئيسي</button>
+            <button class="btn" onclick="window.open('image-test.html', '_blank')">🖼️ اختبار الصور</button>
+            <button class="btn" onclick="downloadReport()">📥 تحميل التقرير</button>
+        </div>
+    </div>
+
+    <!-- مؤشر الميزات النشطة -->
+    <div class="feature-indicator" id="feature-indicator">
+        <div>الميزات النشطة:</div>
+        <div id="active-features">جاري الفحص...</div>
+    </div>
+
+    <script>
+        class SystemTester {
+            constructor() {
+                this.results = {};
+                this.init();
+            }
+
+            init() {
+                this.log('🚀 تم تشغيل نظام الاختبار الشامل');
+                this.runAllTests();
+            }
+
+            log(message, type = 'info') {
+                const console = document.getElementById('activity-log');
+                const timestamp = new Date().toLocaleTimeString('ar-SA');
+                const colors = {
+                    info: '#00ff00',
+                    success: '#00ff88',
+                    error: '#ff4444',
+                    warning: '#ffaa00'
+                };
+                
+                const logEntry = document.createElement('div');
+                logEntry.style.color = colors[type];
+                logEntry.innerHTML = `[${timestamp}] ${message}`;
+                console.appendChild(logEntry);
+                console.scrollTop = console.scrollHeight;
+            }
+
+            async runAllTests() {
+                await this.detectDevice();
+                await this.testProfileImage();
+                await this.testResponsiveDesign();
+                await this.testActiveFeatures();
+                this.generateReport();
+            }
+
+            async detectDevice() {
+                this.log('🔍 بدء اختبار كشف الجهاز...');
+                
+                // كشف نوع الجهاز
+                const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const isTablet = /iPad|Android(?=.*Tablet)|(?=.*Tablet.*Android)/i.test(navigator.userAgent);
+                const isDesktop = !isMobile && !isTablet;
+
+                let deviceType = 'غير محدد';
+                if (isMobile) deviceType = 'موبايل';
+                else if (isTablet) deviceType = 'تابلت';
+                else if (isDesktop) deviceType = 'كمبيوتر';
+
+                document.getElementById('device-type').textContent = `نوع الجهاز: ${deviceType}`;
+                document.getElementById('device-class').textContent = `الفئة: ${document.body.className || 'افتراضي'}`;
+
+                // معلومات المتصفح
+                const browser = this.getBrowserInfo();
+                document.getElementById('browser-info').textContent = `المتصفح: ${browser}`;
+                document.getElementById('user-agent').textContent = `User Agent: ${navigator.userAgent.substring(0, 50)}...`;
+
+                // معلومات الشاشة
+                document.getElementById('screen-info').textContent = `دقة الشاشة: ${screen.width}x${screen.height}`;
+                document.getElementById('viewport-info').textContent = `نافذة العرض: ${window.innerWidth}x${window.innerHeight}`;
+                document.getElementById('orientation-info').textContent = `الاتجاه: ${window.innerWidth > window.innerHeight ? 'أفقي' : 'عمودي'}`;
+
+                // نظام التشغيل
+                const os = this.getOSInfo();
+                document.getElementById('os-info').textContent = `نظام التشغيل: ${os}`;
+                document.getElementById('platform-info').textContent = `المنصة: ${navigator.platform}`;
+
+                this.results.device = { type: deviceType, browser, os };
+                this.log(`✅ تم كشف الجهاز: ${deviceType} - ${browser} - ${os}`, 'success');
+            }
+
+            getBrowserInfo() {
+                const ua = navigator.userAgent;
+                if (ua.includes('Chrome')) return 'Chrome';
+                if (ua.includes('Firefox')) return 'Firefox';
+                if (ua.includes('Safari')) return 'Safari';
+                if (ua.includes('Edge')) return 'Edge';
+                return 'متصفح آخر';
+            }
+
+            getOSInfo() {
+                const ua = navigator.userAgent;
+                if (ua.includes('Windows')) return 'Windows';
+                if (ua.includes('Mac')) return 'macOS';
+                if (ua.includes('Linux')) return 'Linux';
+                if (ua.includes('Android')) return 'Android';
+                if (ua.includes('iOS')) return 'iOS';
+                return 'نظام آخر';
+            }
+
+            async testProfileImage() {
+                this.log('🖼️ بدء اختبار تحميل صورة البروفايل...');
+                
+                const img = document.getElementById('profile-test');
+                const status = document.getElementById('image-status');
+
+                return new Promise((resolve) => {
+                    img.onload = () => {
+                        status.textContent = '✅ تم التحميل بنجاح';
+                        status.className = 'status-indicator status-success';
+                        this.log('✅ صورة البروفايل تم تحميلها بنجاح', 'success');
+                        this.results.profileImage = 'success';
+                        resolve();
+                    };
+
+                    img.onerror = () => {
+                        status.textContent = '❌ فشل التحميل';
+                        status.className = 'status-indicator status-error';
+                        this.log('❌ فشل في تحميل صورة البروفايل', 'error');
+                        this.results.profileImage = 'failed';
+                        resolve();
+                    };
+
+                    // اختبار إضافي
+                    setTimeout(() => {
+                        if (!img.complete || img.naturalWidth === 0) {
+                            img.onerror();
+                        }
+                    }, 3000);
+                });
+            }
+
+            async testResponsiveDesign() {
+                this.log('📐 بدء اختبار التصميم المتجاوب...');
+
+                const width = window.innerWidth;
+                let currentBreakpoint = '';
+
+                if (width < 768) {
+                    currentBreakpoint = 'موبايل';
+                    document.getElementById('mobile-features').innerHTML = '✅ تم التفعيل<br>📱 تخطيط عمودي<br>🎯 تفاعل باللمس';
+                    document.getElementById('tablet-features').innerHTML = '⭕ غير نشط';
+                    document.getElementById('desktop-features').innerHTML = '⭕ غير نشط';
+                } else if (width < 1024) {
+                    currentBreakpoint = 'تابلت';
+                    document.getElementById('mobile-features').innerHTML = '⭕ غير نشط';
+                    document.getElementById('tablet-features').innerHTML = '✅ تم التفعيل<br>📟 تخطيط متوسط<br>🎯 تفاعل مختلط';
+                    document.getElementById('desktop-features').innerHTML = '⭕ غير نشط';
+                } else {
+                    currentBreakpoint = 'كمبيوتر';
+                    document.getElementById('mobile-features').innerHTML = '⭕ غير نشط';
+                    document.getElementById('tablet-features').innerHTML = '⭕ غير نشط';
+                    document.getElementById('desktop-features').innerHTML = '✅ تم التفعيل<br>🖥️ تخطيط كامل<br>🎯 تفاعل بالماوس';
+                }
+
+                this.results.responsive = currentBreakpoint;
+                this.log(`📐 التصميم المتجاوب نشط: ${currentBreakpoint}`, 'success');
+            }
+
+            async testActiveFeatures() {
+                this.log('⚙️ فحص الميزات النشطة...');
+
+                const features = [];
+                
+                // فحص CSS
+                if (getComputedStyle(document.body).getPropertyValue('--primary-color')) {
+                    features.push('🎨 متغيرات CSS');
+                }
+
+                // فحص JavaScript
+                if (typeof DeviceDetector !== 'undefined') {
+                    features.push('📱 كاشف الأجهزة');
+                }
+
+                // فحص التطبيقات التقدمية
+                if ('serviceWorker' in navigator) {
+                    features.push('⚡ Service Worker');
+                }
+
+                // فحص الخطوط
+                if (getComputedStyle(document.body).fontFamily.includes('Cairo')) {
+                    features.push('📝 خط Cairo');
+                }
+
+                document.getElementById('active-features').innerHTML = features.join('<br>');
+                this.results.features = features;
+                this.log(`⚙️ تم العثور على ${features.length} ميزة نشطة`, 'success');
+            }
+
+            generateReport() {
+                this.log('📊 إنشاء التقرير النهائي...');
+                
+                const report = {
+                    timestamp: new Date().toISOString(),
+                    device: this.results.device,
+                    profileImage: this.results.profileImage,
+                    responsive: this.results.responsive,
+                    features: this.results.features,
+                    viewport: {
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    },
+                    url: window.location.href
+                };
+
+                this.testReport = report;
+                this.log('✅ تم إنشاء التقرير بنجاح', 'success');
+            }
+        }
+
+        // وظائف إضافية
+        function runFullTest() {
+            location.reload();
+        }
+
+        function downloadReport() {
+            if (window.systemTester && window.systemTester.testReport) {
+                const data = JSON.stringify(window.systemTester.testReport, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `system-test-report-${new Date().toISOString().slice(0, 19)}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        // تشغيل النظام
+        window.systemTester = new SystemTester();
+    </script>
+</body>
+</html>
