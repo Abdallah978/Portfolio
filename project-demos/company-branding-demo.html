@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج هوية شركة تقنية ناشئة</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .demo-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,1);
+            transform: scale(1.05);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-50px) translateY(-50px); }
+            100% { transform: translateX(50px) translateY(50px); }
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .logo-section {
+            text-align: center;
+        }
+
+        .main-logo {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            animation: logoRotate 10s infinite ease-in-out;
+        }
+
+        @keyframes logoRotate {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(15deg); }
+        }
+
+        .main-logo::before {
+            content: '⚡';
+            font-size: 80px;
+            color: white;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .logo-variations {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .logo-variant {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .logo-variant:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .logo-variant:nth-child(1) {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .logo-variant:nth-child(2) {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+        }
+
+        .logo-variant:nth-child(3) {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .logo-variant:nth-child(4) {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .company-name {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .brand-values {
+            list-style: none;
+        }
+
+        .brand-values li {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-radius: 25px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .brand-values li:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(-10px);
+        }
+
+        .color-palette {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .color-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .color-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .color-swatch {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .color-card:hover .color-swatch {
+            transform: scale(1.1);
+        }
+
+        .color-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .color-secondary {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+        }
+
+        .color-accent {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .color-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .color-warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .color-info {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .color-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .color-hex {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #666;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .typography-section {
+            padding: 40px;
+        }
+
+        .font-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .font-sample {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .font-sample:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .font-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .font-primary {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .font-secondary {
+            font-family: 'Georgia', serif;
+        }
+
+        .applications {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .app-item {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .app-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .app-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .app-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .tech-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .tech-info.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                margin: 10px;
+                border-radius: 20px;
+            }
+
+            .brand-showcase {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .font-showcase {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .company-name {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <button class="close-btn" onclick="closeDemo()">
+            <i class="fas fa-times"></i> إغلاق
+        </button>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🚀 TechFlow</h1>
+            <p>هوية بصرية متكاملة لشركة تقنية ناشئة</p>
+        </div>
+
+        <!-- Brand Showcase -->
+        <div class="brand-showcase">
+            <div class="logo-section">
+                <div class="main-logo" onclick="animateLogo()"></div>
+                <h3>تنويعات الشعار</h3>
+                <div class="logo-variations">
+                    <div class="logo-variant" onclick="changeTheme('primary')">⚡</div>
+                    <div class="logo-variant" onclick="changeTheme('dark')">⚡</div>
+                    <div class="logo-variant" onclick="changeTheme('red')">⚡</div>
+                    <div class="logo-variant" onclick="changeTheme('orange')">⚡</div>
+                </div>
+            </div>
+
+            <div class="brand-info">
+                <h2 class="company-name">TechFlow</h2>
+                <p class="tagline">"نسرّع نمو الأعمال بالتكنولوجيا"</p>
+                <ul class="brand-values">
+                    <li onclick="highlightValue(this)">💡 الابتكار والإبداع</li>
+                    <li onclick="highlightValue(this)">⚡ السرعة والكفاءة</li>
+                    <li onclick="highlightValue(this)">🛡️ الأمان والموثوقية</li>
+                    <li onclick="highlightValue(this)">🤝 الشراكة طويلة المدى</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="color-palette">
+            <h2 class="section-title">نظام الألوان المؤسسي</h2>
+            <div class="colors-grid">
+                <div class="color-card" onclick="copyColor('#667eea')">
+                    <div class="color-swatch color-primary"></div>
+                    <div class="color-name">اللون الأساسي</div>
+                    <div class="color-hex">#667eea</div>
+                </div>
+                <div class="color-card" onclick="copyColor('#2c3e50')">
+                    <div class="color-swatch color-secondary"></div>
+                    <div class="color-name">اللون الثانوي</div>
+                    <div class="color-hex">#2c3e50</div>
+                </div>
+                <div class="color-card" onclick="copyColor('#e74c3c')">
+                    <div class="color-swatch color-accent"></div>
+                    <div class="color-name">لون التمييز</div>
+                    <div class="color-hex">#e74c3c</div>
+                </div>
+                <div class="color-card" onclick="copyColor('#2ecc71')">
+                    <div class="color-swatch color-success"></div>
+                    <div class="color-name">لون النجاح</div>
+                    <div class="color-hex">#2ecc71</div>
+                </div>
+                <div class="color-card" onclick="copyColor('#f39c12')">
+                    <div class="color-swatch color-warning"></div>
+                    <div class="color-name">لون التحذير</div>
+                    <div class="color-hex">#f39c12</div>
+                </div>
+                <div class="color-card" onclick="copyColor('#3498db')">
+                    <div class="color-swatch color-info"></div>
+                    <div class="color-name">لون المعلومات</div>
+                    <div class="color-hex">#3498db</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typography -->
+        <div class="typography-section">
+            <h2 class="section-title">نظام الخطوط</h2>
+            <div class="font-showcase">
+                <div class="font-sample font-primary">
+                    <div class="font-title">Segoe UI</div>
+                    <p>الخط الأساسي للعناوين والنصوص الرئيسية</p>
+                    <div style="margin-top: 15px; font-size: 14px; color: #666;">
+                        أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ
+                    </div>
+                </div>
+                <div class="font-sample font-secondary">
+                    <div class="font-title">Georgia</div>
+                    <p>خط ثانوي للنصوص الطويلة والمحتوى</p>
+                    <div style="margin-top: 15px; font-size: 14px; color: #666;">
+                        أبجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Applications -->
+        <div class="applications">
+            <h2 class="section-title">تطبيقات الهوية البصرية</h2>
+            <div class="app-grid">
+                <div class="app-item" onclick="showApplication('businesscard')">
+                    <div class="app-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="app-title">بطاقات العمل</div>
+                    <div class="app-description">تصميم بطاقات عمل احترافية بالهوية الجديدة</div>
+                </div>
+                <div class="app-item" onclick="showApplication('letterhead')">
+                    <div class="app-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="app-title">رأس الخطابات</div>
+                    <div class="app-description">قوالب رسمية للمراسلات الداخلية والخارجية</div>
+                </div>
+                <div class="app-item" onclick="showApplication('website')">
+                    <div class="app-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="app-title">الموقع الإلكتروني</div>
+                    <div class="app-description">تطبيق الهوية على تصميم الموقع الرسمي</div>
+                </div>
+                <div class="app-item" onclick="showApplication('social')">
+                    <div class="app-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="app-title">وسائل التواصل</div>
+                    <div class="app-description">قوالب للمنشورات والصور الترويجية</div>
+                </div>
+                <div class="app-item" onclick="showApplication('presentation')">
+                    <div class="app-icon">
+                        <i class="fas fa-presentation"></i>
+                    </div>
+                    <div class="app-title">العروض التقديمية</div>
+                    <div class="app-description">قوالب PowerPoint بالهوية المؤسسية</div>
+                </div>
+                <div class="app-item" onclick="showApplication('merchandise')">
+                    <div class="app-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="app-title">المنتجات الترويجية</div>
+                    <div class="app-description">تطبيق الهوية على الهدايا والمنتجات</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Info -->
+    <div class="tech-info" id="techInfo">
+        <strong>🎨 أدوات التصميم:</strong><br>
+        • Adobe Illustrator<br>
+        • Brand Identity Design<br>
+        • Logo Design<br>
+        • Adobe Photoshop<br>
+        • Typography System
+    </div>
+
+    <script>
+        // Show tech info on load
+        setTimeout(() => {
+            document.getElementById('techInfo').classList.add('show');
+        }, 1000);
+
+        // Hide tech info after 5 seconds
+        setTimeout(() => {
+            document.getElementById('techInfo').classList.remove('show');
+        }, 6000);
+
+        function closeDemo() {
+            window.parent.postMessage('closeModal', '*');
+        }
+
+        function animateLogo() {
+            const logo = document.querySelector('.main-logo');
+            logo.style.animation = 'none';
+            logo.offsetHeight; // Trigger reflow
+            logo.style.animation = 'logoRotate 2s ease-in-out';
+            
+            showNotification('شعار TechFlow - رمز الابتكار والسرعة ⚡');
+        }
+
+        function changeTheme(theme) {
+            const themes = {
+                'primary': { bg: 'linear-gradient(135deg, #667eea, #764ba2)', name: 'النسخة الأساسية' },
+                'dark': { bg: 'linear-gradient(135deg, #2c3e50, #34495e)', name: 'النسخة الداكنة' },
+                'red': { bg: 'linear-gradient(135deg, #e74c3c, #c0392b)', name: 'نسخة التمييز' },
+                'orange': { bg: 'linear-gradient(135deg, #f39c12, #e67e22)', name: 'النسخة الحيوية' }
+            };
+
+            const mainLogo = document.querySelector('.main-logo');
+            mainLogo.style.background = themes[theme].bg;
+            mainLogo.style.transform = 'scale(1.1)';
+            
+            setTimeout(() => {
+                mainLogo.style.transform = 'scale(1)';
+            }, 200);
+
+            showNotification(`تم تطبيق ${themes[theme].name} للشعار`);
+        }
+
+        function highlightValue(element) {
+            // Reset all values
+            document.querySelectorAll('.brand-values li').forEach(li => {
+                li.style.background = '#f8f9fa';
+                li.style.color = '#333';
+                li.style.transform = 'translateX(0)';
+            });
+
+            // Highlight selected value
+            element.style.background = '#667eea';
+            element.style.color = 'white';
+            element.style.transform = 'translateX(-10px)';
+
+            const values = {
+                '💡 الابتكار والإبداع': 'نؤمن بقوة الأفكار الجديدة والحلول المبتكرة',
+                '⚡ السرعة والكفاءة': 'نقدم حلول سريعة وفعالة لتسريع نمو الأعمال',
+                '🛡️ الأمان والموثوقية': 'نضمن أعلى معايير الأمان والجودة',
+                '🤝 الشراكة طويلة المدى': 'نبني علاقات مستدامة مع عملائنا'
+            };
+
+            showNotification(values[element.textContent] || 'قيمة مؤسسية مهمة');
+        }
+
+        function copyColor(hex) {
+            navigator.clipboard.writeText(hex).then(() => {
+                showNotification(`تم نسخ اللون ${hex} إلى الحافظة! 🎨`);
+            }).catch(() => {
+                showNotification(`اللون: ${hex}`);
+            });
+        }
+
+        function showApplication(app) {
+            const applications = {
+                'businesscard': 'عرض تصميم بطاقات العمل الاحترافية 💼',
+                'letterhead': 'عرض قوالب رؤوس الخطابات الرسمية 📄',
+                'website': 'معاينة تطبيق الهوية على الموقع 🌐',
+                'social': 'عرض قوالب وسائل التواصل الاجتماعي 📱',
+                'presentation': 'معاينة قوالب العروض التقديمية 📊',
+                'merchandise': 'عرض المنتجات الترويجية والهدايا 🎁'
+            };
+
+            showNotification(applications[app] || 'عرض التطبيق...');
+
+            // Simulate opening application preview
+            setTimeout(() => {
+                showNotification('تم تحميل معاينة التطبيق بنجاح! ✨');
+            }, 1500);
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                font-size: 14px;
+                z-index: 2000;
+                animation: slideDown 0.3s ease-out;
+                box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+            `;
+            notification.textContent = message;
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideDown {
+                    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideDown 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('مرحباً بك في عرض هوية TechFlow! 🚀');
+            
+            // Add interactive elements
+            const colorCards = document.querySelectorAll('.color-card');
+            colorCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.querySelector('.color-swatch').style.transform = 'scale(1.1) rotate(10deg)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.querySelector('.color-swatch').style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+        });
+
+        // Handle clicks outside modal
+        window.addEventListener('message', function(event) {
+            if (event.data === 'closeModal') {
+                window.close();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج نظام إدارة الموارد البشرية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .hr-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .main-layout {
+            flex: 1;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #f8f9fa;
+            border-left: 1px solid #e9ecef;
+            padding: 2rem 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            color: #495057;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-right: 3px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-right-color: #1976d2;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-left: 1rem;
+            width: 20px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: #2c3e50;
+        }
+
+        .add-btn {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-active { background: #d4edda; color: #155724; }
+        .status-inactive { background: #f8d7da; color: #721c24; }
+        .status-pending { background: #fff3cd; color: #856404; }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            margin: 0 0.2rem;
+            padding: 0.3rem;
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #e3f2fd;
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .filter-select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .employee-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .employee-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .employee-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            margin-left: 1rem;
+        }
+
+        .employee-info {
+            flex: 1;
+        }
+
+        .employee-name {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .employee-title {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                order: 2;
+            }
+            
+            .content {
+                order: 1;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hr-container">
+        <div class="header">
+            <div class="logo">
+                <span>👥</span>
+                <span>نظام إدارة الموارد البشرية</span>
+            </div>
+            <div class="user-menu">
+                <span>أحمد محمد - مدير الموارد البشرية</span>
+                <div class="user-avatar">أم</div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="sidebar">
+                <div class="nav-item active" onclick="showSection('dashboard')">
+                    <i>📊</i>
+                    <span>لوحة التحكم</span>
+                </div>
+                <div class="nav-item" onclick="showSection('employees')">
+                    <i>👤</i>
+                    <span>الموظفين</span>
+                </div>
+                <div class="nav-item" onclick="showSection('attendance')">
+                    <i>⏰</i>
+                    <span>الحضور والانصراف</span>
+                </div>
+                <div class="nav-item" onclick="showSection('payroll')">
+                    <i>💰</i>
+                    <span>الرواتب</span>
+                </div>
+                <div class="nav-item" onclick="showSection('leave')">
+                    <i>🏖️</i>
+                    <span>الإجازات</span>
+                </div>
+                <div class="nav-item" onclick="showSection('performance')">
+                    <i>⭐</i>
+                    <span>تقييم الأداء</span>
+                </div>
+                <div class="nav-item" onclick="showSection('training')">
+                    <i>📚</i>
+                    <span>التدريب</span>
+                </div>
+                <div class="nav-item" onclick="showSection('reports')">
+                    <i>📈</i>
+                    <span>التقارير</span>
+                </div>
+            </div>
+
+            <div class="content">
+                <!-- لوحة التحكم -->
+                <div id="dashboard" class="section">
+                    <div class="dashboard-header">
+                        <h1 class="page-title">لوحة التحكم</h1>
+                        <button class="add-btn" onclick="showModal('addEmployee')">
+                            + إضافة موظف جديد
+                        </button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card" onclick="showSection('employees')">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">إجمالي الموظفين</div>
+                        </div>
+                        <div class="stat-card" onclick="showSection('attendance')">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-number">142</div>
+                            <div class="stat-label">الحاضرين اليوم</div>
+                        </div>
+                        <div class="stat-card" onclick="showSection('leave')">
+                            <div class="stat-icon">🏖️</div>
+                            <div class="stat-number">14</div>
+                            <div class="stat-label">في إجازة</div>
+                        </div>
+                        <div class="stat-card" onclick="showSection('payroll')">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-number">850,000</div>
+                            <div class="stat-label">إجمالي الرواتب (ريال)</div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="section-title">نشاطات اليوم</h2>
+                        <div class="employee-card">
+                            <div class="employee-avatar">سأ</div>
+                            <div class="employee-info">
+                                <div class="employee-name">سارة أحمد - طلب إجازة</div>
+                                <div class="employee-title">مطورة برمجيات - 3 أيام إجازة مرضية</div>
+                            </div>
+                            <span class="status-badge status-pending">معلق</span>
+                        </div>
+                        
+                        <div class="employee-card">
+                            <div class="employee-avatar">مع</div>
+                            <div class="employee-info">
+                                <div class="employee-name">محمد علي - تقييم أداء</div>
+                                <div class="employee-title">مصمم جرافيك - تقييم ربع سنوي</div>
+                            </div>
+                            <span class="status-badge status-active">مكتمل</span>
+                        </div>
+                        
+                        <div class="employee-card">
+                            <div class="employee-avatar">فم</div>
+                            <div class="employee-info">
+                                <div class="employee-name">فاطمة محمود - دورة تدريبية</div>
+                                <div class="employee-title">محاسبة - دورة إدارة المشاريع</div>
+                            </div>
+                            <span class="status-badge status-active">جاري</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم الموظفين -->
+                <div id="employees" class="section" style="display: none;">
+                    <div class="dashboard-header">
+                        <h1 class="page-title">إدارة الموظفين</h1>
+                        <button class="add-btn" onclick="showModal('addEmployee')">
+                            + موظف جديد
+                        </button>
+                    </div>
+
+                    <div class="content-section">
+                        <div class="search-filter">
+                            <input type="text" class="search-input" placeholder="البحث عن موظف...">
+                            <select class="filter-select">
+                                <option>جميع الأقسام</option>
+                                <option>تقنية المعلومات</option>
+                                <option>الموارد البشرية</option>
+                                <option>المحاسبة</option>
+                                <option>التسويق</option>
+                            </select>
+                            <select class="filter-select">
+                                <option>جميع الحالات</option>
+                                <option>نشط</option>
+                                <option>غير نشط</option>
+                                <option>في إجازة</option>
+                            </select>
+                        </div>
+
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>الموظف</th>
+                                        <th>المنصب</th>
+                                        <th>القسم</th>
+                                        <th>تاريخ التوظيف</th>
+                                        <th>الراتب</th>
+                                        <th>الحالة</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div style="display: flex; align-items: center;">
+                                                <div class="employee-avatar" style="width: 40px; height: 40px; margin-left: 0.5rem;">أم</div>
+                                                أحمد محمد علي
+                                            </div>
+                                        </td>
+                                        <td>مطور برمجيات أول</td>
+                                        <td>تقنية المعلومات</td>
+                                        <td>2020-03-15</td>
+                                        <td>12,000 ريال</td>
+                                        <td><span class="status-badge status-active">نشط</span></td>
+                                        <td>
+                                            <button class="action-btn" onclick="editEmployee(1)">✏️</button>
+                                            <button class="action-btn" onclick="viewEmployee(1)">👁️</button>
+                                            <button class="action-btn" onclick="deleteEmployee(1)">🗑️</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div style="display: flex; align-items: center;">
+                                                <div class="employee-avatar" style="width: 40px; height: 40px; margin-left: 0.5rem;">سأ</div>
+                                                سارة أحمد حسن
+                                            </div>
+                                        </td>
+                                        <td>مصممة جرافيك</td>
+                                        <td>التسويق</td>
+                                        <td>2021-07-20</td>
+                                        <td>8,000 ريال</td>
+                                        <td><span class="status-badge status-pending">في إجازة</span></td>
+                                        <td>
+                                            <button class="action-btn" onclick="editEmployee(2)">✏️</button>
+                                            <button class="action-btn" onclick="viewEmployee(2)">👁️</button>
+                                            <button class="action-btn" onclick="deleteEmployee(2)">🗑️</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div style="display: flex; align-items: center;">
+                                                <div class="employee-avatar" style="width: 40px; height: 40px; margin-left: 0.5rem;">مع</div>
+                                                محمد علي الأحمد
+                                            </div>
+                                        </td>
+                                        <td>محاسب أول</td>
+                                        <td>المحاسبة</td>
+                                        <td>2019-11-10</td>
+                                        <td>10,000 ريال</td>
+                                        <td><span class="status-badge status-active">نشط</span></td>
+                                        <td>
+                                            <button class="action-btn" onclick="editEmployee(3)">✏️</button>
+                                            <button class="action-btn" onclick="viewEmployee(3)">👁️</button>
+                                            <button class="action-btn" onclick="deleteEmployee(3)">🗑️</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أقسام أخرى مخفية -->
+                <div id="attendance" class="section" style="display: none;">
+                    <h1 class="page-title">نظام الحضور والانصراف</h1>
+                    <div class="content-section">
+                        <h2 class="section-title">تتبع الحضور اليومي</h2>
+                        <p>هنا يمكن عرض بيانات الحضور والانصراف للموظفين...</p>
+                    </div>
+                </div>
+
+                <div id="payroll" class="section" style="display: none;">
+                    <h1 class="page-title">إدارة الرواتب</h1>
+                    <div class="content-section">
+                        <h2 class="section-title">معالجة الرواتب الشهرية</h2>
+                        <p>هنا يمكن إدارة رواتب الموظفين وإصدار كشوف الرواتب...</p>
+                    </div>
+                </div>
+
+                <div id="leave" class="section" style="display: none;">
+                    <h1 class="page-title">إدارة الإجازات</h1>
+                    <div class="content-section">
+                        <h2 class="section-title">طلبات الإجازات</h2>
+                        <p>هنا يمكن إدارة طلبات الإجازات والموافقات...</p>
+                    </div>
+                </div>
+
+                <div id="performance" class="section" style="display: none;">
+                    <h1 class="page-title">تقييم الأداء</h1>
+                    <div class="content-section">
+                        <h2 class="section-title">نظام تقييم الأداء الدوري</h2>
+                        <p>هنا يمكن إجراء تقييمات الأداء وتتبع التطور...</p>
+                    </div>
+                </div>
+
+                <div id="training" class="section" style="display: none;">
+                    <h1 class="page-title">برامج التدريب</h1>
+                    <div class="content-section">
+                        <h2 class="section-title">إدارة البرامج التدريبية</h2>
+                        <p>هنا يمكن إدارة البرامج التدريبية وتسجيل الموظفين...</p>
+                    </div>
+                </div>
+
+                <div id="reports" class="section" style="display: none;">
+                    <h1 class="page-title">التقارير والإحصائيات</h1>
+                    <div class="content-section">
+                        <h2 class="section-title">تقارير شاملة</h2>
+                        <p>هنا يمكن إنشاء وعرض التقارير المختلفة...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة موظف -->
+    <div id="addEmployeeModal" class="modal">
+        <div class="modal-content">
+            <h2>إضافة موظف جديد</h2>
+            
+            <div class="form-group">
+                <label class="form-label">الاسم الكامل</label>
+                <input type="text" class="form-input" placeholder="أدخل الاسم الكامل">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">البريد الإلكتروني</label>
+                <input type="email" class="form-input" placeholder="example@company.com">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">رقم الهاتف</label>
+                <input type="tel" class="form-input" placeholder="+966 5xxxxxxxx">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">المنصب</label>
+                <input type="text" class="form-input" placeholder="المنصب الوظيفي">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">القسم</label>
+                <select class="form-input">
+                    <option>اختر القسم</option>
+                    <option>تقنية المعلومات</option>
+                    <option>الموارد البشرية</option>
+                    <option>المحاسبة</option>
+                    <option>التسويق</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">الراتب الأساسي</label>
+                <input type="number" class="form-input" placeholder="0">
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="closeModal()">إلغاء</button>
+                <button class="btn btn-primary" onclick="saveEmployee()">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // إخفاء جميع الأقسام
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // إزالة التحديد من جميع عناصر التنقل
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // عرض القسم المحدد
+            document.getElementById(sectionId).style.display = 'block';
+            
+            // تحديد عنصر التنقل النشط
+            event.target.closest('.nav-item').classList.add('active');
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId + 'Modal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('show');
+            });
+        }
+
+        function saveEmployee() {
+            alert('تم حفظ بيانات الموظف بنجاح!');
+            closeModal();
+        }
+
+        function editEmployee(id) {
+            alert(`تحرير بيانات الموظف رقم ${id}`);
+        }
+
+        function viewEmployee(id) {
+            alert(`عرض تفاصيل الموظف رقم ${id}`);
+        }
+
+        function deleteEmployee(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الموظف؟')) {
+                alert(`تم حذف الموظف رقم ${id}`);
+            }
+        }
+
+        // إغلاق النافذة المنبثقة عند النقر خارجها
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal();
+            }
+        });
+
+        // تأثيرات تحميل الصفحة
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.stat-card, .employee-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

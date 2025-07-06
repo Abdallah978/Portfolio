@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج نظام المعلومات الجغرافية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .gis-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #16213e, #0f3460);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: rgba(22, 33, 62, 0.95);
+            padding: 1rem;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+            border-bottom: 1px solid rgba(0,212,255,0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .layer-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .layer-item:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .layer-checkbox {
+            margin-left: 0.5rem;
+        }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            overflow: hidden;
+        }
+
+        .map-canvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0,212,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0,153,204,0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        .map-markers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            cursor: pointer;
+            animation: markerPulse 2s infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        .marker::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #ff6b6b;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: markerRipple 2s infinite;
+        }
+
+        .marker.hospital { background: #4ecdc4; }
+        .marker.hospital::after { border-color: #4ecdc4; }
+
+        .marker.school { background: #feca57; }
+        .marker.school::after { border-color: #feca57; }
+
+        .marker.park { background: #48dbfb; }
+        .marker.park::after { border-color: #48dbfb; }
+
+        .tools-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(22, 33, 62, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .tool-btn {
+            display: block;
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 0.7rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        .tool-btn.active {
+            background: #00d4ff;
+            color: #1a1a2e;
+        }
+
+        .coordinates-display {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .info-popup {
+            position: absolute;
+            background: rgba(22, 33, 62, 0.95);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            max-width: 250px;
+            transform: scale(0);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .info-popup.show {
+            transform: scale(1);
+        }
+
+        .search-box {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(22, 33, 62, 0.9);
+            padding: 0.5rem;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            outline: none;
+            width: 300px;
+        }
+
+        .search-btn {
+            background: #00d4ff;
+            border: none;
+            color: #1a1a2e;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(22, 33, 62, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes markerPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        @keyframes markerRipple {
+            0% { opacity: 0.6; transform: scale(0.5); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+                position: absolute;
+                z-index: 100;
+                height: 100%;
+            }
+            
+            .tools-panel {
+                right: 10px;
+                top: 10px;
+                padding: 0.5rem;
+            }
+            
+            .search-box {
+                width: 90%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .search-input {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gis-container">
+        <div class="header">
+            <div class="logo">🗺️ نظام المعلومات الجغرافية</div>
+            <div class="nav-controls">
+                <button class="nav-btn" onclick="toggleSidebar()">📋 الطبقات</button>
+                <button class="nav-btn" onclick="exportMap()">📤 تصدير</button>
+                <button class="nav-btn" onclick="shareMap()">🔗 مشاركة</button>
+                <button class="nav-btn" onclick="showHelp()">❓ مساعدة</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">طبقات الخريطة</div>
+                    
+                    <div class="layer-item" onclick="toggleLayer('roads')">
+                        <input type="checkbox" class="layer-checkbox" checked>
+                        <span>🛣️ الطرق والشوارع</span>
+                    </div>
+                    
+                    <div class="layer-item" onclick="toggleLayer('buildings')">
+                        <input type="checkbox" class="layer-checkbox" checked>
+                        <span>🏢 المباني</span>
+                    </div>
+                    
+                    <div class="layer-item" onclick="toggleLayer('hospitals')">
+                        <input type="checkbox" class="layer-checkbox" checked>
+                        <span>🏥 المستشفيات</span>
+                    </div>
+                    
+                    <div class="layer-item" onclick="toggleLayer('schools')">
+                        <input type="checkbox" class="layer-checkbox" checked>
+                        <span>🏫 المدارس</span>
+                    </div>
+                    
+                    <div class="layer-item" onclick="toggleLayer('parks')">
+                        <input type="checkbox" class="layer-checkbox" checked>
+                        <span>🌳 الحدائق</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">التحليلات المكانية</div>
+                    
+                    <div class="layer-item" onclick="performAnalysis('density')">
+                        <span>📊 تحليل الكثافة</span>
+                    </div>
+                    
+                    <div class="layer-item" onclick="performAnalysis('distance')">
+                        <span>📏 قياس المسافات</span>
+                    </div>
+                    
+                    <div class="layer-item" onclick="performAnalysis('buffer')">
+                        <span>🎯 تحليل النطاق</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">خيارات العرض</div>
+                    
+                    <div class="layer-item" onclick="changeMapStyle('satellite')">
+                        <span>🛰️ صورة جوية</span>
+                    </div>
+                    
+                    <div class="layer-item" onclick="changeMapStyle('terrain')">
+                        <span>⛰️ التضاريس</span>
+                    </div>
+                    
+                    <div class="layer-item" onclick="changeMapStyle('dark')">
+                        <span>🌙 الوضع الليلي</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="البحث عن موقع أو عنوان..." id="searchInput">
+                    <button class="search-btn" onclick="searchLocation()">🔍</button>
+                </div>
+
+                <div class="tools-panel">
+                    <button class="tool-btn active" onclick="selectTool('pan')" id="panTool">
+                        🤚 تحريك الخريطة
+                    </button>
+                    <button class="tool-btn" onclick="selectTool('measure')" id="measureTool">
+                        📏 قياس المسافة
+                    </button>
+                    <button class="tool-btn" onclick="selectTool('draw')" id="drawTool">
+                        ✏️ رسم الأشكال
+                    </button>
+                    <button class="tool-btn" onclick="selectTool('marker')" id="markerTool">
+                        📍 إضافة علامة
+                    </button>
+                    <button class="tool-btn" onclick="selectTool('select')" id="selectTool">
+                        👆 تحديد العناصر
+                    </button>
+                </div>
+
+                <div class="map-canvas" id="mapCanvas" onmousemove="updateCoordinates(event)">
+                    <div class="map-markers">
+                        <!-- مستشفيات -->
+                        <div class="marker hospital" style="top: 30%; left: 25%;" onclick="showInfo('مستشفى الملك فهد', 'مستشفى عام - 500 سرير', event)"></div>
+                        <div class="marker hospital" style="top: 60%; left: 70%;" onclick="showInfo('مستشفى الجامعة', 'مستشفى تخصصي - 300 سرير', event)"></div>
+                        
+                        <!-- مدارس -->
+                        <div class="marker school" style="top: 45%; left: 40%;" onclick="showInfo('مدرسة النور الابتدائية', 'مدرسة ابتدائية - 600 طالب', event)"></div>
+                        <div class="marker school" style="top: 25%; left: 60%;" onclick="showInfo('ثانوية الفيصل', 'مدرسة ثانوية - 800 طالب', event)"></div>
+                        <div class="marker school" style="top: 70%; left: 35%;" onclick="showInfo('مدرسة الأمل', 'مدرسة متوسطة - 450 طالب', event)"></div>
+                        
+                        <!-- حدائق -->
+                        <div class="marker park" style="top: 40%; left: 80%;" onclick="showInfo('حديقة الملك فهد', 'حديقة عامة - 50 فدان', event)"></div>
+                        <div class="marker park" style="top: 55%; left: 20%;" onclick="showInfo('منتزه الواحة', 'منتزه عائلي - 25 فدان', event)"></div>
+                    </div>
+                </div>
+
+                <div class="coordinates-display" id="coordinates">
+                    الإحداثيات: 24.7136° شمال، 46.6753° شرق
+                </div>
+
+                <div class="legend">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">وسيلة الإيضاح</div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4ecdc4;"></div>
+                        <span>المستشفيات</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #feca57;"></div>
+                        <span>المدارس</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #48dbfb;"></div>
+                        <span>الحدائق</span>
+                    </div>
+                </div>
+
+                <div class="info-popup" id="infoPopup">
+                    <div id="popupContent"></div>
+                    <button onclick="closePopup()" style="background: #ff6b6b; border: none; color: white; padding: 0.3rem 0.8rem; border-radius: 3px; float: left; margin-top: 0.5rem; cursor: pointer;">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTool = 'pan';
+        let sidebarCollapsed = false;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebarCollapsed = !sidebarCollapsed;
+            
+            if (sidebarCollapsed) {
+                sidebar.classList.add('collapsed');
+            } else {
+                sidebar.classList.remove('collapsed');
+            }
+        }
+
+        function selectTool(tool) {
+            // إزالة التحديد من جميع الأدوات
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // تحديد الأداة المختارة
+            document.getElementById(tool + 'Tool').classList.add('active');
+            currentTool = tool;
+            
+            // تغيير شكل المؤشر
+            const mapCanvas = document.getElementById('mapCanvas');
+            switch(tool) {
+                case 'pan':
+                    mapCanvas.style.cursor = 'grab';
+                    break;
+                case 'measure':
+                    mapCanvas.style.cursor = 'crosshair';
+                    break;
+                case 'draw':
+                    mapCanvas.style.cursor = 'crosshair';
+                    break;
+                case 'marker':
+                    mapCanvas.style.cursor = 'crosshair';
+                    break;
+                case 'select':
+                    mapCanvas.style.cursor = 'pointer';
+                    break;
+            }
+        }
+
+        function toggleLayer(layer) {
+            const markers = document.querySelectorAll('.marker.' + layer);
+            markers.forEach(marker => {
+                if (marker.style.display === 'none') {
+                    marker.style.display = 'block';
+                } else {
+                    marker.style.display = 'none';
+                }
+            });
+        }
+
+        function updateCoordinates(event) {
+            const rect = event.target.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width * 100).toFixed(4);
+            const y = ((event.clientY - rect.top) / rect.height * 100).toFixed(4);
+            
+            // تحويل إلى إحداثيات جغرافية تقريبية
+            const lat = (24.7136 + (50 - y) * 0.01).toFixed(4);
+            const lng = (46.6753 + (x - 50) * 0.01).toFixed(4);
+            
+            document.getElementById('coordinates').textContent = `الإحداثيات: ${lat}° شمال، ${lng}° شرق`;
+        }
+
+        function showInfo(title, description, event) {
+            const popup = document.getElementById('infoPopup');
+            const content = document.getElementById('popupContent');
+            
+            content.innerHTML = `
+                <h3 style="color: #00d4ff; margin-bottom: 0.5rem;">${title}</h3>
+                <p style="margin-bottom: 0.5rem;">${description}</p>
+                <small style="color: #aaa;">اضغط للمزيد من التفاصيل</small>
+            `;
+            
+            popup.style.left = event.pageX + 'px';
+            popup.style.top = event.pageY + 'px';
+            popup.classList.add('show');
+            
+            event.stopPropagation();
+        }
+
+        function closePopup() {
+            document.getElementById('infoPopup').classList.remove('show');
+        }
+
+        function searchLocation() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim()) {
+                alert(`البحث عن: ${searchTerm}\nجاري البحث في قاعدة البيانات الجغرافية...`);
+                // هنا يمكن إضافة وظيفة البحث الحقيقية
+            }
+        }
+
+        function performAnalysis(type) {
+            const analyses = {
+                'density': 'تحليل كثافة السكان والخدمات',
+                'distance': 'قياس المسافات بين النقاط',
+                'buffer': 'تحليل النطاق حول المواقع المحددة'
+            };
+            
+            alert(`تشغيل: ${analyses[type]}\nجاري المعالجة...`);
+        }
+
+        function changeMapStyle(style) {
+            const mapCanvas = document.getElementById('mapCanvas');
+            const styles = {
+                'satellite': 'radial-gradient(circle at 30% 40%, rgba(139,69,19,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 20%, rgba(34,139,34,0.3) 0%, transparent 50%), linear-gradient(135deg, #8B4513 0%, #228B22 100%)',
+                'terrain': 'radial-gradient(circle at 20% 80%, rgba(139,69,19,0.4) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(160,82,45,0.4) 0%, transparent 50%), linear-gradient(135deg, #8B4513 0%, #A0522D 100%)',
+                'dark': 'radial-gradient(circle at 20% 30%, rgba(0,212,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(0,153,204,0.1) 0%, transparent 50%), linear-gradient(135deg, #2c3e50 0%, #34495e 100%)'
+            };
+            
+            mapCanvas.style.background = styles[style] || styles['dark'];
+        }
+
+        function exportMap() {
+            alert('تصدير الخريطة\nتنسيقات متاحة: PDF, PNG, SVG, KML');
+        }
+
+        function shareMap() {
+            alert('مشاركة الخريطة\nتم إنشاء رابط المشاركة: https://gis.example.com/map/123456');
+        }
+
+        function showHelp() {
+            alert(`مساعدة نظام المعلومات الجغرافية:
+
+            🤚 تحريك الخريطة: اسحب لتحريك الخريطة
+            📏 قياس المسافة: انقر على نقطتين لقياس المسافة
+            ✏️ رسم الأشكال: ارسم خطوط ومضلعات
+            📍 إضافة علامة: انقر لإضافة علامة جديدة
+            👆 تحديد العناصر: انقر لتحديد وتحرير العناصر
+            
+            استخدم الشريط الجانبي للتحكم في الطبقات والتحليلات`);
+        }
+
+        // إضافة تأثيرات تفاعلية
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.info-popup')) {
+                closePopup();
+            }
+        });
+
+        // تحريك الخريطة بالماوس
+        let isDragging = false;
+        let startX, startY;
+
+        document.getElementById('mapCanvas').addEventListener('mousedown', function(e) {
+            if (currentTool === 'pan') {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                e.target.style.cursor = 'grabbing';
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging && currentTool === 'pan') {
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                // هنا يمكن إضافة منطق تحريك الخريطة الحقيقي
+                // حالياً نعرض فقط التأثير البصري
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (isDragging) {
+                isDragging = false;
+                document.getElementById('mapCanvas').style.cursor = 'grab';
+            }
+        });
+
+        // تأثيرات الزوم بالعجلة
+        document.getElementById('mapCanvas').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const scale = e.deltaY > 0 ? 0.9 : 1.1;
+            
+            // تأثير الزوم البصري
+            const markers = document.querySelectorAll('.marker');
+            markers.forEach(marker => {
+                const currentScale = marker.style.transform.includes('scale') 
+                    ? parseFloat(marker.style.transform.match(/scale\(([^)]+)\)/)[1]) 
+                    : 1;
+                const newScale = Math.max(0.5, Math.min(2, currentScale * scale));
+                marker.style.transform = marker.style.transform.replace(/scale\([^)]+\)/, '') + ` scale(${newScale})`;
+            });
+        });
+    </script>
+</body>
+</html>

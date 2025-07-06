@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title data-en="Portfolio Gallery - Abdullah Mohammed Hamad" data-ar="معرض الأعمال - عبد الله محمد حمد">معرض الأعمال - عبد الله محمد حمد</title>
+    <meta name="description" content="معرض شامل لأعمال ومشاريع عبد الله محمد حمد في مجالات تطوير الويب، التطبيقات، الذكاء الاصطناعي، والتصميم">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts - Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="portfolio-gallery.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>عبد الله محمد</h2>
+            </div>            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-en="Home" data-ar="الرئيسية">الرئيسية</a></li>
+                <li><a href="index.html#about" class="nav-link" data-en="About" data-ar="نبذة عني">نبذة عني</a></li>
+                <li><a href="index.html#skills" class="nav-link" data-en="Skills" data-ar="المهارات">المهارات</a></li>
+                <li><a href="#portfolio" class="nav-link active" data-en="Portfolio" data-ar="معرض الأعمال">معرض الأعمال</a></li>
+                <li><a href="index.html#certificates" class="nav-link" data-en="Certificates" data-ar="الشهادات">الشهادات</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-en="Contact" data-ar="تواصل معي">تواصل معي</a></li>
+                <li class="language-toggle">
+                    <button id="languageToggle" class="lang-btn" aria-label="Toggle Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-text" data-en="عربي" data-ar="English">English</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gallery-hero">
+        <div class="hero-container">            <div class="hero-content">
+                <div class="breadcrumb">
+                    <a href="index.html" data-en="Home" data-ar="الرئيسية">الرئيسية</a>
+                    <i class="fas fa-chevron-left"></i>
+                    <span data-en="Portfolio Gallery" data-ar="معرض الأعمال">معرض الأعمال</span>
+                </div>
+                <h1 class="hero-title" data-en="My Portfolio Gallery" data-ar="معرض أعمالي">معرض أعمالي</h1>
+                <p class="hero-description" data-en="Explore a comprehensive collection of my projects across various technical fields, from web development and applications to artificial intelligence and design" data-ar="استكشف مجموعة شاملة من مشاريعي في مختلف المجالات التقنية، من تطوير الويب والتطبيقات إلى الذكاء الاصطناعي والتصميم">
+                    استكشف مجموعة شاملة من مشاريعي في مختلف المجالات التقنية، من تطوير الويب والتطبيقات إلى الذكاء الاصطناعي والتصميم
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="50">0</div>
+                        <div class="stat-label" data-en="Completed Projects" data-ar="مشروع منجز">مشروع منجز</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="6">0</div>
+                        <div class="stat-label" data-en="Specializations" data-ar="مجال تخصص">مجال تخصص</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="25">0</div>
+                        <div class="stat-label" data-en="Satisfied Clients" data-ar="عميل راضٍ">عميل راضٍ</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="100">0</div>
+                        <div class="stat-label" data-en="Success Rate" data-ar="% نجاح">% نجاح</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Categories -->
+    <section class="project-categories">        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-en="Project Categories" data-ar="فئات المشاريع">فئات المشاريع</span>
+                <h2 class="section-title" data-en="Browse by Specialization" data-ar="تصفح حسب التخصص">تصفح حسب التخصص</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card" data-category="web">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</h3>
+                    <p data-en="Professional websites and interactive web applications" data-ar="مواقع ويب احترافية وتطبيقات ويب تفاعلية">مواقع ويب احترافية وتطبيقات ويب تفاعلية</p>
+                    <div class="category-count" data-en="15 Projects" data-ar="15 مشروع">15 مشروع</div>
+                </div>
+
+                <div class="category-card" data-category="mobile">
+                    <div class="category-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 data-en="Mobile Applications" data-ar="تطبيقات الجوال">تطبيقات الجوال</h3>
+                    <p data-en="Smart applications for Android & iOS" data-ar="تطبيقات ذكية للأندرويد و iOS">تطبيقات ذكية للأندرويد و iOS</p>
+                    <div class="category-count" data-en="8 Projects" data-ar="8 مشاريع">8 مشاريع</div>
+                </div>
+
+                <div class="category-card" data-category="ai">
+                    <div class="category-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 data-en="Artificial Intelligence" data-ar="الذكاء الاصطناعي">الذكاء الاصطناعي</h3>
+                    <p data-en="Smart solutions and advanced machine learning systems" data-ar="حلول ذكية وأنظمة تعلم آلي متقدمة">حلول ذكية وأنظمة تعلم آلي متقدمة</p>
+                    <div class="category-count" data-en="10 Projects" data-ar="10 مشاريع">10 مشاريع</div>
+                </div>
+
+                <div class="category-card" data-category="design">
+                    <div class="category-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 data-en="Design & Identity" data-ar="التصميم والهوية">التصميم والهوية</h3>
+                    <p data-en="Visual identity design and marketing materials" data-ar="تصميم هويات بصرية ومواد تسويقية">تصميم هويات بصرية ومواد تسويقية</p>
+                    <div class="category-count" data-en="12 Projects" data-ar="12 مشروع">12 مشروع</div>
+                </div>
+
+                <div class="category-card" data-category="dashboard">
+                    <div class="category-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 data-en="Dashboards" data-ar="لوحات التحكم">لوحات التحكم</h3>
+                    <p data-en="Management and data analysis systems" data-ar="أنظمة إدارة وتحليل البيانات">أنظمة إدارة وتحليل البيانات</p>
+                    <div class="category-count" data-en="9 Projects" data-ar="9 مشاريع">9 مشاريع</div>
+                </div>
+
+                <div class="category-card" data-category="system">
+                    <div class="category-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 data-en="Integrated Systems" data-ar="الأنظمة المتكاملة">الأنظمة المتكاملة</h3>
+                    <p data-en="Comprehensive technical solutions for enterprises" data-ar="حلول تقنية شاملة للمؤسسات">حلول تقنية شاملة للمؤسسات</p>
+                    <div class="category-count" data-en="7 Projects" data-ar="7 مشاريع">7 مشاريع</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="featured-projects">        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-en="Featured Projects" data-ar="مشاريع مميزة">مشاريع مميزة</span>
+                <h2 class="section-title" data-en="My Best Work" data-ar="أبرز أعمالي">أبرز أعمالي</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="featured-grid">
+                <!-- Project 1: E-commerce Platform -->
+                <div class="featured-project">
+                    <div class="project-image">
+                        <img src="project-images/ecommerce-platform.png" alt="منصة تجارة إلكترونية">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Comprehensive E-commerce Platform" data-ar="منصة تجارة إلكترونية شاملة">منصة تجارة إلكترونية شاملة</h3>
+                                <p data-en="Integrated platform for e-commerce with advanced management system and electronic payment support" data-ar="منصة متكاملة للتجارة الإلكترونية مع نظام إدارة متقدم ودعم للدفع الإلكتروني">منصة متكاملة للتجارة الإلكترونية مع نظام إدارة متقدم ودعم للدفع الإلكتروني</p>
+                                <div class="project-buttons">
+                                    <a href="project-demos/ecommerce-demo.html" class="btn-project primary" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="View Live" data-ar="معاينة حية">معاينة حية</span>
+                                    </a>
+                                    <button class="btn-project secondary" onclick="openProjectModal('ecommerce')">
+                                        <i class="fas fa-info-circle"></i> <span data-en="More Details" data-ar="تفاصيل أكثر">تفاصيل أكثر</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <div class="project-meta">
+                            <span class="project-category" data-en="Web Development" data-ar="تطوير ويب">تطوير ويب</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                        <h3 data-en="Advanced E-commerce Platform" data-ar="منصة التجارة الإلكترونية المتقدمة">منصة التجارة الإلكترونية المتقدمة</h3>
+                        <p data-en="Comprehensive e-commerce system including product management, order processing, and multiple payment systems" data-ar="نظام شامل للتجارة الإلكترونية يشمل إدارة المنتجات، معالجة الطلبات، وأنظمة الدفع المتعددة">نظام شامل للتجارة الإلكترونية يشمل إدارة المنتجات، معالجة الطلبات، وأنظمة الدفع المتعددة</p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">React.js</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Stripe API</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: AI System -->
+                <div class="featured-project">
+                    <div class="project-image">
+                        <img src="project-images/ai-prediction-system.png" alt="نظام التنبؤ الذكي">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Smart Prediction System" data-ar="نظام التنبؤ الذكي">نظام التنبؤ الذكي</h3>
+                                <p data-en="Smart system for predicting trends and data using advanced machine learning techniques" data-ar="نظام ذكي للتنبؤ بالاتجاهات والبيانات باستخدام تقنيات التعلم الآلي المتقدمة">نظام ذكي للتنبؤ بالاتجاهات والبيانات باستخدام تقنيات التعلم الآلي المتقدمة</p>                                <div class="project-buttons">
+                                    <a href="project-demos/ai-system-demo.html" class="btn-project primary" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="View Live" data-ar="معاينة حية">معاينة حية</span>
+                                    </a>
+                                    <button class="btn-project secondary" onclick="openProjectModal('ai-system')">
+                                        <i class="fas fa-info-circle"></i> <span data-en="More Details" data-ar="تفاصيل أكثر">تفاصيل أكثر</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    <div class="project-details">
+                        <div class="project-meta">
+                            <span class="project-category" data-en="Artificial Intelligence" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                        <h3 data-en="AI Prediction System" data-ar="نظام التنبؤ بالذكاء الاصطناعي">نظام التنبؤ بالذكاء الاصطناعي</h3>
+                        <p data-en="Smart solution for predicting data and future trends using machine learning algorithms" data-ar="حل ذكي للتنبؤ بالبيانات والاتجاهات المستقبلية باستخدام خوارزميات التعلم الآلي">حل ذكي للتنبؤ بالبيانات والاتجاهات المستقبلية باستخدام خوارزميات التعلم الآلي</p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Scikit-learn</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Mobile Health App -->
+                <div class="featured-project">
+                    <div class="project-image">
+                        <img src="project-images/health-app.png" alt="تطبيق صحي">
+                        <div class="project-overlay">                            <div class="overlay-content">
+                                <h3 data-en="Smart Health Tracking App" data-ar="تطبيق المتابعة الصحية">تطبيق المتابعة الصحية</h3>
+                                <p data-en="Comprehensive mobile app for general health monitoring and daily habits with smart analytics" data-ar="تطبيق جوال شامل لمتابعة الصحة العامة والعادات اليومية مع تحليلات ذكية">تطبيق جوال شامل لمتابعة الصحة العامة والعادات اليومية مع تحليلات ذكية</p>
+                                <div class="project-buttons">
+                                    <a href="project-demos/health-app-demo.html" class="btn-project primary" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="View Live" data-ar="معاينة حية">معاينة حية</span>
+                                    </a>
+                                    <button class="btn-project secondary" onclick="openProjectModal('health-app')">
+                                        <i class="fas fa-info-circle"></i> <span data-en="More Details" data-ar="تفاصيل أكثر">تفاصيل أكثر</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    <div class="project-details">
+                        <div class="project-meta">
+                            <span class="project-category" data-en="Mobile App" data-ar="تطبيق جوال">تطبيق جوال</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                        <h3 data-en="Smart Health Tracking App" data-ar="تطبيق المتابعة الصحية الذكي">تطبيق المتابعة الصحية الذكي</h3>
+                        <p data-en="Advanced app for health monitoring with detailed statistics and smart reminders" data-ar="تطبيق متطور لمتابعة الحالة الصحية مع إحصائيات مفصلة وتذكيرات ذكية">تطبيق متطور لمتابعة الحالة الصحية مع إحصائيات مفصلة وتذكيرات ذكية</p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Chart.js</span>
+                            <span class="tech-tag">Push Notifications</span>
+                            <span class="tech-tag">SQLite</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    <!-- All Projects Gallery -->
+    <section id="portfolio" class="all-projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-en="All Projects" data-ar="جميع المشاريع">جميع المشاريع</span>
+                <h2 class="section-title" data-en="My Complete Work" data-ar="أعمالي الكاملة">أعمالي الكاملة</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all" data-en="All" data-ar="الكل">الكل</button>
+                <button class="filter-btn" data-filter="web" data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</button>
+                <button class="filter-btn" data-filter="mobile" data-en="Mobile Apps" data-ar="تطبيقات جوال">تطبيقات جوال</button>
+                <button class="filter-btn" data-filter="ai" data-en="AI" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</button>
+                <button class="filter-btn" data-filter="design" data-en="Design" data-ar="تصميم">تصميم</button>
+                <button class="filter-btn" data-filter="dashboard" data-en="Dashboards" data-ar="لوحات تحكم">لوحات تحكم</button>
+                <button class="filter-btn" data-filter="system" data-en="Systems" data-ar="أنظمة متكاملة">أنظمة متكاملة</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-grid">
+                <!-- Web Development Projects -->                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="project-images/corporate-website.png" alt="موقع شركة">
+                        <div class="project-overlay">
+                            <a href="project-demos/company-website-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('corporate-website')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h4 data-en="Professional Corporate Website" data-ar="موقع شركة احترافي">موقع شركة احترافي</h4>
+                        <p data-en="Advanced corporate website" data-ar="موقع إلكتروني متطور للشركات">موقع إلكتروني متطور للشركات</p>
+                        <div class="project-tech">
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="project-images/cms-system.png" alt="نظام إدارة المحتوى">
+                        <div class="project-overlay">
+                            <a href="project-demos/cms-system-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('cms-system')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h4 data-en="Content Management System" data-ar="نظام إدارة المحتوى">نظام إدارة المحتوى</h4>
+                        <p data-en="Advanced CMS for website management" data-ar="CMS متطور لإدارة المواقع">CMS متطور لإدارة المواقع</p>
+                        <div class="project-tech">
+                            <span>PHP</span>
+                            <span>MySQL</span>
+                            <span>Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="project-images/elearning-platform.png" alt="منصة تعليمية">
+                        <div class="project-overlay">
+                            <a href="project-demos/elearning-platform-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('elearning-platform')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h4 data-en="E-Learning Platform" data-ar="منصة التعليم الإلكتروني">منصة التعليم الإلكتروني</h4>
+                        <p data-en="Comprehensive interactive educational system" data-ar="نظام تعليمي تفاعلي شامل">نظام تعليمي تفاعلي شامل</p>
+                        <div class="project-tech">
+                            <span>Vue.js</span>
+                            <span>Laravel</span>
+                            <span>MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile App Projects -->
+                <div class="project-card" data-category="mobile">
+                    <div class="project-image">
+                        <img src="project-images/ecommerce-mobile.png" alt="تطبيق تجارة إلكترونية">
+                        <div class="project-overlay">
+                            <a href="project-demos/mobile-app-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('ecommerce-mobile')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>                    <div class="project-info">
+                        <h4 data-en="E-commerce Mobile App" data-ar="تطبيق التجارة الإلكترونية">تطبيق التجارة الإلكترونية</h4>
+                        <p data-en="Mobile app for online shopping" data-ar="تطبيق جوال للتسوق الإلكتروني">تطبيق جوال للتسوق الإلكتروني</p>
+                        <div class="project-tech">
+                            <span>React Native</span>
+                            <span>Firebase</span>
+                            <span>Stripe</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="mobile">
+                    <div class="project-image">
+                        <img src="project-images/restaurant-app.png" alt="تطبيق مطعم">
+                        <div class="project-overlay">
+                            <a href="project-demos/restaurant-app-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('restaurant-app')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>                    <div class="project-info">
+                        <h4 data-en="Restaurant Management App" data-ar="تطبيق إدارة المطاعم">تطبيق إدارة المطاعم</h4>
+                        <p data-en="Comprehensive restaurant management system" data-ar="نظام شامل لإدارة المطاعم">نظام شامل لإدارة المطاعم</p>
+                        <div class="project-tech">
+                            <span>Flutter</span>
+                            <span>Node.js</span>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Projects -->
+                <div class="project-card" data-category="ai">
+                    <div class="project-image">
+                        <img src="project-images/chatbot-ai.png" alt="شات بوت ذكي">
+                        <div class="project-overlay">
+                            <a href="project-demos/chatbot-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('chatbot-ai')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>                    <div class="project-info">
+                        <h4 data-en="Interactive Smart Assistant" data-ar="مساعد ذكي تفاعلي">مساعد ذكي تفاعلي</h4>
+                        <p data-en="Smart chatbot for customer service" data-ar="شات بوت ذكي لخدمة العملاء">شات بوت ذكي لخدمة العملاء</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>NLP</span>
+                            <span>OpenAI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Projects -->
+                <div class="project-card" data-category="design">
+                    <div class="project-image">
+                        <img src="project-images/brand-identity.png" alt="هوية بصرية">
+                        <div class="project-overlay">
+                            <a href="project-demos/brand-identity-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('brand-identity')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>                    <div class="project-info">
+                        <h4 data-en="Complete Brand Identity" data-ar="هوية بصرية متكاملة">هوية بصرية متكاملة</h4>
+                        <p data-en="Comprehensive identity design for companies" data-ar="تصميم هوية شاملة للشركات">تصميم هوية شاملة للشركات</p>
+                        <div class="project-tech">
+                            <span>Adobe Express</span>
+                            <span>Canva</span>
+                            <span>Branding</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Projects -->                <div class="project-card" data-category="dashboard">
+                    <div class="project-image">
+                        <img src="project-images/لوحة التحكم الويب التفاعلية/web-dashboard-main-dashboard.png" alt="لوحة تحكم تفاعلية">
+                        <div class="project-overlay">
+                            <a href="project-demos/web-dashboard-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('web-dashboard')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>                    <div class="project-info">
+                        <h4 data-en="Interactive Dashboard" data-ar="لوحة تحكم تفاعلية">لوحة تحكم تفاعلية</h4>
+                        <p data-en="Data management and analysis system with modern interface" data-ar="نظام إدارة وتحليل البيانات مع واجهة عصرية">نظام إدارة وتحليل البيانات مع واجهة عصرية</p>
+                        <div class="project-tech">
+                            <span>React</span>
+                            <span>D3.js</span>
+                            <span>API Integration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Projects -->
+                <div class="project-card" data-category="system">
+                    <div class="project-image">
+                        <img src="project-images/hr-system.png" alt="نظام الموارد البشرية">
+                        <div class="project-overlay">
+                            <a href="project-demos/hr-system-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('hr-system')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>                    <div class="project-info">
+                        <h4 data-en="HR Management System" data-ar="نظام الموارد البشرية">نظام الموارد البشرية</h4>
+                        <p data-en="Comprehensive human resource management solution" data-ar="حل شامل لإدارة الموارد البشرية">حل شامل لإدارة الموارد البشرية</p>
+                        <div class="project-tech">
+                            <span>Laravel</span>
+                            <span>Vue.js</span>
+                            <span>MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="system">
+                    <div class="project-image">
+                        <img src="project-images/hospital-system.png" alt="نظام إدارة مستشفى">
+                        <div class="project-overlay">
+                            <a href="project-demos/hospital-system-demo.html" class="btn-view" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn-details" onclick="openProjectModal('hospital-system')">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>                    <div class="project-info">
+                        <h4 data-en="Hospital Management System" data-ar="نظام إدارة المستشفيات">نظام إدارة المستشفيات</h4>
+                        <p data-en="Integrated medical management solution" data-ar="حل متكامل للإدارة الطبية">حل متكامل للإدارة الطبية</p>
+                        <div class="project-tech">
+                            <span>Java</span>
+                            <span>Spring Boot</span>
+                            <span>PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More projects can be added here -->
+            </div>
+        </div>
+    </section>    <!-- Call to Action -->
+    <section class="gallery-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-en="Ready to Start Your Next Project?" data-ar="مستعد لبدء مشروعك القادم؟">مستعد لبدء مشروعك القادم؟</h2>
+                <p data-en="Let me help you turn your idea into a digital reality that achieves your goals and serves your customers" data-ar="دعني أساعدك في تحويل فكرتك إلى واقع رقمي يحقق أهدافك ويخدم عملائك">دعني أساعدك في تحويل فكرتك إلى واقع رقمي يحقق أهدافك ويخدم عملائك</p>
+                <div class="cta-buttons">
+                    <a href="index.html#contact" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        <span data-en="Start Your Project Now" data-ar="ابدأ مشروعك الآن">ابدأ مشروعك الآن</span>
+                    </a>
+                    <a href="mailto:abdullahmohammedhamad24@gmail.com" class="btn btn-secondary">
+                        <i class="fas fa-phone"></i>
+                        <span data-en="Direct Contact" data-ar="تواصل مباشر">تواصل مباشر</span>
+                    </a>
+                </div>
+                <div class="cta-features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span data-en="Free Consultation" data-ar="استشارة مجانية">استشارة مجانية</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-clock"></i>
+                        <span data-en="On-Time Delivery" data-ar="تسليم في المواعيد">تسليم في المواعيد</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span data-en="Quality Guarantee" data-ar="ضمان الجودة">ضمان الجودة</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-headset"></i>
+                        <span data-en="Continuous Support" data-ar="دعم مستمر">دعم مستمر</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle" data-en="Project Details" data-ar="تفاصيل المشروع">تفاصيل المشروع</h3>
+                <button class="modal-close" onclick="closeProjectModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="">
+                </div>
+                <div class="modal-details">
+                    <div class="modal-meta">
+                        <span id="modalCategory" class="category-tag"></span>
+                        <span id="modalYear" class="year-tag"></span>
+                    </div>
+                    <h4 id="modalProjectTitle"></h4>
+                    <p id="modalDescription"></p>
+                      <div class="modal-section">
+                        <h5 data-en="Technologies Used" data-ar="التقنيات المستخدمة">التقنيات المستخدمة</h5>
+                        <div id="modalTechnologies" class="tech-tags"></div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h5 data-en="Key Features" data-ar="المميزات الرئيسية">المميزات الرئيسية</h5>
+                        <ul id="modalFeatures"></ul>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h5 data-en="Challenges & Solutions" data-ar="التحديات والحلول">التحديات والحلول</h5>
+                        <p id="modalChallenges"></p>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <a id="modalViewLink" href="#" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-eye"></i>
+                            <span data-en="View Project" data-ar="معاينة المشروع">معاينة المشروع</span>
+                        </a>
+                        <a id="modalCodeLink" href="#" class="btn btn-secondary" target="_blank">
+                            <i class="fas fa-code"></i>
+                            <span data-en="View Code" data-ar="عرض الكود">عرض الكود</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <h3 data-en="Abdullah Mohammed Hamad" data-ar="عبد الله محمد حمد">عبد الله محمد حمد</h3>
+                        <p data-en="Welcome to my digital world… where value is created and impact is made" data-ar="أهلاً بك في عالمي الرقمي… حيث تُصنع القيمة ويُترك الأثر">أهلاً بك في عالمي الرقمي… حيث تُصنع القيمة ويُترك الأثر</p>
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4 data-en="Quick Links" data-ar="روابط سريعة">روابط سريعة</h4>
+                            <ul>
+                                <li><a href="index.html" data-en="Home" data-ar="الرئيسية">الرئيسية</a></li>
+                                <li><a href="index.html#about" data-en="About Me" data-ar="نبذة عني">نبذة عني</a></li>
+                                <li><a href="index.html#skills" data-en="Skills" data-ar="المهارات">المهارات</a></li>
+                                <li><a href="#portfolio" data-en="Portfolio" data-ar="معرض الأعمال">معرض الأعمال</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4 data-en="Services" data-ar="الخدمات">الخدمات</h4>
+                            <ul>
+                                <li><a href="#web" data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</a></li>
+                                <li><a href="#mobile" data-en="Mobile Apps" data-ar="تطبيقات الجوال">تطبيقات الجوال</a></li>
+                                <li><a href="#ai" data-en="Artificial Intelligence" data-ar="الذكاء الاصطناعي">الذكاء الاصطناعي</a></li>
+                                <li><a href="#design" data-en="Design" data-ar="التصميم">التصميم</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4 data-en="Contact Me" data-ar="تواصل معي">تواصل معي</h4>
+                            <ul>
+                                <li><a href="mailto:abdullahmohammedhamad24@gmail.com" data-en="Email" data-ar="البريد الإلكتروني">البريد الإلكتروني</a></li>
+                                <li><a href="https://www.linkedin.com/in/abdullah-mohammed-5376a4204" target="_blank">LinkedIn</a></li>
+                                <li><a href="index.html#contact" data-en="Contact Form" data-ar="نموذج التواصل">نموذج التواصل</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-social">
+                        <a href="mailto:abdullahmohammedhamad24@gmail.com" target="_blank">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/abdullah-mohammed-5376a4204" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                    </div>
+                    <div class="footer-copyright">
+                        <p data-en="&copy; 2025 Abdullah Mohammed Hamad. All rights reserved." data-ar="&copy; 2025 عبد الله محمد حمد. جميع الحقوق محفوظة.">&copy; 2025 عبد الله محمد حمد. جميع الحقوق محفوظة.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer><!-- Theme Toggle Button -->    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-sun sun-icon"></i>
+        <i class="fas fa-moon moon-icon"></i>
+    </button>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="portfolio-gallery.js"></script>
+    
+    <!-- Theme Toggle Script for Gallery -->
+    <script>
+        // Theme toggle for portfolio gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const sunIcon = themeToggle.querySelector('.sun-icon');
+            const moonIcon = themeToggle.querySelector('.moon-icon');
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            body.setAttribute('data-theme', savedTheme);
+            updateIcons(savedTheme);
+            
+            // Toggle functionality
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateIcons(newTheme);
+                
+                // Visual feedback
+                this.style.transform = 'translateY(-50%) scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-50%) scale(1)';
+                }, 200);
+            });
+            
+            function updateIcons(theme) {
+                if (theme === 'dark') {
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                    themeToggle.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                } else {
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                    themeToggle.style.background = 'linear-gradient(135deg, #4facfe, #00f2fe)';
+                }            }
+        });
+    </script>
+    
+    <!-- Translation System -->
+    <script src="translation.js"></script>
+</body>
+</html>

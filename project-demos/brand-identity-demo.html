@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج تصميم الهوية البصرية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-container {
+            width: 95%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .content {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            text-align: center;
+        }
+
+        .logo-preview {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+            animation: logoRotate 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-preview:hover {
+            transform: scale(1.1);
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .color-item {
+            height: 80px;
+            border-radius: 10px;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: colorPulse 2s ease-in-out infinite;
+        }
+
+        .color-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .color-1 { background: #ff6b6b; animation-delay: 0s; }
+        .color-2 { background: #4ecdc4; animation-delay: 0.2s; }
+        .color-3 { background: #45b7d1; animation-delay: 0.4s; }
+        .color-4 { background: #96ceb4; animation-delay: 0.6s; }
+        .color-5 { background: #feca57; animation-delay: 0.8s; }
+
+        .typography-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .font-sample {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .font-sample:hover {
+            transform: translateY(-3px);
+        }
+
+        .font-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .font-demo {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-elements {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .element-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .element-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .element-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mockup-section {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .mockup-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mockup-item:hover {
+            transform: scale(1.05);
+        }
+
+        .mockup-placeholder {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes logoRotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes colorPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .color-palette {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="brand-container">
+        <div class="header">
+            <h1>🎨 استوديو الهوية البصرية</h1>
+            <p>نظام شامل لإدارة وتطوير الهويات البصرية للعلامات التجارية</p>
+        </div>
+
+        <div class="content">
+            <div class="logo-section">
+                <h2>الشعار الرئيسي</h2>
+                <div class="logo-preview" onclick="animateLogo()">
+                    AB
+                </div>
+                <p>شعار ديناميكي متجاوب مع جميع المنصات</p>
+
+                <h3>لوحة الألوان</h3>
+                <div class="color-palette">
+                    <div class="color-item color-1" onclick="selectColor(this)">#FF6B6B</div>
+                    <div class="color-item color-2" onclick="selectColor(this)">#4ECDC4</div>
+                    <div class="color-item color-3" onclick="selectColor(this)">#45B7D1</div>
+                    <div class="color-item color-4" onclick="selectColor(this)">#96CEB4</div>
+                    <div class="color-item color-5" onclick="selectColor(this)">#FECA57</div>
+                </div>
+            </div>
+
+            <div class="typography-section">
+                <h2>الخطوط المستخدمة</h2>
+                
+                <div class="font-sample">
+                    <div class="font-name">عنوان رئيسي - Montserrat Bold</div>
+                    <div class="font-demo" style="font-family: 'Montserrat', sans-serif; font-weight: bold;">
+                        العلامة التجارية
+                    </div>
+                </div>
+
+                <div class="font-sample">
+                    <div class="font-name">نص فرعي - Open Sans Regular</div>
+                    <div class="font-demo" style="font-family: 'Open Sans', sans-serif; font-size: 1.5rem;">
+                        نص توضيحي للمحتوى
+                    </div>
+                </div>
+
+                <div class="font-sample">
+                    <div class="font-name">نص المحتوى - Roboto Light</div>
+                    <div class="font-demo" style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 1.2rem;">
+                        محتوى تفصيلي ووصف المنتجات
+                    </div>
+                </div>
+            </div>
+
+            <div class="brand-elements">
+                <h2 style="grid-column: 1 / -1; text-align: center; margin-bottom: 1rem;">عناصر الهوية البصرية</h2>
+                
+                <div class="element-card" onclick="showElement('business-card')">
+                    <div class="element-icon">💳</div>
+                    <h3>بطاقة الأعمال</h3>
+                    <p>تصميم احترافي للبطاقة الشخصية</p>
+                </div>
+
+                <div class="element-card" onclick="showElement('letterhead')">
+                    <div class="element-icon">📄</div>
+                    <h3>ورقة رسمية</h3>
+                    <p>تصميم الأوراق الرسمية للشركة</p>
+                </div>
+
+                <div class="element-card" onclick="showElement('presentation')">
+                    <div class="element-icon">📊</div>
+                    <h3>قالب العروض</h3>
+                    <p>قوالب احترافية للعروض التقديمية</p>
+                </div>
+
+                <div class="element-card" onclick="showElement('social-media')">
+                    <div class="element-icon">📱</div>
+                    <p>قوالب وسائل التواصل الاجتماعي</p>
+                </div>
+            </div>
+
+            <div class="mockup-section">
+                <h2>المعاينات والتطبيقات</h2>
+                <div class="mockup-grid">
+                    <div class="mockup-item" onclick="viewMockup('website')">
+                        <div class="mockup-placeholder">🌐 موقع إلكتروني</div>
+                        <p>تطبيق الهوية على الموقع</p>
+                    </div>
+                    
+                    <div class="mockup-item" onclick="viewMockup('mobile')">
+                        <div class="mockup-placeholder">📱 تطبيق موبايل</div>
+                        <p>تصميم واجهة التطبيق</p>
+                    </div>
+                    
+                    <div class="mockup-item" onclick="viewMockup('packaging')">
+                        <div class="mockup-placeholder">📦 التغليف</div>
+                        <p>تصميم عبوات المنتجات</p>
+                    </div>
+                    
+                    <div class="mockup-item" onclick="viewMockup('signage')">
+                        <div class="mockup-placeholder">🏢 اللافتات</div>
+                        <p>تصميم لافتات الشركة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function animateLogo() {
+            const logo = document.querySelector('.logo-preview');
+            logo.style.animation = 'none';
+            setTimeout(() => {
+                logo.style.animation = 'logoRotate 0.5s ease-in-out';
+            }, 10);
+        }
+
+        function selectColor(element) {
+            // إزالة التحديد من جميع الألوان
+            document.querySelectorAll('.color-item').forEach(item => {
+                item.style.transform = '';
+                item.style.boxShadow = '';
+            });
+            
+            // تحديد اللون المختار
+            element.style.transform = 'scale(1.1) translateY(-5px)';
+            element.style.boxShadow = '0 10px 20px rgba(0,0,0,0.3)';
+            
+            // تحديث لون الشعار
+            const logo = document.querySelector('.logo-preview');
+            const color = getComputedStyle(element).backgroundColor;
+            logo.style.background = color;
+        }
+
+        function showElement(type) {
+            alert(`عرض تفاصيل: ${getElementName(type)}`);
+        }
+
+        function getElementName(type) {
+            const names = {
+                'business-card': 'بطاقة الأعمال',
+                'letterhead': 'الورقة الرسمية',
+                'presentation': 'قالب العروض',
+                'social-media': 'وسائل التواصل'
+            };
+            return names[type] || type;
+        }
+
+        function viewMockup(type) {
+            const mockupNames = {
+                'website': 'معاينة الموقع الإلكتروني',
+                'mobile': 'معاينة التطبيق',
+                'packaging': 'معاينة التغليف',
+                'signage': 'معاينة اللافتات'
+            };
+            
+            alert(`${mockupNames[type]}\nيتم تحضير المعاينة...`);
+        }
+
+        // تأثيرات تفاعلية عند التحميل
+        window.addEventListener('load', function() {
+            const elements = document.querySelectorAll('.element-card, .mockup-item');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    element.style.transition = 'all 0.6s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // تأثير الماوس المتابع
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.querySelector('.cursor');
+            if (!cursor) {
+                const newCursor = document.createElement('div');
+                newCursor.className = 'cursor';
+                newCursor.style.cssText = `
+                    position: fixed;
+                    width: 20px;
+                    height: 20px;
+                    background: radial-gradient(circle, rgba(255,107,107,0.5) 0%, transparent 70%);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    transition: transform 0.1s ease;
+                `;
+                document.body.appendChild(newCursor);
+            }
+            
+            const cursorElement = document.querySelector('.cursor');
+            cursorElement.style.left = e.clientX - 10 + 'px';
+            cursorElement.style.top = e.clientY - 10 + 'px';
+        });
+    </script>
+</body>
+</html>

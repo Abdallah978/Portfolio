@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-en="Abdullah Mohammed Hamad - Personal Portfolio" data-ar="عبد الله محمد حمد - Portfolio الشخصي">عبد الله محمد حمد - Portfolio الشخصي</title>
+    <meta name="description" content="Portfolio احترافي لعبد الله محمد حمد - مختص موارد بشرية، تسويق رقمي، مطوّر ويب، أمن سيبراني، وGIS">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts - Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <h3 data-en="Loading..." data-ar="جاري التحميل...">جاري التحميل...</h3>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">            <div class="nav-logo">
+                <h2 data-en="Abdullah M." data-ar="عبد الله محمد">عبد الله محمد</h2>
+            </div><ul class="nav-menu">
+                <li><a href="#home" class="nav-link" data-en="Home" data-ar="الرئيسية">الرئيسية</a></li>
+                <li><a href="#about" class="nav-link" data-en="About" data-ar="نبذة عني">نبذة عني</a></li>
+                <li><a href="#skills" class="nav-link" data-en="Skills" data-ar="المهارات">المهارات</a></li>
+                <li><a href="#portfolio" class="nav-link" data-en="Portfolio" data-ar="أعمالي">أعمالي</a></li>
+                <li><a href="#certificates" class="nav-link" data-en="Certificates" data-ar="الشهادات">الشهادات</a></li>
+                <li><a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معي">تواصل معي</a></li>
+                <li class="language-toggle">
+                    <button id="languageToggle" class="lang-btn" aria-label="Toggle Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-text" data-en="عربي" data-ar="English">English</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">                <div class="hero-text">
+                    <div class="hero-greeting">
+                        <span class="wave">👋</span>
+                        <span data-en="Hello, I'm" data-ar="مرحباً، أنا">مرحباً، أنا</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="name-highlight" data-en="Abdullah Mohammed Hamad" data-ar="عبد الله محمد حمد">عبد الله محمد حمد</span>
+                    </h1>
+                    <div class="typing-container">
+                        <span class="typing-text"></span>
+                        <span class="cursor">|</span>
+                    </div>
+                    <p class="hero-description" data-en="Passionate about modern technologies, experienced in skill development, and striving to make a real impact in every team I work with" data-ar="شغوف بالتقنيات الحديثة، متمرس في تطوير المهارات، وأسعى لصنع أثر حقيقي في كل فريق أعمل معه">
+                        شغوف بالتقنيات الحديثة، متمرس في تطوير المهارات، وأسعى لصنع أثر حقيقي في كل فريق أعمل معه
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#portfolio" class="btn btn-primary">
+                            <i class="fas fa-briefcase"></i>
+                            <span data-en="View My Work" data-ar="مشاهدة أعمالي">مشاهدة أعمالي</span>
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i>
+                            <span data-en="Contact Me" data-ar="تواصل معي">تواصل معي</span>
+                        </a>
+                    </div>
+                    <div class="social-links">
+                        <a href="mailto:abdullahmohammedhamad24@gmail.com" target="_blank" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/abdullah-mohammed-5376a4204" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-link">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="image-container">
+                        <img src="image Profile/photo_2025-06-30_21-57-21.jpg" alt="عبد الله محمد حمد" class="profile-img">
+                        <div class="floating-elements">
+                            <div class="floating-icon icon-1"><i class="fas fa-code"></i></div>
+                            <div class="floating-icon icon-2"><i class="fas fa-shield-alt"></i></div>
+                            <div class="floating-icon icon-3"><i class="fas fa-chart-line"></i></div>
+                            <div class="floating-icon icon-4"><i class="fas fa-users"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>            <div class="scroll-indicator">
+                <span data-en="Scroll Down" data-ar="مرر للأسفل">مرر للأسفل</span>
+                <div class="scroll-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">            <div class="section-header">
+                <span class="section-subtitle" data-en="Get to Know Me" data-ar="تعرف عليّ أكثر">تعرف عليّ أكثر</span>
+                <h2 class="section-title" data-en="About Me" data-ar="نبذة عني">نبذة عني</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-intro">
+                        <h3 data-en="Looking for an environment where I can achieve real results... not just a job" data-ar="أبحث عن بيئة أحقق فيها نتائج حقيقية… لا مجرد وظيفة">أبحث عن بيئة أحقق فيها نتائج حقيقية… لا مجرد وظيفة</h3>
+                        <p class="highlight-text" data-en="I am Abdullah Mohammed Hamad, a graduate of Al-Karkh University of Science - Baghdad, with a specialization in Earth Sciences and Remote Sensing. I have combined my academic background with my technical and managerial skills to create a professional mix that serves me in the world of business, technology, and analysis." data-ar="أنا عبد الله محمد حمد، خريج جامعة الكرخ للعلوم – بغداد، بتخصص علوم الأرض والتحسس النائي. جمعت بين خلفيتي الأكاديمية ومهاراتي التقنية والإدارية لتكوين مزيج احترافي يخدمني في عالم الأعمال، التكنولوجيا، والتحليل.">
+                            أنا عبد الله محمد حمد، خريج جامعة الكرخ للعلوم – بغداد، بتخصص علوم الأرض والتحسس النائي. 
+                            جمعت بين خلفيتي الأكاديمية ومهاراتي التقنية والإدارية لتكوين مزيج احترافي يخدمني في عالم الأعمال، التكنولوجيا، والتحليل.
+                        </p>
+                    </div>
+                    
+                    <div class="about-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h4 data-en="Education" data-ar="التعليم">التعليم</h4>
+                                <p data-en="Bachelor of Earth Sciences and Remote Sensing<br>Al-Karkh University of Science - Baghdad" data-ar="بكالوريوس علوم الأرض والتحسس النائي<br>جامعة الكرخ للعلوم - بغداد">بكالوريوس علوم الأرض والتحسس النائي<br>
+                                جامعة الكرخ للعلوم - بغداد</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h4 data-en="Specializations" data-ar="التخصصات">التخصصات</h4>
+                                <p data-en="Human Resources, Digital Marketing, Web Development,<br>Cybersecurity, and Geographic Information Systems" data-ar="موارد بشرية، تسويق رقمي، تطوير ويب،<br>أمن سيبراني، وأنظمة المعلومات الجغرافية">موارد بشرية، تسويق رقمي، تطوير ويب،<br>
+                                أمن سيبراني، وأنظمة المعلومات الجغرافية</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-target"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h4 data-en="Goal" data-ar="الهدف">الهدف</h4>
+                                <p data-en="Make a real impact in an advanced technical environment<br>and contribute to the success of teams and projects" data-ar="صنع أثر حقيقي في بيئة تقنية متقدمة<br>والمساهمة في نجاح الفرق والمشاريع">صنع أثر حقيقي في بيئة تقنية متقدمة<br>
+                                والمساهمة في نجاح الفرق والمشاريع</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="50">0</div>
+                            <div class="stat-label" data-en="Completed Projects" data-ar="مشروع منجز">مشروع منجز</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="15">0</div>
+                            <div class="stat-label" data-en="Certificates" data-ar="شهادة معتمدة">شهادة معتمدة</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="6">0</div>
+                            <div class="stat-label" data-en="Specializations" data-ar="مجال تخصص">مجال تخصص</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="100">0</div>
+                            <div class="stat-label" data-en="% Commitment" data-ar="% التزام">% التزام</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">            <div class="section-header">
+                <span class="section-subtitle" data-en="What I Do" data-ar="ما أجيده">ما أجيده</span>
+                <h2 class="section-title" data-en="Skills & Expertise" data-ar="المهارات والخبرات">المهارات والخبرات</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="skills-grid">                <div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 data-en="Human Resources" data-ar="إدارة الموارد البشرية">إدارة الموارد البشرية</h3>
+                    <p data-en="Talent management and development, smart recruitment, and building effective HR strategies" data-ar="إدارة وتطوير المواهب، التوظيف الذكي، وبناء استراتيجيات HR فعالة">إدارة وتطوير المواهب، التوظيف الذكي، وبناء استراتيجيات HR فعالة</p>
+                    <div class="skill-items">
+                        <span class="skill-tag" data-en="Recruitment & Selection" data-ar="التوظيف والاختيار">التوظيف والاختيار</span>
+                        <span class="skill-tag" data-en="Performance Development" data-ar="تطوير الأداء">تطوير الأداء</span>
+                        <span class="skill-tag" data-en="Talent Management" data-ar="إدارة المواهب">إدارة المواهب</span>
+                        <span class="skill-tag" data-en="Training & Development" data-ar="التدريب والتطوير">التدريب والتطوير</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 data-en="Digital Marketing" data-ar="التسويق الرقمي">التسويق الرقمي</h3>
+                    <p data-en="Digital marketing strategies, data analysis, and advertising campaign management" data-ar="استراتيجيات التسويق الرقمي، تحليل البيانات، وإدارة الحملات الإعلانية">استراتيجيات التسويق الرقمي، تحليل البيانات، وإدارة الحملات الإعلانية</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">Google Ads</span>
+                        <span class="skill-tag">Facebook Marketing</span>
+                        <span class="skill-tag">SEO/SEM</span>
+                        <span class="skill-tag" data-en="Data Analysis" data-ar="تحليل البيانات">تحليل البيانات</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</h3>
+                    <p data-en="Developing advanced websites and web applications using the latest technologies" data-ar="تطوير مواقع وتطبيقات ويب متقدمة باستخدام أحدث التقنيات">تطوير مواقع وتطبيقات ويب متقدمة باستخدام أحدث التقنيات</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">HTML/CSS/JS</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Supabase</span>
+                        <span class="skill-tag">React</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 data-en="Cybersecurity" data-ar="الأمن السيبراني">الأمن السيبراني</h3>
+                    <p data-en="System and data protection, threat analysis, and implementing security standards" data-ar="حماية الأنظمة والبيانات، تحليل التهديدات، وتطبيق معايير الأمان">حماية الأنظمة والبيانات، تحليل التهديدات، وتطبيق معايير الأمان</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">Network Security</span>
+                        <span class="skill-tag">Penetration Testing</span>
+                        <span class="skill-tag">Risk Assessment</span>
+                        <span class="skill-tag">Compliance</span>
+                    </div>
+                </div><div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 data-en="Geographic Information Systems" data-ar="نظم المعلومات الجغرافية">نظم المعلومات الجغرافية</h3>
+                    <p data-en="Spatial data analysis, creating interactive maps, and geological surveys" data-ar="تحليل البيانات المكانية، إنشاء الخرائط التفاعلية، والمسح الجيولوجي">تحليل البيانات المكانية، إنشاء الخرائط التفاعلية، والمسح الجيولوجي</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">ArcGIS</span>
+                        <span class="skill-tag">QGIS</span>
+                        <span class="skill-tag">Remote Sensing</span>
+                        <span class="skill-tag">Spatial Analysis</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 data-en="Creative Design" data-ar="التصميم الإبداعي">التصميم الإبداعي</h3>
+                    <p data-en="Visual identity design, marketing materials, and user interfaces" data-ar="تصميم الهويات البصرية، المواد التسويقية، وواجهات المستخدم">تصميم الهويات البصرية، المواد التسويقية، وواجهات المستخدم</p>
+                    <div class="skill-items">
+                        <span class="skill-tag">Canva</span>
+                        <span class="skill-tag">Adobe Express</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Brand Identity</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Preview Section -->
+    <section id="portfolio" class="portfolio-preview">
+        <div class="container">            <div class="section-header">
+                <span class="section-subtitle" data-en="Latest Work" data-ar="أحدث أعمالي">أحدث أعمالي</span>
+                <h2 class="section-title" data-en="Project Gallery" data-ar="معرض المشاريع">معرض المشاريع</h2>
+                <div class="section-divider"></div>
+            </div>
+              <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all" data-en="All" data-ar="الكل">الكل</button>
+                <button class="filter-btn" data-filter="web" data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</button>
+                <button class="filter-btn" data-filter="mobile" data-en="Mobile Apps" data-ar="تطبيقات الجوال">تطبيقات الجوال</button>
+                <button class="filter-btn" data-filter="ai" data-en="AI & ML" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</button>
+                <button class="filter-btn" data-filter="design" data-en="Design" data-ar="تصميم">تصميم</button>
+            </div>
+
+            <div class="portfolio-grid">                <div class="portfolio-item" data-category="ai">
+                    <div class="portfolio-image">
+                        <img src="project-images/ai-prediction-system.png" alt="نظام التنبؤ الذكي">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3 data-en="Smart Prediction System" data-ar="نظام التنبؤ الذكي">نظام التنبؤ الذكي</h3>
+                                <p data-en="Smart system for data prediction using artificial intelligence" data-ar="نظام ذكي للتنبؤ بالبيانات باستخدام الذكاء الاصطناعي">نظام ذكي للتنبؤ بالبيانات باستخدام الذكاء الاصطناعي</p>
+                                <div class="portfolio-buttons">
+                                    <a href="project-demos/ai-system-demo.html" class="btn-portfolio" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="Preview" data-ar="معاينة">معاينة</span>
+                                    </a>
+                                    <a href="#" class="btn-portfolio">
+                                        <i class="fas fa-code"></i> <span data-en="Code" data-ar="الكود">الكود</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Machine Learning</span>
+                        <span class="tech-tag">TensorFlow</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image">
+                        <img src="project-images/ecommerce-platform.png" alt="منصة تجارة إلكترونية">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3 data-en="E-commerce Platform" data-ar="منصة تجارة إلكترونية">منصة تجارة إلكترونية</h3>
+                                <p data-en="Comprehensive e-commerce platform with advanced management system" data-ar="منصة شاملة للتجارة الإلكترونية مع نظام إدارة متقدم">منصة شاملة للتجارة الإلكترونية مع نظام إدارة متقدم</p>
+                                <div class="portfolio-buttons">
+                                    <a href="project-demos/ecommerce-demo.html" class="btn-portfolio" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="Preview" data-ar="معاينة">معاينة</span>
+                                    </a>
+                                    <a href="#" class="btn-portfolio">
+                                        <i class="fas fa-code"></i> <span data-en="Code" data-ar="الكود">الكود</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="mobile">
+                    <div class="portfolio-image">
+                        <img src="project-images/health-app.png" alt="تطبيق صحي">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3 data-en="Health Tracking App" data-ar="تطبيق المتابعة الصحية">تطبيق المتابعة الصحية</h3>
+                                <p data-en="Mobile app for health monitoring and daily habits tracking" data-ar="تطبيق جوال لمتابعة الحالة الصحية والعادات اليومية">تطبيق جوال لمتابعة الحالة الصحية والعادات اليومية</p>
+                                <div class="portfolio-buttons">
+                                    <a href="project-demos/health-app-demo.html" class="btn-portfolio" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="Preview" data-ar="معاينة">معاينة</span>
+                                    </a>
+                                    <a href="#" class="btn-portfolio">
+                                        <i class="fas fa-code"></i> <span data-en="Code" data-ar="الكود">الكود</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">React Native</span>
+                        <span class="tech-tag">Firebase</span>
+                        <span class="tech-tag">Charts.js</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image">
+                        <img src="project-images/corporate-website.png" alt="موقع شركة">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3 data-en="Professional Corporate Website" data-ar="موقع شركة احترافي">موقع شركة احترافي</h3>
+                                <p data-en="Advanced corporate website with content management system" data-ar="موقع إلكتروني متطور للشركات مع نظام إدارة المحتوى">موقع إلكتروني متطور للشركات مع نظام إدارة المحتوى</p>
+                                <div class="portfolio-buttons">
+                                    <a href="project-demos/company-website-demo.html" class="btn-portfolio" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="Preview" data-ar="معاينة">معاينة</span>
+                                    </a>
+                                    <a href="#" class="btn-portfolio">
+                                        <i class="fas fa-code"></i> <span data-en="Code" data-ar="الكود">الكود</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                </div>                <div class="portfolio-item" data-category="design">
+                    <div class="portfolio-image">
+                        <img src="project-images/brand-identity.png" alt="هوية بصرية">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3 data-en="Comprehensive Visual Identity" data-ar="هوية بصرية متكاملة">هوية بصرية متكاملة</h3>
+                                <p data-en="Complete visual identity design for companies and institutions" data-ar="تصميم هوية بصرية شاملة للشركات والمؤسسات">تصميم هوية بصرية شاملة للشركات والمؤسسات</p>
+                                <div class="portfolio-buttons">
+                                    <a href="project-demos/brand-identity-demo.html" class="btn-portfolio" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="Preview" data-ar="معاينة">معاينة</span>
+                                    </a>
+                                    <a href="#" class="btn-portfolio">
+                                        <i class="fas fa-images"></i> <span data-en="Gallery" data-ar="المعرض">المعرض</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">Adobe Express</span>
+                        <span class="tech-tag">Canva</span>
+                        <span class="tech-tag">Brand Design</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="ai">
+                    <div class="portfolio-image">
+                        <img src="project-images/chatbot-ai.png" alt="شات بوت ذكي">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3 data-en="Interactive Smart Assistant" data-ar="مساعد ذكي تفاعلي">مساعد ذكي تفاعلي</h3>
+                                <p data-en="Smart chatbot for customer service using natural language processing" data-ar="شات بوت ذكي لخدمة العملاء باستخدام معالجة اللغات الطبيعية">شات بوت ذكي لخدمة العملاء باستخدام معالجة اللغات الطبيعية</p>
+                                <div class="portfolio-buttons">
+                                    <a href="project-demos/chatbot-demo.html" class="btn-portfolio" target="_blank">
+                                        <i class="fas fa-eye"></i> <span data-en="Preview" data-ar="معاينة">معاينة</span>
+                                    </a>
+                                    <a href="#" class="btn-portfolio">
+                                        <i class="fas fa-code"></i> <span data-en="Code" data-ar="الكود">الكود</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">NLP</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">OpenAI</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-cta">
+                <h3 data-en="Want to see more of my work?" data-ar="تريد رؤية المزيد من أعمالي؟">تريد رؤية المزيد من أعمالي؟</h3>
+                <p data-en="Explore the complete portfolio gallery with comprehensive details for each project" data-ar="استكشف معرض الأعمال الكامل مع تفاصيل شاملة لكل مشروع">استكشف معرض الأعمال الكامل مع تفاصيل شاملة لكل مشروع</p>                <a href="portfolio-gallery.html" class="btn btn-primary">
+                    <i class="fas fa-th-large"></i>
+                    <span data-en="Complete Portfolio Gallery" data-ar="معرض الأعمال الكامل">معرض الأعمال الكامل</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="certificates">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-en="Qualifications" data-ar="مؤهلاتي">مؤهلاتي</span>
+                <h2 class="section-title" data-en="Certificates & Qualifications" data-ar="الشهادات والمؤهلات">الشهادات والمؤهلات</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="certificates-tabs">
+                <button class="tab-btn active" data-tab="academic" data-en="Academic Certificates" data-ar="الشهادات الأكاديمية">الشهادات الأكاديمية</button>
+                <button class="tab-btn" data-tab="professional" data-en="Professional Certificates" data-ar="الشهادات المهنية">الشهادات المهنية</button>
+                <button class="tab-btn" data-tab="courses" data-en="Training Courses" data-ar="الدورات التدريبية">الدورات التدريبية</button>
+            </div>
+
+            <div class="certificates-content">
+                <div class="tab-content active" id="academic">
+                    <div class="certificate-card main-degree">
+                        <div class="certificate-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="certificate-details">
+                            <h3 data-en="Bachelor of Earth Sciences and Remote Sensing" data-ar="بكالوريوس علوم الأرض والتحسس النائي">بكالوريوس علوم الأرض والتحسس النائي</h3>
+                            <p class="institution" data-en="Al-Karkh University of Science - Baghdad" data-ar="جامعة الكرخ للعلوم - بغداد">جامعة الكرخ للعلوم - بغداد</p>
+                            <p class="description" data-en="Specialization in Earth Sciences, Remote Sensing, and Geographic Information Systems" data-ar="تخصص في علوم الأرض، التحسس النائي، ونظم المعلومات الجغرافية">تخصص في علوم الأرض، التحسس النائي، ونظم المعلومات الجغرافية</p>
+                            <span class="year">2020-2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="professional">
+                    <div class="certificates-grid">
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="Coursera/hrci_certificate_final.jpg" alt="HR Associate Certificate">
+                            </div>
+                            <div class="certificate-details">
+                                <h4>HR Associate</h4>
+                                <p>Coursera</p>
+                                <span class="certificate-year">2024</span>
+                            </div>
+                        </div>
+
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="EDRAAK/photo_2025-06-30_17-31-10.jpg" alt="شهادة الأمن السيبراني">
+                            </div>
+                            <div class="certificate-details">
+                                <h4>الأمن السيبراني</h4>
+                                <p>إدراك</p>
+                                <span class="certificate-year">2024</span>
+                            </div>
+                        </div>
+
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="AD DIGITAL Expert by Aleph/photo_2025-06-30_17-28-29.jpg" alt="شهادة التسويق الرقمي">
+                            </div>
+                            <div class="certificate-details">
+                                <h4>Digital Marketing Expert</h4>
+                                <p>Alpha Ad</p>
+                                <span class="certificate-year">2024</span>
+                            </div>
+                        </div>
+
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="Easyt.online certificate/photo_2025-06-30_16-37-06.jpg" alt="شهادة الأمن السيبراني">
+                            </div>
+                            <div class="certificate-details">
+                                <h4>Cybersecurity</h4>
+                                <p>Etsy.online</p>
+                                <span class="certificate-year">2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="courses">
+                    <div class="certificates-grid">
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="full stack web development/photo_2025-07-03_03-28-20.jpg" alt="تطوير الويب الكامل">
+                            </div>
+                            <div class="certificate-details">
+                                <h4>Full Stack Web Development</h4>
+                                <p>معهد تقني متخصص</p>
+                                <span class="certificate-year">2024</span>
+                            </div>
+                        </div>
+
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="Mind Luster/photo_2025-07-03_04-21-37.jpg" alt="دورة متقدمة">
+                            </div>
+                            <div class="certificate-details">
+                                <h4>دورة تطوير مهني</h4>
+                                <p>Mind Luster</p>
+                                <span class="certificate-year">2024</span>
+                            </div>
+                        </div>
+
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="Open US.DEPARTMENT OF STATE  Online professional English Network/photo_2025-06-30_17-36-01.jpg" alt="اللغة الإنجليزية المهنية">
+                            </div>
+                            <div class="certificate-details">
+                                <h4>Professional English Network</h4>
+                                <p>US Department of State</p>
+                                <span class="certificate-year">2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            <div class="certificates-summary">
+                <div class="summary-stats">
+                    <div class="stat">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label" data-en="Certified Credentials" data-ar="شهادة معتمدة">شهادة معتمدة</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label" data-en="Specialization Areas" data-ar="مجالات تخصص">مجالات تخصص</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label" data-en="Training Hours" data-ar="ساعة تدريب">ساعة تدريب</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">            <div class="section-header">
+                <span class="section-subtitle" data-en="Let's Work Together" data-ar="لنبدأ العمل معاً">لنبدأ العمل معاً</span>
+                <h2 class="section-title" data-en="Contact Me" data-ar="تواصل معي">تواصل معي</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-intro">
+                        <h3 data-en="Ready to Make a Difference" data-ar="جاهز لصنع الفرق">جاهز لصنع الفرق</h3>
+                        <p data-en="If you're looking for someone passionate about technology, committed to quality, and excited to achieve results, I'm here to help you reach your goals." data-ar="إذا كنت تبحث عن شخص شغوف بالتقنية، ملتزم بالجودة، ومتحمس لتحقيق النتائج، فأنا هنا لمساعدتك في تحقيق أهدافك.">إذا كنت تبحث عن شخص شغوف بالتقنية، ملتزم بالجودة، ومتحمس لتحقيق النتائج، فأنا هنا لمساعدتك في تحقيق أهدافك.</p>
+                    </div>
+                      <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4 data-en="Email" data-ar="البريد الإلكتروني">البريد الإلكتروني</h4>
+                                <a href="mailto:abdullahmohammedhamad24@gmail.com">abdullahmohammedhamad24@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/abdullah-mohammed-5376a4204" target="_blank">Abdullah Mohammed</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4 data-en="Location" data-ar="الموقع">الموقع</h4>
+                                <span data-en="Baghdad, Iraq" data-ar="بغداد، العراق">بغداد، العراق</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4 data-en="Available for Work" data-ar="متاح للعمل">متاح للعمل</h4>
+                                <span data-en="Full-time, part-time, or freelance projects" data-ar="بدوام كامل، جزئي، أو مشاريع حرة">بدوام كامل، جزئي، أو مشاريع حرة</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="availability-status">
+                        <div class="status-indicator">
+                            <div class="status-dot online"></div>
+                            <span data-en="Available for new projects" data-ar="متاح للمشاريع الجديدة">متاح للمشاريع الجديدة</span>
+                        </div>
+                    </div>
+                </div>
+                  <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" data-en="Full Name" data-ar="الاسم الكامل">الاسم الكامل</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" data-en="Email Address" data-ar="البريد الإلكتروني">البريد الإلكتروني</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company" data-en="Company / Organization" data-ar="الشركة / المؤسسة">الشركة / المؤسسة</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" data-en="Subject" data-ar="الموضوع">الموضوع</label>
+                            <select id="subject" name="subject" required>
+                                <option value="" data-en="Select project type" data-ar="اختر نوع المشروع">اختر نوع المشروع</option>
+                                <option value="web-development" data-en="Web Development" data-ar="تطوير ويب">تطوير ويب</option>
+                                <option value="mobile-app" data-en="Mobile App" data-ar="تطبيق جوال">تطبيق جوال</option>
+                                <option value="ai-project" data-en="AI Project" data-ar="مشروع ذكاء اصطناعي">مشروع ذكاء اصطناعي</option>
+                                <option value="hr-consulting" data-en="HR Consulting" data-ar="استشارات موارد بشرية">استشارات موارد بشرية</option>
+                                <option value="digital-marketing" data-en="Digital Marketing" data-ar="تسويق رقمي">تسويق رقمي</option>
+                                <option value="cybersecurity" data-en="Cybersecurity" data-ar="أمن سيبراني">أمن سيبراني</option>
+                                <option value="gis-project" data-en="GIS Project" data-ar="نظم معلومات جغرافية">نظم معلومات جغرافية</option>
+                                <option value="other" data-en="Other" data-ar="أخرى">أخرى</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" data-en="Project Details" data-ar="تفاصيل المشروع">تفاصيل المشروع</label>
+                            <textarea id="message" name="message" rows="6" placeholder="حدثني عن مشروعك، الأهداف المطلوبة، والمدة الزمنية المتوقعة..." data-en="Tell me about your project, required goals, and expected timeline..." data-ar="حدثني عن مشروعك، الأهداف المطلوبة، والمدة الزمنية المتوقعة..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="budget" data-en="Expected Budget" data-ar="الميزانية المتوقعة">الميزانية المتوقعة</label>
+                            <select id="budget" name="budget">
+                                <option value="" data-en="Select price range" data-ar="اختر النطاق السعري">اختر النطاق السعري</option>
+                                <option value="under-1000" data-en="Under $1000" data-ar="أقل من 1000$">أقل من 1000$</option>
+                                <option value="1000-5000" data-en="$1000 - $5000" data-ar="1000$ - 5000$">1000$ - 5000$</option>
+                                <option value="5000-10000" data-en="$5000 - $10000" data-ar="5000$ - 10000$">5000$ - 10000$</option>
+                                <option value="over-10000" data-en="Over $10000" data-ar="أكثر من 10000$">أكثر من 10000$</option>
+                                <option value="discuss" data-en="To be discussed" data-ar="للمناقشة">للمناقشة</option>
+                            </select>
+                        </div>
+                          <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            <span data-en="Send Message" data-ar="إرسال الرسالة">إرسال الرسالة</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">                    <div class="footer-brand">
+                        <h3 data-en="Abdullah Mohammed Hamad" data-ar="عبد الله محمد حمد">عبد الله محمد حمد</h3>
+                        <p data-en="Welcome to my digital world… where value is created and impact is made" data-ar="أهلاً بك في عالمي الرقمي… حيث تُصنع القيمة ويُترك الأثر">أهلاً بك في عالمي الرقمي… حيث تُصنع القيمة ويُترك الأثر</p>
+                    </div><div class="footer-links">
+                        <div class="footer-column">
+                            <h4 data-en="Quick Links" data-ar="روابط سريعة">روابط سريعة</h4>
+                            <ul>
+                                <li><a href="#about" data-en="About" data-ar="نبذة عني">نبذة عني</a></li>
+                                <li><a href="#skills" data-en="Skills" data-ar="المهارات">المهارات</a></li>
+                                <li><a href="#portfolio" data-en="Portfolio" data-ar="أعمالي">أعمالي</a></li>
+                                <li><a href="#certificates" data-en="Certificates" data-ar="الشهادات">الشهادات</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4 data-en="Services" data-ar="الخدمات">الخدمات</h4>
+                            <ul>
+                                <li><a href="#skills" data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</a></li>
+                                <li><a href="#skills" data-en="Mobile Apps" data-ar="تطبيقات الجوال">تطبيقات الجوال</a></li>
+                                <li><a href="#skills" data-en="Artificial Intelligence" data-ar="الذكاء الاصطناعي">الذكاء الاصطناعي</a></li>
+                                <li><a href="#skills" data-en="Cybersecurity" data-ar="الأمن السيبراني">الأمن السيبراني</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4 data-en="Contact Me" data-ar="تواصل معي">تواصل معي</h4>
+                            <ul>
+                                <li><a href="mailto:abdullahmohammedhamad24@gmail.com" data-en="Email" data-ar="البريد الإلكتروني">البريد الإلكتروني</a></li>
+                                <li><a href="https://www.linkedin.com/in/abdullah-mohammed-5376a4204" target="_blank">LinkedIn</a></li>
+                                <li><a href="portfolio-gallery.html" data-en="Portfolio Gallery" data-ar="معرض الأعمال">معرض الأعمال</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-social">
+                        <a href="mailto:abdullahmohammedhamad24@gmail.com" target="_blank">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/abdullah-mohammed-5376a4204" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                    </div>
+                    <div class="footer-copyright">
+                        <p data-en="&copy; 2025 Abdullah Mohammed Hamad. All rights reserved." data-ar="&copy; 2025 عبد الله محمد حمد. جميع الحقوق محفوظة.">&copy; 2025 عبد الله محمد حمد. جميع الحقوق محفوظة.</p>
+                    </div>
+                </div>
+            </div>
+        </div>    </footer>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-sun sun-icon"></i>
+        <i class="fas fa-moon moon-icon"></i>
+    </button>    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>    
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+    
+    <!-- Translation System -->
+    <script src="translation.js"></script>
+</body>
+</html>

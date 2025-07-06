@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التعلم الإلكتروني - نموذج تفاعلي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4facfe;
+            --secondary-color: #00f2fe;
+            --accent-color: #667eea;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 8px 25px rgba(0,0,0,0.1);
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .demo-header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .demo-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .demo-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .platform-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .sidebar {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--bg-light);
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: var(--gradient-primary);
+            color: var(--white);
+            transform: translateX(-5px);
+        }
+
+        .main-content {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--gradient-accent);
+            color: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+
+        .courses-section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--bg-light);
+        }
+
+        .section-header h2 {
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .course-image {
+            height: 180px;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .course-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .course-progress {
+            background: var(--bg-light);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .course-progress-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .virtual-classroom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .classroom-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .classroom-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+        }
+
+        .video-area {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-placeholder {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        .classroom-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .chat-area {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .chat-message {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .quiz-section {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            list-style: none;
+        }
+
+        .quiz-options li {
+            background: var(--bg-light);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-options li:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .platform-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .classroom-content {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .animate-in {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()">
+        <i class="fas fa-arrow-right"></i>
+        العودة للمعرض
+    </button>
+
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1><i class="fas fa-graduation-cap"></i> منصة التعلم الإلكتروني</h1>
+            <p>منصة تعليمية متكاملة مع فصول افتراضية وتقييمات ذكية</p>
+        </div>
+
+        <div class="platform-layout">
+            <aside class="sidebar">
+                <h3><i class="fas fa-bars"></i> القائمة الرئيسية</h3>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> لوحة التحكم
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="courses">
+                        <i class="fas fa-book"></i> الدورات
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="classroom">
+                        <i class="fas fa-video"></i> الفصل الافتراضي
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="quiz">
+                        <i class="fas fa-question-circle"></i> الاختبارات
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="progress">
+                        <i class="fas fa-chart-line"></i> تتبع التقدم
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="library">
+                        <i class="fas fa-library"></i> المكتبة الرقمية
+                    </a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chart-pie"></i> نظرة عامة</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> إضافة دورة جديدة
+                        </button>
+                    </div>
+
+                    <div class="dashboard-overview">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <h3>1,234</h3>
+                            <p>الطلاب المسجلين</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-book-open"></i>
+                            <h3>45</h3>
+                            <p>الدورات المتاحة</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-clock"></i>
+                            <h3>2,567</h3>
+                            <p>ساعات التعلم</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-certificate"></i>
+                            <h3>892</h3>
+                            <p>الشهادات الممنوحة</p>
+                        </div>
+                    </div>
+
+                    <div class="courses-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-fire"></i> الدورات الأكثر شعبية</h2>
+                        </div>
+                        
+                        <div class="courses-grid">
+                            <div class="course-card">
+                                <div class="course-image">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="course-content">
+                                    <div class="course-title">تطوير تطبيقات الويب</div>
+                                    <div class="course-description">تعلم بناء تطبيقات الويب الحديثة باستخدام أحدث التقنيات</div>
+                                    <div class="course-meta">
+                                        <span><i class="fas fa-users"></i> 324 طالب</span>
+                                        <span><i class="fas fa-star"></i> 4.8</span>
+                                    </div>
+                                    <div class="course-progress">
+                                        <div class="course-progress-bar" style="width: 75%"></div>
+                                    </div>
+                                    <div class="progress-text">75% مكتمل</div>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-image">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="course-content">
+                                    <div class="course-title">الذكاء الاصطناعي</div>
+                                    <div class="course-description">مقدمة شاملة في عالم الذكاء الاصطناعي والتعلم الآلي</div>
+                                    <div class="course-meta">
+                                        <span><i class="fas fa-users"></i> 198 طالب</span>
+                                        <span><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                    <div class="course-progress">
+                                        <div class="course-progress-bar" style="width: 45%"></div>
+                                    </div>
+                                    <div class="progress-text">45% مكتمل</div>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-image">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="course-content">
+                                    <div class="course-title">تطوير تطبيقات الموبايل</div>
+                                    <div class="course-description">تعلم إنشاء تطبيقات الهاتف المحمول لنظامي Android و iOS</div>
+                                    <div class="course-meta">
+                                        <span><i class="fas fa-users"></i> 267 طالب</span>
+                                        <span><i class="fas fa-star"></i> 4.7</span>
+                                    </div>
+                                    <div class="course-progress">
+                                        <div class="course-progress-bar" style="width: 60%"></div>
+                                    </div>
+                                    <div class="progress-text">60% مكتمل</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Virtual Classroom Section -->
+                <div id="classroom" class="content-section">
+                    <div class="virtual-classroom">
+                        <div class="classroom-header">
+                            <h2><i class="fas fa-video"></i> الفصل الافتراضي</h2>
+                            <p>محاضرة مباشرة: أساسيات البرمجة</p>
+                        </div>
+
+                        <div class="classroom-content">
+                            <div class="video-area">
+                                <div class="video-placeholder">
+                                    <i class="fas fa-play-circle"></i>
+                                </div>
+                                <h3>بث مباشر للمحاضرة</h3>
+                                <p>المحاضر: د. أحمد محمد</p>
+                                
+                                <div class="classroom-controls">
+                                    <button class="control-btn" title="صوت">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    <button class="control-btn" title="كاميرا">
+                                        <i class="fas fa-video"></i>
+                                    </button>
+                                    <button class="control-btn" title="مشاركة الشاشة">
+                                        <i class="fas fa-desktop"></i>
+                                    </button>
+                                    <button class="control-btn" title="رفع اليد">
+                                        <i class="fas fa-hand-paper"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="chat-area">
+                                <h4><i class="fas fa-comments"></i> المحادثة المباشرة</h4>
+                                <div class="chat-messages">
+                                    <div class="chat-message">
+                                        <strong>سارة أحمد:</strong> شكراً للشرح الواضح
+                                    </div>
+                                    <div class="chat-message">
+                                        <strong>محمد علي:</strong> هل يمكن إعادة الجزء الأخير؟
+                                    </div>
+                                    <div class="chat-message">
+                                        <strong>فاطمة محمد:</strong> ممتاز، الأمثلة واضحة جداً
+                                    </div>
+                                </div>
+                                <input type="text" placeholder="اكتب رسالتك..." style="width: 100%; padding: 10px; border: none; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Section -->
+                <div id="quiz" class="content-section">
+                    <div class="quiz-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-question-circle"></i> اختبار تفاعلي</h2>
+                            <div>
+                                <span class="badge" style="background: var(--success-color); color: white; padding: 5px 10px; border-radius: 15px;">
+                                    السؤال 1 من 5
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h3>ما هي لغة البرمجة الأفضل لتطوير تطبيقات الويب؟</h3>
+                            
+                            <ul class="quiz-options">
+                                <li onclick="selectOption(this)">
+                                    <i class="fas fa-circle" style="margin-left: 10px;"></i>
+                                    JavaScript
+                                </li>
+                                <li onclick="selectOption(this)">
+                                    <i class="fas fa-circle" style="margin-left: 10px;"></i>
+                                    Python
+                                </li>
+                                <li onclick="selectOption(this)">
+                                    <i class="fas fa-circle" style="margin-left: 10px;"></i>
+                                    Java
+                                </li>
+                                <li onclick="selectOption(this)">
+                                    <i class="fas fa-circle" style="margin-left: 10px;"></i>
+                                    C++
+                                </li>
+                            </ul>
+
+                            <div style="margin-top: 20px; text-align: center;">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-arrow-left"></i> السؤال التالي
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other sections would be similar... -->
+                <div id="courses" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-book"></i> جميع الدورات</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-filter"></i> تصفية
+                        </button>
+                    </div>
+                    <p style="text-align: center; color: var(--text-light); padding: 50px;">
+                        <i class="fas fa-construction" style="font-size: 3rem; margin-bottom: 20px; display: block;"></i>
+                        قسم الدورات قيد التطوير...
+                    </p>
+                </div>
+
+                <div id="progress" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chart-line"></i> تتبع التقدم</h2>
+                    </div>
+                    <p style="text-align: center; color: var(--text-light); padding: 50px;">
+                        <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 20px; display: block;"></i>
+                        قسم التقدم قيد التطوير...
+                    </p>
+                </div>
+
+                <div id="library" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-library"></i> المكتبة الرقمية</h2>
+                    </div>
+                    <p style="text-align: center; color: var(--text-light); padding: 50px;">
+                        <i class="fas fa-books" style="font-size: 3rem; margin-bottom: 20px; display: block;"></i>
+                        المكتبة الرقمية قيد التطوير...
+                    </p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage('closeDemo', '*');
+            } else {
+                window.history.back();
+            }
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all sections
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                // Show target section
+                const targetSection = document.getElementById(this.dataset.section);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    targetSection.classList.add('animate-in');
+                    
+                    setTimeout(() => {
+                        targetSection.classList.remove('animate-in');
+                    }, 500);
+                }
+            });
+        });
+
+        // Quiz functionality
+        function selectOption(option) {
+            // Remove selection from all options
+            document.querySelectorAll('.quiz-options li').forEach(li => {
+                li.style.background = 'var(--bg-light)';
+                li.style.color = 'var(--text-dark)';
+                li.querySelector('i').className = 'fas fa-circle';
+            });
+            
+            // Select clicked option
+            option.style.background = 'var(--success-color)';
+            option.style.color = 'white';
+            option.querySelector('i').className = 'fas fa-check-circle';
+        }
+
+        // Animate stats on page load
+        window.addEventListener('load', () => {
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(50px)';
+                    card.style.transition = 'all 0.6s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        });
+
+        // Course card interactions
+        document.querySelectorAll('.course-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                    alert('سيتم توجيهك إلى صفحة الدورة...');
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

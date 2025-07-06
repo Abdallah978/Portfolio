@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روبوت المحادثة الذكي - نموذج تفاعلي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #764ba2;
+            --secondary-color: #667eea;
+            --accent-color: #f093fb;
+            --success-color: #00d4aa;
+            --warning-color: #fdcb6e;
+            --danger-color: #e17055;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 8px 25px rgba(0,0,0,0.1);
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, #fa8bff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .demo-header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .demo-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .demo-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .chatbot-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr 300px;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .chat-sidebar {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .chat-sidebar h3 {
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .conversation-list {
+            list-style: none;
+        }
+
+        .conversation-item {
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .conversation-item:hover,
+        .conversation-item.active {
+            background: var(--gradient-accent);
+            color: var(--white);
+            transform: translateX(-5px);
+        }
+
+        .conversation-item .title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .conversation-item .preview {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .chat-main {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bot-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .bot-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.9;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .chat-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 500px;
+            background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 20px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .message.bot .message-content {
+            background: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--bg-light);
+            margin-right: 50px;
+        }
+
+        .message.user .message-content {
+            background: var(--gradient-primary);
+            color: var(--white);
+            margin-left: 50px;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+        }
+
+        .message.bot .message-avatar {
+            background: var(--gradient-primary);
+            color: var(--white);
+        }
+
+        .message.user .message-avatar {
+            background: var(--gradient-accent);
+            color: var(--white);
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            background: var(--white);
+            border-radius: 20px;
+            margin-right: 50px;
+            border: 2px solid var(--bg-light);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            30% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .chat-input {
+            padding: 20px;
+            border-top: 2px solid var(--bg-light);
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid var(--bg-light);
+            border-radius: 25px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .message-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gradient-primary);
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow);
+        }
+
+        .analytics-panel {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .analytics-panel h3 {
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sentiment-analysis {
+            margin-bottom: 25px;
+        }
+
+        .sentiment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .sentiment-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sentiment-bar {
+            width: 60px;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .sentiment-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .positive .sentiment-fill {
+            background: var(--success-color);
+        }
+
+        .neutral .sentiment-fill {
+            background: var(--warning-color);
+        }
+
+        .negative .sentiment-fill {
+            background: var(--danger-color);
+        }
+
+        .quick-responses {
+            margin-bottom: 25px;
+        }
+
+        .quick-response {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: var(--gradient-accent);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            text-align: right;
+        }
+
+        .quick-response:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .stats-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border-radius: 10px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .chatbot-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-sidebar,
+            .analytics-panel {
+                order: 2;
+            }
+
+            .demo-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()">
+        <i class="fas fa-arrow-right"></i>
+        العودة للمعرض
+    </button>
+
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1><i class="fas fa-robot"></i> روبوت المحادثة الذكي</h1>
+            <p>نظام محادثة ذكي متعدد اللغات مع معالجة طبيعية للغة وتعلم تكيفي</p>
+        </div>
+
+        <div class="chatbot-layout">
+            <aside class="chat-sidebar">
+                <h3><i class="fas fa-comments"></i> المحادثات</h3>
+                
+                <ul class="conversation-list">
+                    <li class="conversation-item active">
+                        <div class="title">محادثة عامة</div>
+                        <div class="preview">مرحباً، كيف يمكنني مساعدتك؟</div>
+                    </li>
+                    <li class="conversation-item">
+                        <div class="title">الدعم التقني</div>
+                        <div class="preview">لدي مشكلة في النظام...</div>
+                    </li>
+                    <li class="conversation-item">
+                        <div class="title">استفسار المنتجات</div>
+                        <div class="preview">أريد معرفة المزيد عن...</div>
+                    </li>
+                    <li class="conversation-item">
+                        <div class="title">طلب خدمة</div>
+                        <div class="preview">أحتاج إلى خدمة...</div>
+                    </li>
+                </ul>
+
+                <button class="quick-response" style="margin-top: 20px; background: var(--gradient-primary);">
+                    <i class="fas fa-plus"></i> محادثة جديدة
+                </button>
+            </aside>
+
+            <main class="chat-main">
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <div class="bot-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div>
+                            <h3>مساعد ذكي</h3>
+                            <div class="bot-status">
+                                <div class="status-indicator"></div>
+                                متصل - جاهز للمساعدة
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-controls">
+                        <button class="control-btn" title="إعدادات">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <button class="control-btn" title="مشاركة">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="control-btn" title="تصدير">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            مرحباً! أنا مساعدك الذكي. يمكنني مساعدتك في الإجابة على الأسئلة، تقديم المعلومات، وحل المشاكل. كيف يمكنني مساعدتك اليوم؟
+                            <div class="message-time">10:30 ص</div>
+                        </div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-content">
+                            مرحباً، أريد معرفة المزيد عن خدماتكم
+                            <div class="message-time">10:31 ص</div>
+                        </div>
+                        <div class="message-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="message bot">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            ممتاز! نحن نقدم مجموعة واسعة من الخدمات التقنية:
+                            <br><br>
+                            🔹 تطوير المواقع والتطبيقات<br>
+                            🔹 حلول الذكاء الاصطناعي<br>
+                            🔹 أنظمة إدارة المحتوى<br>
+                            🔹 التصميم والهوية البصرية<br>
+                            🔹 الاستشارات التقنية<br>
+                            <br>
+                            هل تريد معرفة تفاصيل أكثر عن خدمة معينة؟
+                            <div class="message-time">10:31 ص</div>
+                        </div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-content">
+                            أهتم بحلول الذكاء الاصطناعي
+                            <div class="message-time">10:32 ص</div>
+                        </div>
+                        <div class="message-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <span>المساعد يكتب...</span>
+                    </div>
+                </div>
+
+                <div class="chat-input">
+                    <div class="input-container">
+                        <textarea 
+                            class="message-input" 
+                            id="messageInput"
+                            placeholder="اكتب رسالتك هنا..."
+                            rows="1"
+                        ></textarea>
+                        <button class="send-btn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="analytics-panel">
+                <h3><i class="fas fa-chart-bar"></i> تحليل المشاعر</h3>
+                
+                <div class="sentiment-analysis">
+                    <div class="sentiment-item positive">
+                        <div class="sentiment-label">
+                            <i class="fas fa-smile" style="color: var(--success-color);"></i>
+                            إيجابي
+                        </div>
+                        <div class="sentiment-bar">
+                            <div class="sentiment-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="sentiment-item neutral">
+                        <div class="sentiment-label">
+                            <i class="fas fa-meh" style="color: var(--warning-color);"></i>
+                            محايد
+                        </div>
+                        <div class="sentiment-bar">
+                            <div class="sentiment-fill" style="width: 20%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="sentiment-item negative">
+                        <div class="sentiment-label">
+                            <i class="fas fa-frown" style="color: var(--danger-color);"></i>
+                            سلبي
+                        </div>
+                        <div class="sentiment-bar">
+                            <div class="sentiment-fill" style="width: 5%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-responses">
+                    <h4 style="margin-bottom: 15px; color: var(--text-dark);">
+                        <i class="fas fa-bolt"></i> ردود سريعة
+                    </h4>
+                    
+                    <button class="quick-response" onclick="insertQuickResponse('شكراً لك على المساعدة')">
+                        شكراً لك
+                    </button>
+                    
+                    <button class="quick-response" onclick="insertQuickResponse('هل يمكن توضيح أكثر؟')">
+                        طلب توضيح
+                    </button>
+                    
+                    <button class="quick-response" onclick="insertQuickResponse('أريد التحدث مع متخصص')">
+                        تحويل للمتخصص
+                    </button>
+                    
+                    <button class="quick-response" onclick="insertQuickResponse('أحتاج إلى عرض سعر')">
+                        طلب عرض سعر
+                    </button>
+                </div>
+
+                <div class="stats-summary">
+                    <div class="stat-item">
+                        <div class="stat-value">1,234</div>
+                        <div class="stat-label">رسالة</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">89%</div>
+                        <div class="stat-label">رضا العملاء</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">لغة مدعومة</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">متاح دائماً</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage('closeDemo', '*');
+            } else {
+                window.history.back();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage('user', message);
+            
+            // Clear input
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Simulate bot response
+            setTimeout(() => {
+                hideTypingIndicator();
+                generateBotResponse(message);
+            }, 2000);
+        }
+
+        function addMessage(sender, content, time = null) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const currentTime = time || new Date().toLocaleTimeString('ar', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            if (sender === 'bot') {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        ${content}
+                        <div class="message-time">${currentTime}</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        ${content}
+                        <div class="message-time">${currentTime}</div>
+                    </div>
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'flex';
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function generateBotResponse(userMessage) {
+            const responses = {
+                'ذكاء اصطناعي': 'حلول الذكاء الاصطناعي لدينا تشمل:<br><br>🤖 تطوير نماذج التعلم الآلي<br>📊 تحليل البيانات الضخمة<br>💬 معالجة اللغة الطبيعية<br>👁️ رؤية الحاسوب<br>🎯 أنظمة التوصيات الذكية<br><br>هل تريد معرفة المزيد عن أي من هذه الحلول؟',
+                'سعر': 'بالطبع! نحن نقدم عروض أسعار مخصصة حسب احتياجاتك. يرجى تقديم المزيد من التفاصيل حول:<br><br>📋 نوع المشروع المطلوب<br>⏱️ الجدول الزمني المطلوب<br>💼 حجم العمل<br>🎯 الأهداف المرجوة<br><br>وسأعدد لك عرض سعر تفصيلي.',
+                'شكر': 'العفو! أنا سعيد لمساعدتك. لا تتردد في طرح أي أسئلة أخرى. أنا هنا للمساعدة دائماً! 😊',
+                'مرحبا': 'أهلاً وسهلاً بك! 👋<br><br>أنا مساعدك الذكي وأنا هنا لمساعدتك في:<br>• الإجابة على الأسئلة<br>• تقديم المعلومات<br>• حل المشاكل التقنية<br>• توجيهك للخدمات المناسبة<br><br>كيف يمكنني مساعدتك اليوم؟'
+            };
+            
+            let response = 'شكراً لك على رسالتك! أفهم استفسارك وأعمل على تحليله. هل يمكنك تقديم المزيد من التفاصيل لأتمكن من مساعدتك بشكل أفضل؟';
+            
+            // Simple keyword matching
+            for (const [keyword, botResponse] of Object.entries(responses)) {
+                if (userMessage.includes(keyword)) {
+                    response = botResponse;
+                    break;
+                }
+            }
+            
+            addMessage('bot', response);
+            updateSentimentAnalysis();
+        }
+
+        function insertQuickResponse(text) {
+            const input = document.getElementById('messageInput');
+            input.value = text;
+            input.focus();
+        }
+
+        function updateSentimentAnalysis() {
+            // Simulate changing sentiment values
+            const sentimentBars = document.querySelectorAll('.sentiment-fill');
+            const randomValues = [
+                Math.random() * 100,
+                Math.random() * 50,
+                Math.random() * 20
+            ];
+            
+            sentimentBars.forEach((bar, index) => {
+                bar.style.width = randomValues[index] + '%';
+            });
+        }
+
+        // Handle Enter key to send message
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Auto-resize textarea
+        document.getElementById('messageInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Conversation switching
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.conversation-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Simulate loading different conversation
+                const messagesContainer = document.getElementById('chatMessages');
+                messagesContainer.innerHTML = `
+                    <div class="message bot">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            تم تحميل محادثة جديدة. كيف يمكنني مساعدتك؟
+                            <div class="message-time">${new Date().toLocaleTimeString('ar', {hour: '2-digit', minute: '2-digit'})}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+        // Animate elements on load
+        window.addEventListener('load', () => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((message, index) => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    message.style.transition = 'all 0.6s ease';
+                    message.style.opacity = '1';
+                    message.style.transform = 'translateY(0)';
+                }, index * 300);
+            });
+        });
+    </script>
+</body>
+</html>

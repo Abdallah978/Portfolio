@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج نظام إدارة الأراضي الزراعية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,1);
+            transform: scale(1.05);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="farm" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M12.5 0L25 12.5L12.5 25L0 12.5Z" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23farm)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .sidebar {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .farm-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .icon-area { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .icon-crop { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .icon-water { background: linear-gradient(135deg, #3498db, #2ecc71); }
+        .icon-soil { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .map-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            gap: 10px;
+        }
+
+        .map-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .control-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background: #f8f9fa;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .control-btn:hover {
+            background: #27ae60;
+            color: white;
+        }
+
+        .control-btn.active {
+            background: #27ae60;
+            color: white;
+        }
+
+        .farm-map {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .farm-map::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><pattern id="field-grid" width="40" height="30" patternUnits="userSpaceOnUse"><rect width="40" height="30" fill="none" stroke="white" stroke-width="1" opacity="0.3"/></pattern></defs><rect width="400" height="300" fill="url(%23field-grid)"/></svg>');
+        }
+
+        .field-zone {
+            position: absolute;
+            border: 2px solid white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .field-zone:hover {
+            transform: scale(1.05);
+            border-color: #f39c12;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .zone-1 {
+            top: 10%;
+            left: 10%;
+            width: 35%;
+            height: 35%;
+            background: rgba(241, 196, 15, 0.3);
+        }
+
+        .zone-2 {
+            top: 10%;
+            right: 10%;
+            width: 45%;
+            height: 35%;
+            background: rgba(46, 204, 113, 0.3);
+        }
+
+        .zone-3 {
+            bottom: 10%;
+            left: 10%;
+            width: 40%;
+            height: 40%;
+            background: rgba(52, 152, 219, 0.3);
+        }
+
+        .zone-4 {
+            bottom: 10%;
+            right: 10%;
+            width: 35%;
+            height: 40%;
+            background: rgba(155, 89, 182, 0.3);
+        }
+
+        .crops-analysis {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .crops-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .crop-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .crop-card:hover {
+            transform: translateY(-5px);
+            border-color: #27ae60;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .crop-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .crop-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .crop-health {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .health-excellent { color: #2ecc71; }
+        .health-good { color: #f39c12; }
+        .health-poor { color: #e74c3c; }
+
+        .crop-progress {
+            width: 100%;
+            height: 6px;
+            background: #ecf0f1;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            border-radius: 3px;
+            transition: width 2s ease-out;
+        }
+
+        .weather-widget {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-width: 200px;
+            opacity: 0;
+            animation: slideInRight 1s ease-out 1s both;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .weather-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .weather-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .weather-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .weather-item:last-child {
+            border-bottom: none;
+        }
+
+        .weather-icon {
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .irrigation-alerts {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .alert-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-message {
+            color: #856404;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .tech-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .tech-info.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                margin: 10px;
+                border-radius: 20px;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .crops-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .weather-widget {
+                position: static;
+                margin: 20px 0;
+                opacity: 1;
+                animation: none;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <button class="close-btn" onclick="closeDemo()">
+            <i class="fas fa-times"></i> إغلاق
+        </button>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🌾 نظام إدارة الأراضي الزراعية</h1>
+            <p>تحليل الأراضي الزراعية ومراقبة المحاصيل بتقنية الذكاء الاصطناعي</p>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-title">
+                    <i class="fas fa-chart-pie"></i>
+                    إحصائيات المزرعة
+                </div>
+                <div class="farm-stats">
+                    <div class="stat-item" onclick="showAreaDetails()">
+                        <div class="stat-header">
+                            <div class="stat-icon icon-area">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </div>
+                            <div class="stat-value">250</div>
+                        </div>
+                        <div class="stat-label">هكتار - إجمالي المساحة</div>
+                    </div>
+
+                    <div class="stat-item" onclick="showCropDetails()">
+                        <div class="stat-header">
+                            <div class="stat-icon icon-crop">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="stat-value">85%</div>
+                        </div>
+                        <div class="stat-label">نسبة الزراعة النشطة</div>
+                    </div>
+
+                    <div class="stat-item" onclick="showWaterDetails()">
+                        <div class="stat-header">
+                            <div class="stat-icon icon-water">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="stat-value">92%</div>
+                        </div>
+                        <div class="stat-label">كفاءة نظام الري</div>
+                    </div>
+
+                    <div class="stat-item" onclick="showSoilDetails()">
+                        <div class="stat-header">
+                            <div class="stat-icon icon-soil">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <div class="stat-value">جيد</div>
+                        </div>
+                        <div class="stat-label">حالة خصوبة التربة</div>
+                    </div>
+                </div>
+
+                <!-- Irrigation Alerts -->
+                <div class="irrigation-alerts">
+                    <div class="alert-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        تنبيهات الري
+                    </div>
+                    <div class="alert-message">
+                        منطقة القمح تحتاج إلى ري خلال 6 ساعات. مستوى الرطوبة: 35%
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Farm Map -->
+                <div class="map-section">
+                    <div class="section-title">
+                        <i class="fas fa-map"></i>
+                        خريطة المزرعة التفاعلية
+                    </div>
+                    <div class="map-controls">
+                        <button class="control-btn active" onclick="changeMapView('satellite')">القمر الصناعي</button>
+                        <button class="control-btn" onclick="changeMapView('ndvi')">مؤشر NDVI</button>
+                        <button class="control-btn" onclick="changeMapView('moisture')">الرطوبة</button>
+                        <button class="control-btn" onclick="changeMapView('elevation')">التضاريس</button>
+                    </div>
+                    <div class="farm-map" onclick="expandMap()">
+                        <div class="field-zone zone-1" onclick="selectZone(event, 'zone1')">
+                            <div>🌾 منطقة القمح<br>75 هكتار</div>
+                        </div>
+                        <div class="field-zone zone-2" onclick="selectZone(event, 'zone2')">
+                            <div>🌽 منطقة الذرة<br>60 هكتار</div>
+                        </div>
+                        <div class="field-zone zone-3" onclick="selectZone(event, 'zone3')">
+                            <div>🥕 منطقة الخضار<br>50 هكتار</div>
+                        </div>
+                        <div class="field-zone zone-4" onclick="selectZone(event, 'zone4')">
+                            <div>🌻 منطقة الزهور<br>40 هكتار</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crops Analysis -->
+                <div class="crops-analysis">
+                    <div class="section-title">
+                        <i class="fas fa-chart-line"></i>
+                        تحليل المحاصيل
+                    </div>
+                    <div class="crops-grid">
+                        <div class="crop-card" onclick="analyzeCrop('wheat')">
+                            <div class="crop-icon">🌾</div>
+                            <div class="crop-name">القمح</div>
+                            <div class="crop-health health-excellent">
+                                <i class="fas fa-heart"></i>
+                                ممتاز
+                            </div>
+                            <div class="crop-progress">
+                                <div class="progress-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="crop-card" onclick="analyzeCrop('corn')">
+                            <div class="crop-icon">🌽</div>
+                            <div class="crop-name">الذرة</div>
+                            <div class="crop-health health-good">
+                                <i class="fas fa-heart"></i>
+                                جيد
+                            </div>
+                            <div class="crop-progress">
+                                <div class="progress-fill" style="width: 70%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="crop-card" onclick="analyzeCrop('vegetables')">
+                            <div class="crop-icon">🥕</div>
+                            <div class="crop-name">الخضار</div>
+                            <div class="crop-health health-excellent">
+                                <i class="fas fa-heart"></i>
+                                ممتاز
+                            </div>
+                            <div class="crop-progress">
+                                <div class="progress-fill" style="width: 92%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="crop-card" onclick="analyzeCrop('flowers')">
+                            <div class="crop-icon">🌻</div>
+                            <div class="crop-name">الزهور</div>
+                            <div class="crop-health health-good">
+                                <i class="fas fa-heart"></i>
+                                جيد
+                            </div>
+                            <div class="crop-progress">
+                                <div class="progress-fill" style="width: 78%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Widget -->
+        <div class="weather-widget">
+            <div class="weather-title">
+                <i class="fas fa-cloud-sun"></i>
+                الطقس اليوم
+            </div>
+            <div class="weather-info">
+                <div class="weather-item">
+                    <span><i class="weather-icon fas fa-thermometer-half"></i> الحرارة</span>
+                    <span>28°م</span>
+                </div>
+                <div class="weather-item">
+                    <span><i class="weather-icon fas fa-tint"></i> الرطوبة</span>
+                    <span>65%</span>
+                </div>
+                <div class="weather-item">
+                    <span><i class="weather-icon fas fa-wind"></i> الرياح</span>
+                    <span>15 كم/س</span>
+                </div>
+                <div class="weather-item">
+                    <span><i class="weather-icon fas fa-cloud-rain"></i> الأمطار</span>
+                    <span>20%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Info -->
+    <div class="tech-info" id="techInfo">
+        <strong>🚜 التقنيات المستخدمة:</strong><br>
+        • GIS Analysis<br>
+        • PostGIS Database<br>
+        • Agriculture Technology<br>
+        • Python Analytics<br>
+        • NDVI Monitoring
+    </div>
+
+    <script>
+        // Show tech info on load
+        setTimeout(() => {
+            document.getElementById('techInfo').classList.add('show');
+        }, 1000);
+
+        // Hide tech info after 5 seconds
+        setTimeout(() => {
+            document.getElementById('techInfo').classList.remove('show');
+        }, 6000);
+
+        function closeDemo() {
+            window.parent.postMessage('closeModal', '*');
+        }
+
+        function showAreaDetails() {
+            showNotification('إجمالي المساحة: 250 هكتار - مقسمة إلى 4 مناطق زراعية 🌾');
+        }
+
+        function showCropDetails() {
+            showNotification('85% من الأراضي قيد الزراعة النشطة - معدل نمو ممتاز 📈');
+        }
+
+        function showWaterDetails() {
+            showNotification('كفاءة الري: 92% - توفير 30% من استهلاك المياه 💧');
+        }
+
+        function showSoilDetails() {
+            showNotification('خصوبة التربة: جيدة - pH متوازن ومغذيات كافية 🌱');
+        }
+
+        function changeMapView(view) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            const map = document.querySelector('.farm-map');
+            const views = {
+                'satellite': { bg: 'linear-gradient(135deg, #27ae60, #2ecc71)', name: 'عرض القمر الصناعي' },
+                'ndvi': { bg: 'linear-gradient(135deg, #e74c3c, #f39c12, #2ecc71)', name: 'مؤشر النمو النباتي' },
+                'moisture': { bg: 'linear-gradient(135deg, #3498db, #2ecc71)', name: 'خريطة الرطوبة' },
+                'elevation': { bg: 'linear-gradient(135deg, #8e44ad, #3498db)', name: 'خريطة التضاريس' }
+            };
+            
+            map.style.background = views[view].bg;
+            showNotification(`تم تغيير العرض إلى: ${views[view].name} 🗺️`);
+        }
+
+        function selectZone(event, zone) {
+            event.stopPropagation();
+            
+            const zones = {
+                'zone1': { name: 'منطقة القمح', crop: '🌾', area: '75 هكتار', status: 'جاهز للحصاد خلال أسبوعين' },
+                'zone2': { name: 'منطقة الذرة', crop: '🌽', area: '60 هكتار', status: 'في مرحلة النمو المتوسط' },
+                'zone3': { name: 'منطقة الخضار', crop: '🥕', area: '50 هكتار', status: 'نمو ممتاز ومحصول وفير' },
+                'zone4': { name: 'منطقة الزهور', crop: '🌻', area: '40 هكتار', status: 'بداية موسم الإزهار' }
+            };
+            
+            const zoneInfo = zones[zone];
+            showNotification(`${zoneInfo.name} ${zoneInfo.crop} - ${zoneInfo.area}: ${zoneInfo.status}`);
+        }
+
+        function expandMap() {
+            showNotification('توسيع الخريطة - عرض تفصيلي للمزرعة 🔍');
+            
+            const map = document.querySelector('.farm-map');
+            map.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                map.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        function analyzeCrop(crop) {
+            const crops = {
+                'wheat': {
+                    name: 'القمح',
+                    icon: '🌾',
+                    analysis: 'نمو ممتاز - متوقع حصاد 4.2 طن/هكتار - جودة عالية'
+                },
+                'corn': {
+                    name: 'الذرة', 
+                    icon: '🌽',
+                    analysis: 'نمو جيد - يحتاج زيادة في الري - متوقع 3.8 طن/هكتار'
+                },
+                'vegetables': {
+                    name: 'الخضار',
+                    icon: '🥕',
+                    analysis: 'حالة ممتازة - نمو سريع ومنتظم - جاهز للقطف'
+                },
+                'flowers': {
+                    name: 'الزهور',
+                    icon: '🌻',
+                    analysis: 'بداية الإزهار - ألوان زاهية - مناسب للبيع'
+                }
+            };
+
+            const cropInfo = crops[crop];
+            showNotification(`تحليل ${cropInfo.name} ${cropInfo.icon}: ${cropInfo.analysis}`);
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #27ae60, #2ecc71);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                font-size: 14px;
+                z-index: 2000;
+                animation: slideDown 0.3s ease-out;
+                box-shadow: 0 5px 20px rgba(39, 174, 96, 0.3);
+                max-width: 90%;
+                text-align: center;
+            `;
+            notification.textContent = message;
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideDown {
+                    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 4 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideDown 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('مرحباً بك في نظام إدارة الأراضي الزراعية! 🚜');
+            
+            // Animate progress bars on load
+            setTimeout(() => {
+                const progressBars = document.querySelectorAll('.progress-fill');
+                progressBars.forEach((bar, index) => {
+                    setTimeout(() => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 100);
+                    }, index * 200);
+                });
+            }, 500);
+
+            // Simulate real-time crop monitoring
+            setInterval(() => {
+                updateCropData();
+            }, 25000);
+        });
+
+        function updateCropData() {
+            showNotification('تحديث بيانات المحاصيل من الأقمار الصناعية... 🛰️');
+            
+            // Simulate random updates to crop progress
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const currentWidth = parseInt(bar.style.width);
+                const change = Math.floor(Math.random() * 4) - 2; // Random change -2 to +2
+                const newWidth = Math.max(0, Math.min(100, currentWidth + change));
+                bar.style.width = newWidth + '%';
+            });
+        }
+
+        // Handle clicks outside modal
+        window.addEventListener('message', function(event) {
+            if (event.data === 'closeModal') {
+                window.close();
+            }
+        });
+
+        // Add interactive effects to zones
+        document.querySelectorAll('.field-zone').forEach(zone => {
+            zone.addEventListener('mouseenter', function() {
+                this.style.borderWidth = '3px';
+                this.style.borderColor = '#f39c12';
+            });
+            
+            zone.addEventListener('mouseleave', function() {
+                this.style.borderWidth = '2px';
+                this.style.borderColor = 'white';
+            });
+        });
+    </script>
+</body>
+</html>

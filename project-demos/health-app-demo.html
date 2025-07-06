@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق الصحة واللياقة - معاينة تفاعلية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 50%, #74b9ff 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .fitness-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="50" cy="70" r="2.5" fill="rgba(255,255,255,0.06)"/><circle cx="90" cy="80" r="1" fill="rgba(255,255,255,0.12)"/></svg>');
+            animation: fitnessFloat 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes fitnessFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-20px, -20px) rotate(180deg); }
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            color: #00b894;
+            margin-bottom: 10px;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .goals-bar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .goal-item {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9ff, #e8f4ff);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .goal-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 184, 148, 0.2);
+        }
+
+        .goal-progress {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(#00b894 0deg 252deg, #e0e0e0 252deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+
+        .goal-progress::before {
+            content: '';
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .goal-percentage {
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            color: #00b894;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            color: #00b894;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #00b894;
+            font-size: 1.3rem;
+        }
+
+        .nav-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: scale(1.05);
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            min-height: 600px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 184, 148, 0.4);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .workout-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .workout-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .workout-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 184, 148, 0.2);
+            border-color: #00b894;
+        }
+
+        .workout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .workout-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 15px;
+        }
+
+        .workout-info h4 {
+            color: #00b894;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .workout-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .detail-item {
+            padding: 12px;
+            background: rgba(0, 184, 148, 0.05);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            color: #00b894;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00b894, #00cec9);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
+        }
+
+        .meal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .meal-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .meal-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 184, 148, 0.2);
+        }
+
+        .meal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .meal-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-left: 15px;
+        }
+
+        .calories-ring {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(#fd79a8 0deg 180deg, #e0e0e0 180deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .calories-ring::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .calories-text {
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            color: #fd79a8;
+            font-size: 0.9rem;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #00b894;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: #00b894;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.3);
+        }
+
+        .activity-feed {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .activity-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(0, 184, 148, 0.05);
+            transform: translateX(5px);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .challenge-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 15px 0;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .workout-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .demo-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fitness-bg"></div>
+    
+    <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> العودة للمعرض
+    </a>
+
+    <div class="demo-container">
+        <div class="header">
+            <h1><i class="fas fa-heartbeat"></i> تطبيق الصحة واللياقة</h1>
+            <p>رحلتك نحو نمط حياة صحي ونشط</p>
+        </div>
+
+        <div class="goals-bar">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #00b894;">
+                <i class="fas fa-bullseye"></i> أهدافك اليومية
+            </h3>
+            <div class="goals-grid">
+                <div class="goal-item">
+                    <div class="goal-progress">
+                        <span class="goal-percentage">70%</span>
+                    </div>
+                    <h4 style="color: #00b894;">الخطوات</h4>
+                    <p>7,000 / 10,000</p>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-progress" style="background: conic-gradient(#fd79a8 0deg 216deg, #e0e0e0 216deg 360deg);">
+                        <span class="goal-percentage" style="color: #fd79a8;">60%</span>
+                    </div>
+                    <h4 style="color: #fd79a8;">السعرات</h4>
+                    <p>1,200 / 2,000</p>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-progress" style="background: conic-gradient(#74b9ff 0deg 288deg, #e0e0e0 288deg 360deg);">
+                        <span class="goal-percentage" style="color: #74b9ff;">80%</span>
+                    </div>
+                    <h4 style="color: #74b9ff;">الماء</h4>
+                    <p>2.0 / 2.5 لتر</p>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-progress" style="background: conic-gradient(#fdcb6e 0deg 144deg, #e0e0e0 144deg 360deg);">
+                        <span class="goal-percentage" style="color: #fdcb6e;">40%</span>
+                    </div>
+                    <h4 style="color: #fdcb6e;">التمرين</h4>
+                    <p>20 / 50 دقيقة</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <h3><i class="fas fa-dumbbell"></i> الأنشطة</h3>
+                <button class="nav-item active" onclick="showSection('dashboard')">
+                    <i class="fas fa-tachometer-alt"></i> الرئيسية
+                </button>
+                <button class="nav-item" onclick="showSection('workouts')">
+                    <i class="fas fa-dumbbell"></i> التمارين
+                </button>
+                <button class="nav-item" onclick="showSection('nutrition')">
+                    <i class="fas fa-apple-alt"></i> التغذية
+                </button>
+                <button class="nav-item" onclick="showSection('progress')">
+                    <i class="fas fa-chart-line"></i> التقدم
+                </button>
+                <button class="nav-item" onclick="showSection('challenges')">
+                    <i class="fas fa-trophy"></i> التحديات
+                </button>
+            </div>
+
+            <div class="content-area">
+                <!-- الرئيسية -->
+                <div id="dashboard" class="content-section active">
+                    <h2><i class="fas fa-tachometer-alt"></i> لوحة التحكم</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-walking"></i></div>
+                            <div class="stat-number">7,234</div>
+                            <div class="stat-label">خطوة اليوم</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                            <div class="stat-number">1,245</div>
+                            <div class="stat-label">سعرة محروقة</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="stat-number">25</div>
+                            <div class="stat-label">دقيقة نشاط</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-bed"></i></div>
+                            <div class="stat-number">7.5</div>
+                            <div class="stat-label">ساعة نوم</div>
+                        </div>
+                    </div>
+
+                    <div class="activity-feed">
+                        <h3 style="margin-bottom: 20px; color: #00b894;">
+                            <i class="fas fa-history"></i> النشاط الأخير
+                        </h3>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <div>
+                                <h4>جري صباحي</h4>
+                                <p>5 كم في 28 دقيقة | 345 سعرة</p>
+                                <small style="color: #666;">منذ ساعتين</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                                <i class="fas fa-apple-alt"></i>
+                            </div>
+                            <div>
+                                <h4>وجبة الإفطار</h4>
+                                <p>شوفان بالفواكه | 320 سعرة</p>
+                                <small style="color: #666;">منذ 3 ساعات</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: linear-gradient(135deg, #fdcb6e, #e17055);">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <div>
+                                <h4>تمرين القوة</h4>
+                                <p>45 دقيقة | 280 سعرة</p>
+                                <small style="color: #666;">أمس</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7);">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div>
+                                <h4>شرب الماء</h4>
+                                <p>500 مل | إجمالي 2 لتر</p>
+                                <small style="color: #666;">منذ 30 دقيقة</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- التمارين -->
+                <div id="workouts" class="content-section">
+                    <h2><i class="fas fa-dumbbell"></i> برنامج التمارين</h2>
+                    
+                    <button class="btn" onclick="startWorkout()">
+                        <i class="fas fa-play"></i> بدء تمرين جديد
+                    </button>
+
+                    <div class="workout-grid">
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="workout-icon">
+                                        <i class="fas fa-running"></i>
+                                    </div>
+                                    <div class="workout-info">
+                                        <h4>تمرين الكارديو</h4>
+                                        <p>للمبتدئين - 30 دقيقة</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="workout-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">السعرات</div>
+                                    <div class="detail-value">250-300</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">المعدات</div>
+                                    <div class="detail-value">بدون معدات</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <button class="btn" onclick="selectWorkout('كارديو')">
+                                <i class="fas fa-play"></i> بدء التمرين
+                            </button>
+                        </div>
+
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="workout-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                                        <i class="fas fa-dumbbell"></i>
+                                    </div>
+                                    <div class="workout-info">
+                                        <h4>تمرين القوة</h4>
+                                        <p>متوسط - 45 دقيقة</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="workout-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">السعرات</div>
+                                    <div class="detail-value">300-400</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">المعدات</div>
+                                    <div class="detail-value">أوزان</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                            <button class="btn" onclick="selectWorkout('قوة')">
+                                <i class="fas fa-play"></i> متابعة التمرين
+                            </button>
+                        </div>
+
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="workout-icon" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7);">
+                                        <i class="fas fa-leaf"></i>
+                                    </div>
+                                    <div class="workout-info">
+                                        <h4>يوجا ومرونة</h4>
+                                        <p>استرخاء - 25 دقيقة</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="workout-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">السعرات</div>
+                                    <div class="detail-value">100-150</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">المعدات</div>
+                                    <div class="detail-value">سجادة يوجا</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%"></div>
+                            </div>
+                            <button class="btn" onclick="selectWorkout('يوجا')" style="background: linear-gradient(45deg, #00cec9, #74b9ff);">
+                                <i class="fas fa-check"></i> مكتمل
+                            </button>
+                        </div>
+
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="workout-icon" style="background: linear-gradient(135deg, #fdcb6e, #e17055);">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <div class="workout-info">
+                                        <h4>HIIT</h4>
+                                        <p>متقدم - 20 دقيقة</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="workout-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">السعرات</div>
+                                    <div class="detail-value">400-500</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">المعدات</div>
+                                    <div class="detail-value">بدون معدات</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <button class="btn" onclick="selectWorkout('HIIT')">
+                                <i class="fas fa-play"></i> بدء التمرين
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- التغذية -->
+                <div id="nutrition" class="content-section">
+                    <h2><i class="fas fa-apple-alt"></i> خطة التغذية</h2>
+                    
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <div class="calories-ring" style="margin: 0 auto; width: 120px; height: 120px;">
+                            <span class="calories-text" style="font-size: 1.2rem;">1,245<br><small>/ 2,000</small></span>
+                        </div>
+                        <h3 style="margin-top: 15px; color: #fd79a8;">السعرات المتبقية: 755</h3>
+                    </div>
+
+                    <div class="meal-grid">
+                        <div class="meal-card">
+                            <div class="meal-header">
+                                <div class="meal-icon">
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #fdcb6e;">الإفطار</h4>
+                                    <p>7:30 صباحاً</p>
+                                </div>
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <p><strong>شوفان بالفواكه</strong></p>
+                                <p>• كوب شوفان + موزة + عسل</p>
+                                <p>• كوب حليب قليل الدسم</p>
+                                <p><strong>320 سعرة حرارية</strong></p>
+                            </div>
+                            <button class="btn" style="background: linear-gradient(45px, #fdcb6e, #e17055);">
+                                <i class="fas fa-check"></i> مكتمل
+                            </button>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-header">
+                                <div class="meal-icon" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">
+                                    <i class="fas fa-cloud-sun"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #74b9ff;">الغداء</h4>
+                                    <p>1:00 ظهراً</p>
+                                </div>
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <p><strong>سلطة الدجاج المشوي</strong></p>
+                                <p>• 150 جم دجاج مشوي</p>
+                                <p>• خضار مشكلة + أفوكادو</p>
+                                <p><strong>450 سعرة حرارية</strong></p>
+                            </div>
+                            <button class="btn">
+                                <i class="fas fa-utensils"></i> وقت الوجبة
+                            </button>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-header">
+                                <div class="meal-icon" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7);">
+                                    <i class="fas fa-cookie-bite"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #a29bfe;">وجبة خفيفة</h4>
+                                    <p>4:00 عصراً</p>
+                                </div>
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <p><strong>مكسرات وفواكه</strong></p>
+                                <p>• حفنة لوز</p>
+                                <p>• تفاحة متوسطة</p>
+                                <p><strong>180 سعرة حرارية</strong></p>
+                            </div>
+                            <button class="btn">
+                                <i class="fas fa-plus"></i> إضافة للقائمة
+                            </button>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-header">
+                                <div class="meal-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                                    <i class="fas fa-moon"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #667eea;">العشاء</h4>
+                                    <p>7:30 مساءً</p>
+                                </div>
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <p><strong>سمك مشوي مع الخضار</strong></p>
+                                <p>• 120 جم سمك سلمون</p>
+                                <p>• خضار مسلوقة + أرز بني</p>
+                                <p><strong>380 سعرة حرارية</strong></p>
+                            </div>
+                            <button class="btn">
+                                <i class="fas fa-clock"></i> تذكير
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- التقدم -->
+                <div id="progress" class="content-section">
+                    <h2><i class="fas fa-chart-line"></i> تتبع التقدم</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <div class="stat-icon"><i class="fas fa-weight"></i></div>
+                            <div class="stat-number">72</div>
+                            <div class="stat-label">الوزن الحالي (كج)</div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                            <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
+                            <div class="stat-number">68</div>
+                            <div class="stat-label">الهدف (كج)</div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #fdcb6e, #e17055);">
+                            <div class="stat-icon"><i class="fas fa-minus"></i></div>
+                            <div class="stat-number">-2.5</div>
+                            <div class="stat-label">الفقدان (كج)</div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7);">
+                            <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                            <div class="stat-number">18</div>
+                            <div class="stat-label">دهون الجسم (%)</div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+                        <div style="background: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 15px;">
+                            <h3 style="color: #00b894; margin-bottom: 15px;">
+                                <i class="fas fa-chart-area"></i> تطور الوزن
+                            </h3>
+                            <div style="height: 200px; background: rgba(0, 184, 148, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(0, 184, 148, 0.3);">
+                                <div style="text-align: center; color: #00b894;">
+                                    <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                                    <p>رسم بياني للوزن خلال الشهر</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 15px;">
+                            <h3 style="color: #fd79a8; margin-bottom: 15px;">
+                                <i class="fas fa-fire"></i> السعرات المحروقة
+                            </h3>
+                            <div style="height: 200px; background: rgba(253, 121, 168, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(253, 121, 168, 0.3);">
+                                <div style="text-align: center; color: #fd79a8;">
+                                    <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                                    <p>معدل حرق السعرات اليومي</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- التحديات -->
+                <div id="challenges" class="content-section">
+                    <h2><i class="fas fa-trophy"></i> التحديات والإنجازات</h2>
+                    
+                    <div class="challenge-card">
+                        <h3><i class="fas fa-medal"></i> تحدي الـ 30 يوم</h3>
+                        <p>امشِ 10,000 خطوة يومياً لمدة 30 يوماً متتالياً</p>
+                        <div class="progress-bar" style="margin: 15px 0;">
+                            <div class="progress-fill" style="width: 40%; background: linear-gradient(90deg, #fdcb6e, #e17055);"></div>
+                        </div>
+                        <p><strong>اليوم 12 من 30</strong> | المكافأة: 500 نقطة</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 25px;">
+                        <div style="background: linear-gradient(135deg, #00b894, #00cec9); color: white; padding: 20px; border-radius: 15px; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <h4>مدمن الحرق</h4>
+                            <p>احرق 500 سعرة في يوم واحد</p>
+                            <div style="margin-top: 15px; padding: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 8px;">
+                                <strong>مكتمل ✓</strong>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #fd79a8, #e84393); color: white; padding: 20px; border-radius: 15px; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <h4>عداء ماراثوني</h4>
+                            <p>اجرِ 5 كم بدون توقف</p>
+                            <div style="margin-top: 15px; padding: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 8px;">
+                                <strong>قيد التقدم 75%</strong>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 20px; border-radius: 15px; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <h4>بطل القوة</h4>
+                            <p>أكمل 20 تمرين قوة</p>
+                            <div style="margin-top: 15px; padding: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 8px;">
+                                <strong>15/20 مكتمل</strong>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: white; padding: 20px; border-radius: 15px; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 15px;">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h4>خبير اليوجا</h4>
+                            <p>مارس اليوجا 10 أيام متتالية</p>
+                            <div style="margin-top: 15px; padding: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 8px;">
+                                <strong>7/10 أيام</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3><i class="fas fa-trophy"></i> الإنجازات</h3>
+                
+                <div style="background: linear-gradient(135deg, #fdcb6e, #e17055); color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h4>أسبوع نشط</h4>
+                    <small>مارست الرياضة 7 أيام متتالية</small>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #00b894, #00cec9); color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h4>حارق السعرات</h4>
+                    <small>حرقت 1000 سعرة في يوم واحد</small>
+                </div>
+
+                <h3><i class="fas fa-users"></i> الأصدقاء</h3>
+                
+                <div style="background: rgba(102, 126, 234, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: #667eea;">سارة أحمد</h4>
+                            <small>8,234 خطوة اليوم</small>
+                        </div>
+                    </div>
+                    <div style="background: rgba(102, 126, 234, 0.2); height: 5px; border-radius: 3px;">
+                        <div style="background: #667eea; height: 100%; width: 82%; border-radius: 3px;"></div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(253, 121, 168, 0.1); padding: 15px; border-radius: 10px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #fd79a8, #e84393); display: flex; align-items: center; justify-content: center; color: white;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: #fd79a8;">أحمد محمد</h4>
+                            <small>6,789 خطوة اليوم</small>
+                        </div>
+                    </div>
+                    <div style="background: rgba(253, 121, 168, 0.2); height: 5px; border-radius: 3px;">
+                        <div style="background: #fd79a8; height: 100%; width: 68%; border-radius: 3px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // إخفاء جميع الأقسام
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // إظهار القسم المحدد
+            document.getElementById(sectionId).classList.add('active');
+            
+            // تحديث حالة الأزرار
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function startWorkout() {
+            showNotification('بدء تمرين جديد! اختر نوع التمرين المناسب لك', 'success');
+        }
+
+        function selectWorkout(type) {
+            showNotification(`بدء تمرين ${type}! استعد للحصول على أفضل النتائج`, 'info');
+            
+            // محاكاة تحديث التقدم
+            setTimeout(() => {
+                showNotification(`ممتاز! تم إنجاز جزء من تمرين ${type}`, 'success');
+            }, 3000);
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            
+            let bgColor, icon;
+            switch(type) {
+                case 'success':
+                    bgColor = 'linear-gradient(135deg, #00b894, #00cec9)';
+                    icon = 'fas fa-check-circle';
+                    break;
+                case 'warning':
+                    bgColor = 'linear-gradient(135deg, #fdcb6e, #e17055)';
+                    icon = 'fas fa-exclamation-triangle';
+                    break;
+                case 'error':
+                    bgColor = 'linear-gradient(135deg, #ff6b6b, #ee5a24)';
+                    icon = 'fas fa-exclamation-circle';
+                    break;
+                default:
+                    bgColor = 'linear-gradient(135deg, #74b9ff, #0984e3)';
+                    icon = 'fas fa-info-circle';
+            }
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${bgColor};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                z-index: 1001;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            notification.innerHTML = `<i class="${icon}"></i> ${message}`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // تحديث البيانات الحية
+        function updateLiveData() {
+            // محاكاة تحديث الخطوات
+            const stepsElement = document.querySelector('.stat-number');
+            if (stepsElement) {
+                const currentSteps = parseInt(stepsElement.textContent.replace(',', ''));
+                if (Math.random() > 0.7) {
+                    const newSteps = currentSteps + Math.floor(Math.random() * 50) + 1;
+                    stepsElement.textContent = newSteps.toLocaleString();
+                }
+            }
+
+            // تحديث التقدم في الأهداف
+            const progressElements = document.querySelectorAll('.goal-progress');
+            progressElements.forEach((progress, index) => {
+                if (Math.random() > 0.9) {
+                    const percentage = progress.querySelector('.goal-percentage');
+                    const current = parseInt(percentage.textContent);
+                    const newValue = Math.min(current + 1, 100);
+                    percentage.textContent = newValue + '%';
+                    
+                    // تحديث التدرج
+                    const degrees = (newValue / 100) * 360;
+                    const colors = ['#00b894', '#fd79a8', '#74b9ff', '#fdcb6e'];
+                    progress.style.background = `conic-gradient(${colors[index]} 0deg ${degrees}deg, #e0e0e0 ${degrees}deg 360deg)`;
+                }
+            });
+        }
+
+        // تأثيرات التحميل
+        window.addEventListener('load', function() {
+            // تحريك الأرقام
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach((stat, index) => {
+                setTimeout(() => {
+                    const finalNumber = stat.textContent;
+                    let currentNumber = 0;
+                    const increment = Math.ceil(parseInt(finalNumber.replace(/,/g, '')) / 50);
+                    
+                    const timer = setInterval(() => {
+                        currentNumber += increment;
+                        if (currentNumber >= parseInt(finalNumber.replace(/,/g, ''))) {
+                            stat.textContent = finalNumber;
+                            clearInterval(timer);
+                        } else {
+                            stat.textContent = currentNumber.toLocaleString();
+                        }
+                    }, 30);
+                }, index * 200);
+            });
+            
+            // تحديث دوري للبيانات
+            setInterval(updateLiveData, 20000);
+        });
+
+        // إضافة تأثيرات CSS للرسوم المتحركة
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // تأثيرات تفاعلية للبطاقات
+        document.querySelectorAll('.workout-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // تحفيز المستخدم
+        setTimeout(() => {
+            showNotification('تذكير: حان وقت شرب الماء! 💧', 'info');
+        }, 10000);
+
+        setTimeout(() => {
+            showNotification('ممتاز! لقد حققت 70% من هدف الخطوات اليومي 🎉', 'success');
+        }, 15000);
+    </script>
+</body>
+</html>

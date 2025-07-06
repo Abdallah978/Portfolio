@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج تطبيق المطاعم الذكي</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .demo-container {
+            max-width: 375px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .phone-header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+
+        .app-header {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .app-header h1 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .app-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 25px;
+            padding: 12px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .search-bar i {
+            color: #666;
+        }
+
+        .location-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .categories {
+            padding: 0 20px 20px;
+            background: #f8f9fa;
+        }
+
+        .categories-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category-item {
+            min-width: 80px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .category-item.active .category-icon {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .category-name {
+            font-size: 12px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .featured-section {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .restaurant-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .restaurant-image {
+            height: 160px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+        }
+
+        .delivery-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(46, 204, 113, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .restaurant-info {
+            padding: 15px;
+        }
+
+        .restaurant-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .restaurant-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #f39c12;
+            font-size: 14px;
+        }
+
+        .delivery-time {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .restaurant-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #f8f9fa;
+            color: #666;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: white;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .nav-item.active {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tech-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .tech-info.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .special-offers {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            margin: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            color: #2d3436;
+        }
+
+        .offer-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .offer-text {
+            font-size: 14px;
+        }
+
+        .order-tracking {
+            background: #fff;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .order-tracking.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .tracking-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .tracking-step.active {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .tracking-step.active .step-icon {
+            background: rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 400px) {
+            .demo-container {
+                max-width: 95%;
+                margin: 10px auto;
+            }
+
+            .bottom-nav {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <button class="close-btn" onclick="closeDemo()">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Phone Header -->
+        <div class="phone-header">
+            <div class="status-bar">
+                <span>9:41</span>
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+            <div class="app-header">
+                <h1><i class="fas fa-utensils"></i> طلباتي</h1>
+                <p>اطلب من مطاعمك المفضلة</p>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" placeholder="ابحث عن مطعم أو وجبة...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="location-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>الرياض، حي النخيل - 15 دقيقة للتوصيل</span>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories">
+            <div class="categories-scroll">
+                <div class="category-item active" onclick="selectCategory(this, 'pizza')">
+                    <div class="category-icon">🍕</div>
+                    <div class="category-name">بيتزا</div>
+                </div>
+                <div class="category-item" onclick="selectCategory(this, 'burger')">
+                    <div class="category-icon">🍔</div>
+                    <div class="category-name">برجر</div>
+                </div>
+                <div class="category-item" onclick="selectCategory(this, 'arabic')">
+                    <div class="category-icon">🥙</div>
+                    <div class="category-name">عربي</div>
+                </div>
+                <div class="category-item" onclick="selectCategory(this, 'asian')">
+                    <div class="category-icon">🍜</div>
+                    <div class="category-name">آسيوي</div>
+                </div>
+                <div class="category-item" onclick="selectCategory(this, 'dessert')">
+                    <div class="category-icon">🍰</div>
+                    <div class="category-name">حلويات</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Special Offers -->
+        <div class="special-offers">
+            <div class="offer-title">🎉 عرض خاص</div>
+            <div class="offer-text">خصم 30% على طلبك الأول + توصيل مجاني</div>
+        </div>
+
+        <!-- Featured Restaurants -->
+        <div class="featured-section">
+            <h3 class="section-title">المطاعم المميزة</h3>
+            
+            <div class="restaurant-card" onclick="openRestaurant('pizza-house')">
+                <div class="restaurant-image">
+                    🍕
+                    <div class="delivery-badge">توصيل سريع</div>
+                </div>
+                <div class="restaurant-info">
+                    <div class="restaurant-name">بيت البيتزا</div>
+                    <div class="restaurant-details">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8</span>
+                        </div>
+                        <div class="delivery-time">25-35 دقيقة</div>
+                    </div>
+                    <div class="restaurant-tags">
+                        <span class="tag">إيطالي</span>
+                        <span class="tag">بيتزا</span>
+                        <span class="tag">سريع</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant-card" onclick="openRestaurant('burger-king')">
+                <div class="restaurant-image" style="background: linear-gradient(45deg, #e17055, #fdcb6e);">
+                    🍔
+                    <div class="delivery-badge">عرض خاص</div>
+                </div>
+                <div class="restaurant-info">
+                    <div class="restaurant-name">ملك البرجر</div>
+                    <div class="restaurant-details">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.6</span>
+                        </div>
+                        <div class="delivery-time">20-30 دقيقة</div>
+                    </div>
+                    <div class="restaurant-tags">
+                        <span class="tag">أمريكي</span>
+                        <span class="tag">برجر</span>
+                        <span class="tag">مشاوي</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant-card" onclick="openRestaurant('arab-kitchen')">
+                <div class="restaurant-image" style="background: linear-gradient(45deg, #00b894, #00cec9);">
+                    🥙
+                    <div class="delivery-badge">جديد</div>
+                </div>
+                <div class="restaurant-info">
+                    <div class="restaurant-name">المطبخ العربي</div>
+                    <div class="restaurant-details">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.9</span>
+                        </div>
+                        <div class="delivery-time">30-40 دقيقة</div>
+                    </div>
+                    <div class="restaurant-tags">
+                        <span class="tag">عربي</span>
+                        <span class="tag">مندي</span>
+                        <span class="tag">كبسة</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Tracking -->
+        <div class="order-tracking" id="orderTracking">
+            <h3 class="section-title">تتبع طلبك #1234</h3>
+            <div class="tracking-step active">
+                <div class="step-icon">✓</div>
+                <div>
+                    <div style="font-weight: bold;">تم تأكيد الطلب</div>
+                    <div style="font-size: 12px; opacity: 0.7;">تم استلام طلبك بنجاح</div>
+                </div>
+            </div>
+            <div class="tracking-step active">
+                <div class="step-icon">🍳</div>
+                <div>
+                    <div style="font-weight: bold;">قيد التحضير</div>
+                    <div style="font-size: 12px; opacity: 0.7;">المطعم يحضر طلبك الآن</div>
+                </div>
+            </div>
+            <div class="tracking-step">
+                <div class="step-icon">🚚</div>
+                <div>
+                    <div style="font-weight: bold;">في الطريق</div>
+                    <div style="font-size: 12px; opacity: 0.7;">سيصل خلال 15 دقيقة</div>
+                </div>
+            </div>
+            <div class="tracking-step">
+                <div class="step-icon">🏠</div>
+                <div>
+                    <div style="font-weight: bold;">تم التوصيل</div>
+                    <div style="font-size: 12px; opacity: 0.7;">وصل طلبك بأمان</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab(this, 'home')">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(this, 'search')">
+                <i class="fas fa-search"></i>
+                <span>البحث</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(this, 'orders')">
+                <i class="fas fa-shopping-bag"></i>
+                <span>طلباتي</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(this, 'favorites')">
+                <i class="fas fa-heart"></i>
+                <span>المفضلة</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(this, 'profile')">
+                <i class="fas fa-user"></i>
+                <span>الملف الشخصي</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Info -->
+    <div class="tech-info" id="techInfo">
+        <strong>🚀 التقنيات المستخدمة:</strong><br>
+        • Flutter & Dart<br>
+        • Google Maps API<br>
+        • Payment Gateway<br>
+        • Firebase Real-time<br>
+        • GetX State Management
+    </div>
+
+    <script>
+        // Show tech info on load
+        setTimeout(() => {
+            document.getElementById('techInfo').classList.add('show');
+        }, 1000);
+
+        // Hide tech info after 5 seconds
+        setTimeout(() => {
+            document.getElementById('techInfo').classList.remove('show');
+        }, 6000);
+
+        function closeDemo() {
+            window.parent.postMessage('closeModal', '*');
+        }
+
+        function selectCategory(element, category) {
+            // Remove active class from all categories
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected category
+            element.classList.add('active');
+            
+            // Simulate loading new restaurants
+            showNotification(`تم تحميل مطاعم ${getCategoryName(category)}`);
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'pizza': 'البيتزا',
+                'burger': 'البرجر',
+                'arabic': 'الطعام العربي',
+                'asian': 'الطعام الآسيوي',
+                'dessert': 'الحلويات'
+            };
+            return names[category] || category;
+        }
+
+        function openRestaurant(restaurantId) {
+            const names = {
+                'pizza-house': 'بيت البيتزا',
+                'burger-king': 'ملك البرجر',
+                'arab-kitchen': 'المطبخ العربي'
+            };
+            
+            showNotification(`فتح قائمة ${names[restaurantId] || restaurantId}...`);
+            
+            // Simulate opening restaurant menu
+            setTimeout(() => {
+                showNotification('تم تحميل القائمة بنجاح! 🍽️');
+            }, 1000);
+        }
+
+        function switchTab(element, tab) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected tab
+            element.classList.add('active');
+            
+            // Handle tab switching
+            switch(tab) {
+                case 'home':
+                    document.querySelector('.featured-section').style.display = 'block';
+                    document.getElementById('orderTracking').classList.remove('show');
+                    showNotification('عودة للصفحة الرئيسية');
+                    break;
+                case 'search':
+                    showNotification('فتح صفحة البحث المتقدم');
+                    break;
+                case 'orders':
+                    document.querySelector('.featured-section').style.display = 'none';
+                    document.getElementById('orderTracking').classList.add('show');
+                    showNotification('عرض طلباتك الحالية');
+                    // Simulate order tracking update
+                    setTimeout(updateOrderTracking, 2000);
+                    break;
+                case 'favorites':
+                    showNotification('عرض مطاعمك المفضلة ❤️');
+                    break;
+                case 'profile':
+                    showNotification('فتح الملف الشخصي');
+                    break;
+            }
+        }
+
+        function updateOrderTracking() {
+            const trackingSteps = document.querySelectorAll('.tracking-step');
+            let currentStep = document.querySelectorAll('.tracking-step.active').length;
+            
+            if (currentStep < trackingSteps.length) {
+                trackingSteps[currentStep].classList.add('active');
+                
+                const stepTexts = [
+                    'تم تأكيد الطلب',
+                    'قيد التحضير في المطعم',
+                    'خرج للتوصيل! 🚚',
+                    'تم التوصيل بنجاح! 🎉'
+                ];
+                
+                showNotification(stepTexts[currentStep] || 'تحديث حالة الطلب');
+                
+                // Continue updating if not finished
+                if (currentStep < trackingSteps.length - 1) {
+                    setTimeout(updateOrderTracking, 3000);
+                }
+            }
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                font-size: 14px;
+                z-index: 2000;
+                animation: slideDown 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideDown {
+                    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideDown 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('مرحباً بك في تطبيق المطاعم الذكي! 🍽️');
+        });
+
+        // Handle clicks outside modal
+        window.addEventListener('message', function(event) {
+            if (event.data === 'closeModal') {
+                window.close();
+            }
+        });
+    </script>
+</body>
+</html>

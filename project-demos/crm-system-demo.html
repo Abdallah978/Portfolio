@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة علاقات العملاء CRM - نموذج تفاعلي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4facfe;
+            --secondary-color: #667eea;
+            --accent-color: #764ba2;
+            --success-color: #00d4aa;
+            --warning-color: #fdcb6e;
+            --danger-color: #e17055;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 8px 25px rgba(0,0,0,0.1);
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, #f093fb 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #667eea 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .demo-header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .demo-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .crm-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .sidebar {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: var(--gradient-primary);
+            color: var(--white);
+            transform: translateX(-5px);
+        }
+
+        .main-content {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: var(--gradient-accent);
+            color: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow);
+        }
+
+        .metric-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--bg-light);
+        }
+
+        .customers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .customer-card {
+            background: var(--white);
+            border: 2px solid var(--bg-light);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .customer-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .customer-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .customer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .customer-info h4 {
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .customer-info .company {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .customer-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .customer-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        .status-potential {
+            background: var(--warning-color);
+            color: var(--text-dark);
+        }
+
+        .status-inactive {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+
+        .sales-pipeline {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .pipeline-stages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .pipeline-stage {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .stage-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stage-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .automation-center {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .automation-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .automation-info h4 {
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .automation-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .automation-toggle {
+            width: 60px;
+            height: 30px;
+            background: var(--success-color);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .automation-toggle::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: var(--white);
+            border-radius: 50%;
+            top: 2px;
+            right: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .automation-toggle.off {
+            background: var(--text-light);
+        }
+
+        .automation-toggle.off::after {
+            right: 32px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .crm-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .demo-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .customers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()">
+        <i class="fas fa-arrow-right"></i>
+        العودة للمعرض
+    </button>
+
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1><i class="fas fa-users"></i> نظام إدارة علاقات العملاء CRM</h1>
+            <p>نظام CRM متقدم مع تحليلات ذكية وأتمتة التسويق وإدارة شاملة للعملاء</p>
+        </div>
+
+        <div class="crm-layout">
+            <aside class="sidebar">
+                <h3 style="margin-bottom: 20px; color: var(--text-dark);">
+                    <i class="fas fa-th-list"></i> القوائم الرئيسية
+                </h3>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> لوحة التحكم
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="customers">
+                        <i class="fas fa-users"></i> العملاء
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="pipeline">
+                        <i class="fas fa-funnel-dollar"></i> مسار المبيعات
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="automation">
+                        <i class="fas fa-robot"></i> أتمتة التسويق
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="analytics">
+                        <i class="fas fa-chart-bar"></i> التحليلات
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-section="reports">
+                        <i class="fas fa-file-alt"></i> التقارير
+                    </a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chart-pie"></i> نظرة عامة</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> إضافة عميل جديد
+                        </button>
+                    </div>
+
+                    <div class="dashboard-overview">
+                        <div class="metric-card">
+                            <i class="fas fa-users"></i>
+                            <div class="metric-value">2,847</div>
+                            <div class="metric-label">إجمالي العملاء</div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div class="metric-value">$1.2M</div>
+                            <div class="metric-label">المبيعات هذا الشهر</div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-bullseye"></i>
+                            <div class="metric-value">156</div>
+                            <div class="metric-label">فرص جديدة</div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-percentage"></i>
+                            <div class="metric-value">23%</div>
+                            <div class="metric-label">معدل التحويل</div>
+                        </div>
+                    </div>
+
+                    <div class="section-header">
+                        <h2><i class="fas fa-star"></i> أهم العملاء</h2>
+                    </div>
+
+                    <div class="customers-grid">
+                        <div class="customer-card">
+                            <div class="customer-header">
+                                <div class="customer-avatar">أح</div>
+                                <div class="customer-info">
+                                    <h4>أحمد محمد</h4>
+                                    <div class="company">شركة التقنيات المتقدمة</div>
+                                </div>
+                            </div>
+                            <div class="customer-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">$45K</div>
+                                    <div class="stat-label">إجمالي المبيعات</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">12</div>
+                                    <div class="stat-label">الطلبات</div>
+                                </div>
+                            </div>
+                            <div class="customer-status">
+                                <div class="status-badge status-active">عميل نشط</div>
+                                <div style="color: var(--text-light); font-size: 0.8rem;">آخر نشاط: اليوم</div>
+                            </div>
+                        </div>
+
+                        <div class="customer-card">
+                            <div class="customer-header">
+                                <div class="customer-avatar">سا</div>
+                                <div class="customer-info">
+                                    <h4>سارة أحمد</h4>
+                                    <div class="company">مؤسسة الإبداع الرقمي</div>
+                                </div>
+                            </div>
+                            <div class="customer-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">$28K</div>
+                                    <div class="stat-label">إجمالي المبيعات</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">8</div>
+                                    <div class="stat-label">الطلبات</div>
+                                </div>
+                            </div>
+                            <div class="customer-status">
+                                <div class="status-badge status-potential">عميل محتمل</div>
+                                <div style="color: var(--text-light); font-size: 0.8rem;">آخر نشاط: أمس</div>
+                            </div>
+                        </div>
+
+                        <div class="customer-card">
+                            <div class="customer-header">
+                                <div class="customer-avatar">مح</div>
+                                <div class="customer-info">
+                                    <h4>محمد علي</h4>
+                                    <div class="company">شركة المستقبل للتطوير</div>
+                                </div>
+                            </div>
+                            <div class="customer-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">$67K</div>
+                                    <div class="stat-label">إجمالي المبيعات</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">18</div>
+                                    <div class="stat-label">الطلبات</div>
+                                </div>
+                            </div>
+                            <div class="customer-status">
+                                <div class="status-badge status-active">عميل نشط</div>
+                                <div style="color: var(--text-light); font-size: 0.8rem;">آخر نشاط: منذ ساعتين</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Pipeline Section -->
+                <div id="pipeline" class="content-section">
+                    <div class="sales-pipeline">
+                        <h2 style="margin-bottom: 10px;">
+                            <i class="fas fa-funnel-dollar"></i> مسار المبيعات
+                        </h2>
+                        <p style="opacity: 0.9; margin-bottom: 20px;">تتبع الفرص من البداية إلى الإغلاق</p>
+                        
+                        <div class="pipeline-stages">
+                            <div class="pipeline-stage">
+                                <div class="stage-value">67</div>
+                                <div class="stage-label">عملاء محتملون</div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <div class="stage-value">34</div>
+                                <div class="stage-label">فرص مؤهلة</div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <div class="stage-value">18</div>
+                                <div class="stage-label">مقترحات مرسلة</div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <div class="stage-value">12</div>
+                                <div class="stage-label">في المفاوضة</div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <div class="stage-value">8</div>
+                                <div class="stage-label">صفقات مغلقة</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Automation Section -->
+                <div id="automation" class="content-section">
+                    <div class="automation-center">
+                        <h2 style="margin-bottom: 20px;">
+                            <i class="fas fa-robot"></i> مركز أتمتة التسويق
+                        </h2>
+                        
+                        <div class="automation-card">
+                            <div class="automation-info">
+                                <h4>رسائل الترحيب التلقائية</h4>
+                                <p>إرسال رسائل ترحيب للعملاء الجدد تلقائياً</p>
+                            </div>
+                            <div class="automation-toggle" onclick="toggleAutomation(this)"></div>
+                        </div>
+
+                        <div class="automation-card">
+                            <div class="automation-info">
+                                <h4>تذكيرات المتابعة</h4>
+                                <p>تذكيرات تلقائية لمتابعة العملاء المحتملين</p>
+                            </div>
+                            <div class="automation-toggle" onclick="toggleAutomation(this)"></div>
+                        </div>
+
+                        <div class="automation-card">
+                            <div class="automation-info">
+                                <h4>تصنيف العملاء الذكي</h4>
+                                <p>تصنيف العملاء حسب السلوك والاهتمامات</p>
+                            </div>
+                            <div class="automation-toggle off" onclick="toggleAutomation(this)"></div>
+                        </div>
+
+                        <div class="automation-card">
+                            <div class="automation-info">
+                                <h4>إشعارات الفرص الساخنة</h4>
+                                <p>تنبيهات فورية عند ظهور فرص مبيعات جديدة</p>
+                            </div>
+                            <div class="automation-toggle" onclick="toggleAutomation(this)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other sections placeholders -->
+                <div id="customers" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-users"></i> إدارة العملاء</h2>
+                    </div>
+                    <p style="text-align: center; color: var(--text-light); padding: 50px;">
+                        <i class="fas fa-construction" style="font-size: 3rem; margin-bottom: 20px; display: block;"></i>
+                        قسم إدارة العملاء قيد التطوير...
+                    </p>
+                </div>
+
+                <div id="analytics" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chart-bar"></i> التحليلات</h2>
+                    </div>
+                    <p style="text-align: center; color: var(--text-light); padding: 50px;">
+                        <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 20px; display: block;"></i>
+                        قسم التحليلات قيد التطوير...
+                    </p>
+                </div>
+
+                <div id="reports" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-file-alt"></i> التقارير</h2>
+                    </div>
+                    <p style="text-align: center; color: var(--text-light); padding: 50px;">
+                        <i class="fas fa-file-chart-column" style="font-size: 3rem; margin-bottom: 20px; display: block;"></i>
+                        قسم التقارير قيد التطوير...
+                    </p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage('closeDemo', '*');
+            } else {
+                window.history.back();
+            }
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all sections
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                // Show target section
+                const targetSection = document.getElementById(this.dataset.section);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            });
+        });
+
+        // Toggle automation
+        function toggleAutomation(toggle) {
+            toggle.classList.toggle('off');
+            const isOn = !toggle.classList.contains('off');
+            
+            // Animate toggle
+            toggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                toggle.style.transform = 'scale(1)';
+            }, 150);
+            
+            // Show status message
+            const card = toggle.closest('.automation-card');
+            const originalBackground = card.style.background;
+            card.style.background = isOn ? 'linear-gradient(135deg, #00d4aa, #a8e6cf)' : 'linear-gradient(135deg, #e17055, #fab1a0)';
+            card.style.color = 'white';
+            
+            setTimeout(() => {
+                card.style.background = originalBackground;
+                card.style.color = '';
+            }, 1000);
+        }
+
+        // Animate elements on load
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.metric-card, .customer-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // Customer card interactions
+        document.querySelectorAll('.customer-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const customerName = this.querySelector('h4').textContent;
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                    alert(`عرض ملف العميل: ${customerName}`);
+                }, 150);
+            });
+        });
+
+        // Metric card interactions
+        document.querySelectorAll('.metric-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'rotate(5deg) scale(1.05)';
+                setTimeout(() => {
+                    this.style.transform = 'rotate(0deg) scale(1)';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>

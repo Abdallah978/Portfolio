@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج تطبيق موبايل الخدمات - عبد الله محمد حمد</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .mobile-container {
+            width: 375px;
+            height: 812px;
+            background: #000;
+            border-radius: 40px;
+            padding: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .mobile-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen-content {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .time {
+            font-weight: 700;
+        }
+
+        .battery-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Navigation Screens */
+        .screen {
+            display: none;
+            width: 100%;
+            height: calc(100% - 44px);
+            position: relative;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Login Screen */
+        .login-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .app-logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .welcome-text h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .welcome-text p {
+            opacity: 0.9;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .login-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Home Screen */
+        .home-screen {
+            background: #f8f9fa;
+        }
+
+        .home-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+            color: white;
+        }
+
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        .greeting-text h2 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .greeting-text p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Services Grid */
+        .services-section {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin: 0 auto 15px;
+        }
+
+        .service-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .service-desc {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Recent Activity */
+        .recent-activity {
+            background: white;
+            margin: 20px;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .activity-icon.payment { background: #43e97b; }
+        .activity-icon.service { background: #667eea; }
+        .activity-icon.notification { background: #f093fb; }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Profile Screen */
+        .profile-screen {
+            background: #f8f9fa;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 30px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile-email {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .profile-menu {
+            padding: 20px;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .menu-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+        }
+
+        .menu-text {
+            flex: 1;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .menu-arrow {
+            color: #ccc;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .nav-item.active {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .nav-item span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .screen.active {
+            animation: slideIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.parent.postMessage('closeDemo', '*')">
+        <i class="fas fa-arrow-left"></i> العودة للمعرض
+    </button>
+
+    <div class="mobile-container">
+        <div class="mobile-screen">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="battery-info">
+                    <span>100%</span>
+                    <i class="fas fa-battery-full"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-signal"></i>
+                </div>
+            </div>
+
+            <!-- Screen Content -->
+            <div class="screen-content">
+                <!-- Login Screen -->
+                <div class="screen login-screen active" id="loginScreen">
+                    <div class="app-logo">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="welcome-text">
+                        <h1>أهلاً بك</h1>
+                        <p>تطبيق الخدمات الذكي لجميع احتياجاتك اليومية</p>
+                    </div>
+                    <div class="login-form">
+                        <div class="form-group">
+                            <input type="email" class="form-input" placeholder="البريد الإلكتروني">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" placeholder="كلمة المرور">
+                        </div>
+                        <button class="login-btn" onclick="switchScreen('homeScreen')">
+                            تسجيل الدخول
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Home Screen -->
+                <div class="screen home-screen" id="homeScreen">
+                    <div class="home-header">
+                        <div class="user-greeting">
+                            <div class="user-avatar">عم</div>
+                            <div class="greeting-text">
+                                <h2>مرحباً عبد الله</h2>
+                                <p>كيف يمكننا مساعدتك اليوم؟</p>
+                            </div>
+                        </div>
+                        <div class="quick-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">خدمة مكتملة</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">₪850</div>
+                                <div class="stat-label">إجمالي الوفر</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="services-section">
+                        <h3 class="section-title">الخدمات المتاحة</h3>
+                        <div class="services-grid">
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="service-title">الدفع والتحويل</div>
+                                <div class="service-desc">خدمات مالية سريعة وآمنة</div>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <div class="service-title">خدمة التوصيل</div>
+                                <div class="service-desc">توصيل سريع لمنزلك</div>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="service-title">حجز المواعيد</div>
+                                <div class="service-desc">احجز موعدك بسهولة</div>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                                <div class="service-title">الدعم الفني</div>
+                                <div class="service-desc">مساعدة على مدار الساعة</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h3 class="section-title">النشاط الأخير</h3>
+                        <div class="activity-item">
+                            <div class="activity-icon payment">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-text">تم الدفع بنجاح</div>
+                                <div class="activity-time">منذ ساعتين</div>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon service">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-text">خدمة التوصيل مكتملة</div>
+                                <div class="activity-time">أمس</div>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon notification">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-text">عرض جديد متاح</div>
+                                <div class="activity-time">منذ 3 أيام</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Screen -->
+                <div class="screen profile-screen" id="profileScreen">
+                    <div class="profile-header">
+                        <div class="profile-avatar">عم</div>
+                        <div class="profile-name">عبد الله محمد حمد</div>
+                        <div class="profile-email">abdullah@example.com</div>
+                    </div>
+
+                    <div class="profile-menu">
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="menu-text">تعديل الملف الشخصي</div>
+                            <div class="menu-arrow">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="menu-text">الإشعارات</div>
+                            <div class="menu-arrow">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="menu-text">الخصوصية والأمان</div>
+                            <div class="menu-arrow">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <div class="menu-text">المساعدة والدعم</div>
+                            <div class="menu-arrow">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div class="menu-text">الإعدادات</div>
+                            <div class="menu-arrow">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                        </div>
+
+                        <div class="menu-item" style="color: #e74c3c;">
+                            <div class="menu-icon" style="color: #e74c3c;">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                            <div class="menu-text">تسجيل الخروج</div>
+                            <div class="menu-arrow">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item active" onclick="switchScreen('homeScreen')">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </div>
+                    <div class="nav-item" onclick="alert('قريباً')">
+                        <i class="fas fa-th-large"></i>
+                        <span>الخدمات</span>
+                    </div>
+                    <div class="nav-item" onclick="alert('قريباً')">
+                        <i class="fas fa-history"></i>
+                        <span>السجل</span>
+                    </div>
+                    <div class="nav-item" onclick="switchScreen('profileScreen')">
+                        <i class="fas fa-user"></i>
+                        <span>الملف الشخصي</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // Show target screen
+            document.getElementById(screenId).classList.add('active');
+
+            // Update navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            if (screenId === 'homeScreen') {
+                navItems[0].classList.add('active');
+            } else if (screenId === 'profileScreen') {
+                navItems[3].classList.add('active');
+            }
+        }
+
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate time updates
+            function updateTime() {
+                const now = new Date();
+                const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                               now.getMinutes().toString().padStart(2, '0');
+                document.querySelector('.time').textContent = timeStr;
+            }
+
+            updateTime();
+            setInterval(updateTime, 60000);
+
+            // Add click effects to service cards
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        alert('جاري تحميل الخدمة...');
+                    }, 150);
+                });
+            });
+
+            // Add touch feedback to menu items
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (!this.textContent.includes('تسجيل الخروج')) {
+                        alert('قريباً: ' + this.querySelector('.menu-text').textContent);
+                    } else {
+                        if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                            switchScreen('loginScreen');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

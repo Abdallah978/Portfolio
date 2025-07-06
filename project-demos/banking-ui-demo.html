@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج تصميم تطبيق بنكي</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .demo-container {
+            max-width: 375px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .phone-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+
+        .bank-header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            position: relative;
+        }
+
+        .bank-logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+        }
+
+        .welcome-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-name {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .security-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .account-balance {
+            background: white;
+            margin: 20px;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .account-balance::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12);
+        }
+
+        .balance-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .balance-amount {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .balance-change {
+            font-size: 12px;
+            color: #2ecc71;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .quick-actions {
+            padding: 0 20px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #3498db;
+        }
+
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .action-card.transfer .action-icon {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .action-card.pay .action-icon {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .action-card.cards .action-icon {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .action-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .recent-transactions {
+            padding: 0 20px 100px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .view-all {
+            font-size: 14px;
+            color: #3498db;
+            cursor: pointer;
+        }
+
+        .transaction-item {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .transaction-icon.income {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .transaction-icon.expense {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .transaction-icon.transfer {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .transaction-details h4 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+
+        .transaction-details p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .transaction-amount {
+            text-align: left;
+        }
+
+        .amount {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .amount.positive {
+            color: #2ecc71;
+        }
+
+        .amount.negative {
+            color: #e74c3c;
+        }
+
+        .transaction-time {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            background: white;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .nav-item:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .nav-item.active {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tech-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .tech-info.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .security-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .security-modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .security-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 300px;
+            text-align: center;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .security-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 32px;
+        }
+
+        .fingerprint-scanner {
+            width: 100px;
+            height: 100px;
+            border: 3px solid #3498db;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #3498db;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 400px) {
+            .demo-container {
+                max-width: 95%;
+                margin: 10px auto;
+            }
+
+            .bottom-nav {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <button class="close-btn" onclick="closeDemo()">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Phone Header -->
+        <div class="phone-header">
+            <div class="status-bar">
+                <span>9:41</span>
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+        </div>
+
+        <!-- Bank Header -->
+        <div class="bank-header">
+            <div class="security-indicator">
+                <i class="fas fa-shield-alt"></i>
+                آمن
+            </div>
+            <div class="bank-logo">
+                🏦
+            </div>
+            <div class="welcome-text">مرحباً بعودتك</div>
+            <div class="user-name">أحمد محمد علي</div>
+        </div>
+
+        <!-- Account Balance -->
+        <div class="account-balance">
+            <div class="balance-label">الرصيد الحالي</div>
+            <div class="balance-amount">45,250 ر.س</div>
+            <div class="balance-change">
+                <i class="fas fa-arrow-up"></i>
+                +2,150 ر.س هذا الشهر
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="actions-grid">
+                <div class="action-card transfer" onclick="performAction('transfer')">
+                    <div class="action-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="action-title">تحويل</div>
+                </div>
+                <div class="action-card pay" onclick="performAction('pay')">
+                    <div class="action-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="action-title">دفع الفواتير</div>
+                </div>
+                <div class="action-card" onclick="performAction('deposit')">
+                    <div class="action-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="action-title">إيداع</div>
+                </div>
+                <div class="action-card cards" onclick="performAction('cards')">
+                    <div class="action-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="action-title">البطاقات</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="recent-transactions">
+            <div class="section-title">
+                المعاملات الأخيرة
+                <span class="view-all" onclick="viewAllTransactions()">عرض الكل</span>
+            </div>
+
+            <div class="transaction-item">
+                <div class="transaction-info">
+                    <div class="transaction-icon income">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h4>راتب الشهر</h4>
+                        <p>شركة التقنية المتقدمة</p>
+                    </div>
+                </div>
+                <div class="transaction-amount">
+                    <div class="amount positive">+15,000 ر.س</div>
+                    <div class="transaction-time">اليوم، 2:30 م</div>
+                </div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="transaction-info">
+                    <div class="transaction-icon expense">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h4>تسوق إلكتروني</h4>
+                        <p>أمازون السعودية</p>
+                    </div>
+                </div>
+                <div class="transaction-amount">
+                    <div class="amount negative">-850 ر.س</div>
+                    <div class="transaction-time">أمس، 7:45 م</div>
+                </div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="transaction-info">
+                    <div class="transaction-icon transfer">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h4>تحويل إلى سارة أحمد</h4>
+                        <p>حوالة فورية</p>
+                    </div>
+                </div>
+                <div class="transaction-amount">
+                    <div class="amount negative">-500 ر.س</div>
+                    <div class="transaction-time">أمس، 3:20 م</div>
+                </div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="transaction-info">
+                    <div class="transaction-icon expense">
+                        <i class="fas fa-gas-pump"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h4>وقود</h4>
+                        <p>محطة أرامكو</p>
+                    </div>
+                </div>
+                <div class="transaction-amount">
+                    <div class="amount negative">-120 ر.س</div>
+                    <div class="transaction-time">2 أيام، 5:15 م</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab(this, 'home')">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(this, 'transactions')">
+                <i class="fas fa-list"></i>
+                <span>المعاملات</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(this, 'cards')">
+                <i class="fas fa-credit-card"></i>
+                <span>البطاقات</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(this, 'more')">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>المزيد</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Modal -->
+    <div class="security-modal" id="securityModal">
+        <div class="security-content">
+            <div class="security-icon">
+                <i class="fas fa-fingerprint"></i>
+            </div>
+            <h3>تأكيد الهوية</h3>
+            <p>استخدم بصمة الإصبع أو التعرف على الوجه</p>
+            <div class="fingerprint-scanner">
+                <i class="fas fa-fingerprint"></i>
+            </div>
+            <button onclick="completeAuthentication()" style="background: #3498db; color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 14px; cursor: pointer; margin-top: 15px;">
+                تأكيد
+            </button>
+        </div>
+    </div>
+
+    <!-- Technology Info -->
+    <div class="tech-info" id="techInfo">
+        <strong>🎨 تقنيات التصميم:</strong><br>
+        • Figma للتصميم<br>
+        • UI/UX متقدم<br>
+        • Security Design<br>
+        • Adobe XD<br>
+        • Principle للأنيميشن
+    </div>
+
+    <script>
+        // Show tech info on load
+        setTimeout(() => {
+            document.getElementById('techInfo').classList.add('show');
+        }, 1000);
+
+        // Hide tech info after 5 seconds
+        setTimeout(() => {
+            document.getElementById('techInfo').classList.remove('show');
+        }, 6000);
+
+        function closeDemo() {
+            window.parent.postMessage('closeModal', '*');
+        }
+
+        function performAction(action) {
+            const actions = {
+                'transfer': 'فتح شاشة التحويل الآمن 💸',
+                'pay': 'عرض الفواتير المستحقة 💳',
+                'deposit': 'خيارات الإيداع المتاحة 💰',
+                'cards': 'إدارة البطاقات البنكية 🏦'
+            };
+
+            // Show security modal for sensitive operations
+            if (['transfer', 'pay', 'cards'].includes(action)) {
+                document.getElementById('securityModal').classList.add('show');
+                return;
+            }
+
+            showNotification(actions[action] || 'تنفيذ العملية...');
+        }
+
+        function completeAuthentication() {
+            document.getElementById('securityModal').classList.remove('show');
+            showNotification('تم التحقق من الهوية بنجاح! ✅');
+            
+            setTimeout(() => {
+                showNotification('تم فتح الخدمة المطلوبة 🔓');
+            }, 1500);
+        }
+
+        function switchTab(element, tab) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected tab
+            element.classList.add('active');
+            
+            const tabNames = {
+                'home': 'الصفحة الرئيسية 🏠',
+                'transactions': 'جميع المعاملات 📋',
+                'cards': 'إدارة البطاقات 💳',
+                'more': 'الخدمات الإضافية ⚙️'
+            };
+            
+            showNotification(`فتح ${tabNames[tab] || tab}`);
+        }
+
+        function viewAllTransactions() {
+            showNotification('عرض جميع المعاملات والتفاصيل 📊');
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(52, 152, 219, 0.95);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                font-size: 14px;
+                z-index: 2000;
+                animation: slideDown 0.3s ease-out;
+                box-shadow: 0 5px 20px rgba(52, 152, 219, 0.3);
+            `;
+            notification.textContent = message;
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideDown {
+                    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideDown 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('مرحباً بك في التطبيق البنكي الآمن! 🏦');
+            
+            // Simulate live balance updates
+            setInterval(() => {
+                updateBalance();
+            }, 10000);
+        });
+
+        function updateBalance() {
+            const balanceElement = document.querySelector('.balance-amount');
+            const currentBalance = parseInt(balanceElement.textContent.replace(/[^\d]/g, ''));
+            const change = Math.floor(Math.random() * 200) - 100; // Random change between -100 and +100
+            const newBalance = currentBalance + change;
+            
+            balanceElement.style.animation = 'pulse 0.5s ease-out';
+            setTimeout(() => {
+                balanceElement.textContent = newBalance.toLocaleString() + ' ر.س';
+                balanceElement.style.animation = '';
+            }, 250);
+        }
+
+        // Handle clicks outside modal
+        window.addEventListener('message', function(event) {
+            if (event.data === 'closeModal') {
+                window.close();
+            }
+        });
+
+        // Close security modal when clicking outside
+        document.getElementById('securityModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

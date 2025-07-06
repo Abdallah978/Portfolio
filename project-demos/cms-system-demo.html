@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج تفاعلي - نظام إدارة المحتوى</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .demo-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .demo-header h1 {
+            margin-bottom: 10px;
+        }
+
+        .demo-header p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .close-demo {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .close-demo:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .cms-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .cms-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cms-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cms-title h2 {
+            font-size: 1.5rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #3498db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .cms-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 600px;
+        }
+
+        .sidebar {
+            background: #34495e;
+            color: white;
+            padding: 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #3498db;
+            padding-right: 35px;
+        }
+
+        .nav-item i {
+            margin-left: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="%23999" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>') no-repeat 15px center;
+            background-size: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-published {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-draft {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-archived {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .editor-toolbar {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .editor-btn {
+            padding: 8px 12px;
+            border: none;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .editor-btn:hover {
+            background: #e9ecef;
+        }
+
+        .content-editor {
+            min-height: 300px;
+            border-radius: 0 0 8px 8px;
+            resize: vertical;
+        }
+
+        .sidebar-widget {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .widget-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .tag-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            min-height: 45px;
+        }
+
+        .tag {
+            background: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .media-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .media-item:hover {
+            transform: scale(1.05);
+        }
+
+        .media-preview {
+            height: 120px;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #999;
+        }
+
+        .media-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .media-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .media-info p {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 1024px) {
+            .cms-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tech-showcase {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            max-width: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .tech-showcase h4 {
+            margin-bottom: 10px;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .tech-item {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Header -->
+    <div class="demo-header">
+        <h1>📝 نموذج تفاعلي - نظام إدارة المحتوى</h1>
+        <p>CMS متقدم مع واجهة إدارة سهلة الاستخدام</p>
+        <button class="close-demo" onclick="closeDemoModal()">
+            <i class="fas fa-times"></i> إغلاق النموذج
+        </button>
+    </div>
+
+    <!-- CMS Demo -->
+    <div class="cms-container">
+        <!-- CMS Header -->
+        <div class="cms-header">
+            <div class="cms-title">
+                <i class="fas fa-edit"></i>
+                <h2>نظام إدارة المحتوى</h2>
+            </div>
+            <div class="user-menu">
+                <span>مرحباً، عبد الله</span>
+                <div class="user-avatar">ع</div>
+            </div>
+        </div>
+
+        <!-- CMS Layout -->
+        <div class="cms-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    لوحة التحكم
+                </a>
+                <a href="#" class="nav-item" data-section="posts">
+                    <i class="fas fa-file-alt"></i>
+                    المقالات
+                </a>
+                <a href="#" class="nav-item" data-section="pages">
+                    <i class="fas fa-copy"></i>
+                    الصفحات
+                </a>
+                <a href="#" class="nav-item" data-section="media">
+                    <i class="fas fa-images"></i>
+                    مكتبة الوسائط
+                </a>
+                <a href="#" class="nav-item" data-section="users">
+                    <i class="fas fa-users"></i>
+                    المستخدمين
+                </a>
+                <a href="#" class="nav-item" data-section="comments">
+                    <i class="fas fa-comments"></i>
+                    التعليقات
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i class="fas fa-cogs"></i>
+                    الإعدادات
+                </a>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Dashboard Section -->
+                <div class="content-section active" id="dashboard">
+                    <h1 class="page-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        لوحة التحكم
+                    </h1>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="color: #3498db;">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-number">127</div>
+                            <div class="stat-label">إجمالي المقالات</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="color: #27ae60;">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-number">15.2K</div>
+                            <div class="stat-label">إجمالي المشاهدات</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="color: #e74c3c;">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-number">2,847</div>
+                            <div class="stat-label">المستخدمين المسجلين</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="color: #f39c12;">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="stat-number">89</div>
+                            <div class="stat-label">التعليقات الجديدة</div>
+                        </div>
+                    </div>
+
+                    <div class="data-table">
+                        <h3 style="padding: 20px 20px 0;">آخر المقالات المنشورة</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>العنوان</th>
+                                    <th>الكاتب</th>
+                                    <th>تاريخ النشر</th>
+                                    <th>المشاهدات</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>مستقبل التكنولوجيا في العالم العربي</td>
+                                    <td>أحمد محمد</td>
+                                    <td>2024-01-15</td>
+                                    <td>1,234</td>
+                                    <td><span class="status-badge status-published">منشور</span></td>
+                                </tr>
+                                <tr>
+                                    <td>تطوير تطبيقات الموبايل الحديثة</td>
+                                    <td>فاطمة علي</td>
+                                    <td>2024-01-14</td>
+                                    <td>987</td>
+                                    <td><span class="status-badge status-published">منشور</span></td>
+                                </tr>
+                                <tr>
+                                    <td>الذكاء الاصطناعي والمستقبل</td>
+                                    <td>محمد سالم</td>
+                                    <td>2024-01-13</td>
+                                    <td>1,567</td>
+                                    <td><span class="status-badge status-draft">مسودة</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Posts Section -->
+                <div class="content-section" id="posts">
+                    <h1 class="page-title">
+                        <i class="fas fa-file-alt"></i>
+                        المقالات
+                    </h1>
+                    
+                    <div class="action-bar">
+                        <div class="search-box">
+                            <input type="text" placeholder="البحث في المقالات...">
+                        </div>
+                        <button class="btn btn-primary" onclick="showNewPostForm()">
+                            <i class="fas fa-plus"></i>
+                            مقال جديد
+                        </button>
+                    </div>
+
+                    <div class="data-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>العنوان</th>
+                                    <th>الكاتب</th>
+                                    <th>التصنيف</th>
+                                    <th>تاريخ النشر</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>مستقبل التكنولوجيا في العالم العربي</td>
+                                    <td>أحمد محمد</td>
+                                    <td>تكنولوجيا</td>
+                                    <td>2024-01-15</td>
+                                    <td><span class="status-badge status-published">منشور</span></td>
+                                    <td>
+                                        <button class="btn-success" style="padding: 5px 10px; margin: 2px;">تعديل</button>
+                                        <button class="btn-danger" style="padding: 5px 10px; margin: 2px;">حذف</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>تطوير تطبيقات الموبايل الحديثة</td>
+                                    <td>فاطمة علي</td>
+                                    <td>برمجة</td>
+                                    <td>2024-01-14</td>
+                                    <td><span class="status-badge status-published">منشور</span></td>
+                                    <td>
+                                        <button class="btn-success" style="padding: 5px 10px; margin: 2px;">تعديل</button>
+                                        <button class="btn-danger" style="padding: 5px 10px; margin: 2px;">حذف</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>الذكاء الاصطناعي والمستقبل</td>
+                                    <td>محمد سالم</td>
+                                    <td>ذكاء اصطناعي</td>
+                                    <td>2024-01-13</td>
+                                    <td><span class="status-badge status-draft">مسودة</span></td>
+                                    <td>
+                                        <button class="btn-success" style="padding: 5px 10px; margin: 2px;">تعديل</button>
+                                        <button class="btn-danger" style="padding: 5px 10px; margin: 2px;">حذف</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- New Post Form -->
+                <div class="content-section" id="new-post">
+                    <h1 class="page-title">
+                        <i class="fas fa-plus"></i>
+                        مقال جديد
+                    </h1>
+
+                    <form class="form-grid" onsubmit="savePost(event)">
+                        <div class="main-form">
+                            <div class="form-group">
+                                <label for="post-title">عنوان المقال</label>
+                                <input type="text" id="post-title" placeholder="أدخل عنوان المقال..." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="post-excerpt">المقتطف</label>
+                                <textarea id="post-excerpt" rows="3" placeholder="مقتطف قصير عن المقال..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>محتوى المقال</label>
+                                <div class="editor-toolbar">
+                                    <button type="button" class="editor-btn"><i class="fas fa-bold"></i></button>
+                                    <button type="button" class="editor-btn"><i class="fas fa-italic"></i></button>
+                                    <button type="button" class="editor-btn"><i class="fas fa-underline"></i></button>
+                                    <button type="button" class="editor-btn"><i class="fas fa-list-ul"></i></button>
+                                    <button type="button" class="editor-btn"><i class="fas fa-list-ol"></i></button>
+                                    <button type="button" class="editor-btn"><i class="fas fa-link"></i></button>
+                                    <button type="button" class="editor-btn"><i class="fas fa-image"></i></button>
+                                </div>
+                                <textarea id="post-content" class="content-editor" placeholder="اكتب محتوى المقال هنا..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-form">
+                            <div class="sidebar-widget">
+                                <h3 class="widget-title">نشر المقال</h3>
+                                <div class="form-group">
+                                    <label for="post-status">حالة المقال</label>
+                                    <select id="post-status">
+                                        <option value="draft">مسودة</option>
+                                        <option value="published">منشور</option>
+                                        <option value="scheduled">مجدول</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="publish-date">تاريخ النشر</label>
+                                    <input type="datetime-local" id="publish-date">
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                    <i class="fas fa-save"></i>
+                                    حفظ المقال
+                                </button>
+                            </div>
+
+                            <div class="sidebar-widget">
+                                <h3 class="widget-title">التصنيف والعلامات</h3>
+                                <div class="form-group">
+                                    <label for="post-category">التصنيف</label>
+                                    <select id="post-category">
+                                        <option value="">اختر التصنيف</option>
+                                        <option value="tech">تكنولوجيا</option>
+                                        <option value="programming">برمجة</option>
+                                        <option value="ai">ذكاء اصطناعي</option>
+                                        <option value="web">تطوير ويب</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>العلامات</label>
+                                    <div class="tag-input" id="tags-container">
+                                        <input type="text" placeholder="أضف علامة..." onkeydown="addTag(event)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sidebar-widget">
+                                <h3 class="widget-title">الصورة المميزة</h3>
+                                <div class="media-preview" onclick="selectFeaturedImage()">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="selectFeaturedImage()">
+                                    اختيار صورة
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Media Library -->
+                <div class="content-section" id="media">
+                    <h1 class="page-title">
+                        <i class="fas fa-images"></i>
+                        مكتبة الوسائط
+                    </h1>
+                    
+                    <div class="action-bar">
+                        <div class="search-box">
+                            <input type="text" placeholder="البحث في الوسائط...">
+                        </div>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-upload"></i>
+                            رفع ملفات
+                        </button>
+                    </div>
+
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <div class="media-preview">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="media-info">
+                                <h4>صورة1.jpg</h4>
+                                <p>245 كيلوبايت</p>
+                            </div>
+                        </div>
+                        <div class="media-item">
+                            <div class="media-preview">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="media-info">
+                                <h4>مستند.pdf</h4>
+                                <p>1.2 ميجابايت</p>
+                            </div>
+                        </div>
+                        <div class="media-item">
+                            <div class="media-preview">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="media-info">
+                                <h4>فيديو.mp4</h4>
+                                <p>15.8 ميجابايت</p>
+                            </div>
+                        </div>
+                        <div class="media-item">
+                            <div class="media-preview">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="media-info">
+                                <h4>خلفية.png</h4>
+                                <p>892 كيلوبايت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Section -->
+                <div class="content-section" id="users">
+                    <h1 class="page-title">
+                        <i class="fas fa-users"></i>
+                        المستخدمين
+                    </h1>
+                    
+                    <div class="action-bar">
+                        <div class="search-box">
+                            <input type="text" placeholder="البحث في المستخدمين...">
+                        </div>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i>
+                            مستخدم جديد
+                        </button>
+                    </div>
+
+                    <div class="data-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>البريد الإلكتروني</th>
+                                    <th>الدور</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>آخر دخول</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>عبد الله محمد</td>
+                                    <td>admin@example.com</td>
+                                    <td>مدير</td>
+                                    <td>2024-01-01</td>
+                                    <td>اليوم</td>
+                                    <td>
+                                        <button class="btn-success" style="padding: 5px 10px; margin: 2px;">تعديل</button>
+                                        <button class="btn-warning" style="padding: 5px 10px; margin: 2px;">إيقاف</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>أحمد محمد</td>
+                                    <td>ahmed@example.com</td>
+                                    <td>كاتب</td>
+                                    <td>2024-01-05</td>
+                                    <td>أمس</td>
+                                    <td>
+                                        <button class="btn-success" style="padding: 5px 10px; margin: 2px;">تعديل</button>
+                                        <button class="btn-warning" style="padding: 5px 10px; margin: 2px;">إيقاف</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>فاطمة علي</td>
+                                    <td>fatima@example.com</td>
+                                    <td>محرر</td>
+                                    <td>2024-01-10</td>
+                                    <td>منذ يومين</td>
+                                    <td>
+                                        <button class="btn-success" style="padding: 5px 10px; margin: 2px;">تعديل</button>
+                                        <button class="btn-warning" style="padding: 5px 10px; margin: 2px;">إيقاف</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech Showcase -->
+    <div class="tech-showcase">
+        <h4><i class="fas fa-code"></i> التقنيات المستخدمة</h4>
+        <div class="tech-list">
+            <span class="tech-item">Laravel</span>
+            <span class="tech-item">Vue.js</span>
+            <span class="tech-item">MySQL</span>
+            <span class="tech-item">Bootstrap</span>
+            <span class="tech-item">Pusher</span>
+        </div>
+    </div>
+
+    <script>
+        // Close demo modal
+        function closeDemoModal() {
+            if (window.parent) {
+                window.parent.postMessage('closeDemo', '*');
+            }
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Hide all content sections
+                document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+                
+                // Show selected section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // Show new post form
+        function showNewPostForm() {
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            document.getElementById('new-post').classList.add('active');
+        }
+
+        // Add tag functionality
+        function addTag(event) {
+            if (event.key === 'Enter' || event.key === ',') {
+                event.preventDefault();
+                const input = event.target;
+                const tagText = input.value.trim();
+                
+                if (tagText) {
+                    const tagContainer = document.getElementById('tags-container');
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.innerHTML = `${tagText} <span class="tag-remove" onclick="removeTag(this)">×</span>`;
+                    
+                    tagContainer.insertBefore(tag, input);
+                    input.value = '';
+                }
+            }
+        }
+
+        // Remove tag
+        function removeTag(element) {
+            element.parentElement.remove();
+        }
+
+        // Select featured image
+        function selectFeaturedImage() {
+            alert('سيتم فتح مكتبة الوسائط لاختيار الصورة المميزة');
+        }
+
+        // Save post
+        function savePost(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('post-title').value;
+            const excerpt = document.getElementById('post-excerpt').value;
+            const content = document.getElementById('post-content').value;
+            const status = document.getElementById('post-status').value;
+            const category = document.getElementById('post-category').value;
+            
+            // Simulate saving
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> تم الحفظ بنجاح!';
+                submitBtn.style.background = '#27ae60';
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.background = '#3498db';
+                    submitBtn.disabled = false;
+                    
+                    // Show success message
+                    alert(`تم حفظ المقال "${title}" بنجاح!`);
+                    
+                    // Reset form
+                    event.target.reset();
+                    document.getElementById('tags-container').querySelectorAll('.tag').forEach(tag => tag.remove());
+                }, 2000);
+            }, 2000);
+        }
+
+        // Simulate dynamic stats
+        function updateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            statNumbers.forEach(stat => {
+                const currentValue = parseInt(stat.textContent.replace(/[^0-9]/g, ''));
+                const increment = Math.floor(Math.random() * 5) + 1;
+                
+                if (Math.random() > 0.7) { // 30% chance to update
+                    stat.textContent = stat.textContent.replace(currentValue.toString(), (currentValue + increment).toString());
+                    stat.style.color = '#27ae60';
+                    
+                    setTimeout(() => {
+                        stat.style.color = '#2c3e50';
+                    }, 1000);
+                }
+            });
+        }
+
+        // Update stats every 10 seconds
+        setInterval(updateStats, 10000);
+
+        // Search functionality
+        document.querySelectorAll('.search-box input').forEach(searchInput => {
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                console.log('البحث عن:', searchTerm);
+                // Here you would implement actual search functionality
+            });
+        });
+
+        // Initialize tooltips and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add some interactive behaviors
+            document.querySelectorAll('.stat-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
