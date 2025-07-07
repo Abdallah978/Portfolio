@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شهادة البكالوريوس - عبد الله محمد حمد</title>
+    <style>
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .certificate {
+            background: white;
+            width: 800px;
+            height: 600px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(102, 126, 234, 0.03) 2px,
+                rgba(102, 126, 234, 0.03) 4px
+            );
+            pointer-events: none;
+        }
+        .header {
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .university-name {
+            font-size: 24px;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .certificate-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+        .recipient-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+            text-decoration: underline;
+        }
+        .degree-info {
+            font-size: 18px;
+            color: #555;
+            margin: 20px 0;
+        }
+        .specialization {
+            font-size: 16px;
+            color: #667eea;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .period {
+            font-size: 14px;
+            color: #777;
+            margin: 20px 0;
+        }
+        .signature-section {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .signature {
+            text-align: center;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+            width: 200px;
+        }
+        .date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+        }
+        .decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+        .decoration-1 {
+            top: 20px;
+            right: 20px;
+        }
+        .decoration-2 {
+            bottom: 20px;
+            left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+        
+        <div class="header">
+            <div class="university-name">جامعة الكرخ للعلوم</div>
+            <div class="university-name" style="font-size: 18px; color: #764ba2;">University of Karkh for Science</div>
+        </div>
+        
+        <div class="certificate-title">شهادة البكالوريوس</div>
+        
+        <div style="margin: 30px 0;">
+            <div style="font-size: 16px; color: #666; margin-bottom: 10px;">تُمنح هذه الشهادة للطالب</div>
+            <div class="recipient-name">عبد الله محمد حمد</div>
+            <div style="font-size: 14px; color: #666; margin-top: 10px;">Abdullah Mohammed Hamad</div>
+        </div>
+        
+        <div class="degree-info">
+            <div style="margin-bottom: 15px;">لحصوله على درجة البكالوريوس في</div>
+            <div class="specialization">علوم الأرض والتحسس النائي</div>
+            <div style="font-size: 14px; color: #764ba2;">Earth Sciences & Remote Sensing</div>
+        </div>
+        
+        <div class="period">للفترة من 2019 إلى 2023</div>
+        
+        <div class="signature-section">
+            <div class="signature">
+                <div style="font-size: 12px; color: #666;">عميد الكلية</div>
+            </div>
+            <div class="signature">
+                <div style="font-size: 12px; color: #666;">رئيس الجامعة</div>
+            </div>
+        </div>
+        
+        <div class="date">تاريخ الإصدار: 2023</div>
+    </div>
+</body>
+</html>

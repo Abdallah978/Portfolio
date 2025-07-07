@@ -1,503 +1,293 @@
-// ====== Language Translation System ======
-
-class LanguageTranslator {
+// ===== Translation System =====
+class TranslationManager {
     constructor() {
-        this.currentLanguage = localStorage.getItem('language') || 'ar';
+        this.currentLanguage = 'en';
         this.translations = {
             en: {
                 // Navigation
-                'nav-home': 'Home',
-                'nav-about': 'About',
-                'nav-skills': 'Skills', 
-                'nav-portfolio': 'Portfolio',
-                'nav-certificates': 'Certificates',
-                'nav-contact': 'Contact',
+                home: 'Home',
+                about: 'About',
+                skills: 'Skills',
+                projects: 'Projects',
+                certificates: 'Certificates',
+                contact: 'Contact',
                 
                 // Hero Section
-                'hero-greeting': "Hello, I'm",
-                'hero-name': 'Abdullah Mohammed Hamad',
-                'hero-description': 'Passionate about modern technologies, experienced in skill development, and striving to make a real impact in every team I work with',
-                'hero-view-work': 'View My Work',
-                'hero-contact': 'Contact Me',
-                
-                // Typing Effect
-                'typing-texts': [
-                    'HR Specialist',
-                    'Digital Marketing Expert', 
-                    'Web Developer',
-                    'Cybersecurity Analyst',
-                    'GIS Specialist',
-                    'UI/UX Designer'
-                ],
+                greeting: "Hello, I'm",
+                heroSubtitle: 'Full Stack Developer | AI Specialist | Cybersecurity Expert',
+                heroDescription: 'Passionate about creating innovative digital solutions that make a real impact. Let\'s build something amazing together.',
+                viewMyWork: 'View My Work',
+                getInTouch: 'Get In Touch',
+                scrollDown: 'Scroll Down',
                 
                 // About Section
-                'about-subtitle': 'Get to Know Me',
-                'about-title': 'About Me',
-                'about-intro-title': 'Looking for an environment where I can achieve real results... not just a job',
-                'about-intro-text': 'I am Abdullah Mohammed Hamad, a graduate of Al-Karkh University of Science - Baghdad, with a specialization in Earth Sciences and Remote Sensing. I have combined my academic background with my technical and managerial skills to create a professional mix that serves me in the world of business, technology, and analysis.',
-                'about-education-title': 'Education',
-                'about-education-text': 'Bachelor of Earth Sciences and Remote Sensing<br>Al-Karkh University of Science - Baghdad',
-                'about-specializations-title': 'Specializations',
-                'about-specializations-text': 'Human Resources, Digital Marketing, Web Development,<br>Cybersecurity, and Geographic Information Systems',
-                'about-goal-title': 'Goal',
-                'about-goal-text': 'Make a real impact in an advanced technical environment<br>and contribute to the success of teams and projects',
-                'stat-projects': 'Completed Projects',
-                'stat-certificates': 'Certificates',
-                'stat-specializations': 'Specializations',
-                'stat-commitment': '% Commitment',
+                aboutTitle: 'About Me',
+                aboutSubtitle: 'Discover my journey and expertise',
+                professionalBackground: 'Professional Background',
+                aboutDescription: 'I am a versatile technology professional with expertise spanning multiple domains including web development, artificial intelligence, cybersecurity, and digital marketing. My passion lies in creating innovative solutions that bridge the gap between technology and real-world business needs.',
+                projectsCompleted: 'Projects Completed',
+                certificatesEarned: 'Certificates Earned',
+                yearsExperience: 'Years Experience',
+                aboutQuote: 'I don\'t just look for a job... I seek an environment where I can achieve real results.',
                 
                 // Skills Section
-                'skills-subtitle': 'What I Do',
-                'skills-title': 'Skills & Expertise',
-                  // Skills Card Titles
-                'skill-hr-title': 'Human Resources',
-                'skill-marketing-title': 'Digital Marketing',
-                'skill-web-title': 'Web Development',
-                'skill-cyber-title': 'Cybersecurity',
-                'skill-gis-title': 'GIS Systems',
-                'skill-design-title': 'UI/UX Design',
+                skillsTitle: 'My Skills',
+                skillsSubtitle: 'Expertise across multiple domains',
+                webDevelopment: 'Web Development',
+                artificialIntelligence: 'Artificial Intelligence',
+                cybersecurity: 'Cybersecurity',
+                digitalMarketing: 'Digital Marketing',
+                gisMapping: 'GIS & Mapping',
+                uiuxDesign: 'UI/UX Design',
                 
-                // Portfolio Section
-                'portfolio-subtitle': 'My Work',
-                'portfolio-title': 'Featured Projects',
-                'portfolio-all-projects': 'View All Projects',
+                // Projects Section
+                projectsTitle: 'Featured Projects',
+                projectsSubtitle: 'Showcasing my latest work and achievements',
+                allProjects: 'All Projects',
+                webDev: 'Web Development',
+                aiMl: 'AI & Machine Learning',
+                mobileApps: 'Mobile Apps',
+                design: 'UI/UX Design',
+                viewAllProjects: 'View All Projects',
                 
-                // Featured Projects
-                'project-view-live': 'View Live',
-                'project-view-code': 'View Code',
-                'project-details': 'More Details',
-                'project-web-category': 'Web Development',
-                'project-mobile-category': 'Mobile Apps',
-                'project-ai-category': 'AI & ML',
-                'project-design-category': 'Design',
-                'project-system-category': 'Systems',
+                // Project Descriptions
+                ecommerceTitle: 'E-commerce Platform',
+                ecommerceDesc: 'Full-stack e-commerce solution with advanced features including payment integration, inventory management, and analytics dashboard.',
+                aiSystemTitle: 'AI Prediction System',
+                aiSystemDesc: 'Machine learning model for predictive analytics with real-time data processing and visualization capabilities.',
+                healthAppTitle: 'Healthcare Mobile App',
+                healthAppDesc: 'Cross-platform mobile application for patient management, appointment scheduling, and health monitoring.',
+                corporateWebsiteTitle: 'Corporate Website Design',
+                corporateWebsiteDesc: 'Modern and professional corporate website design with focus on user experience and brand identity.',
+                bankingUITitle: 'Banking UI System',
+                bankingUIDesc: 'Secure and intuitive banking interface with advanced security features and real-time transaction monitoring.',
+                chatbotTitle: 'AI-Powered Chatbot',
+                chatbotDesc: 'Intelligent chatbot with natural language processing capabilities for customer support and engagement.',
                 
-                // Portfolio Gallery Page
-                'gallery-breadcrumb-home': 'Home',
-                'gallery-breadcrumb-portfolio': 'Portfolio Gallery',
-                'gallery-hero-title': 'My Portfolio Gallery',
-                'gallery-hero-description': 'Explore a comprehensive collection of my projects across various technical fields, from web development and applications to artificial intelligence and design',
-                'gallery-stat-projects': 'Completed Projects',
-                'gallery-stat-specializations': 'Specializations',
-                'gallery-stat-clients': 'Satisfied Clients',
-                'gallery-stat-success': 'Success Rate',
+                // Certificates Section
+                certificatesTitle: 'Certificates & Achievements',
+                certificatesSubtitle: 'Professional certifications and continuous learning journey',
+                academic: 'Academic',
+                professional: 'Professional',
+                onlineCourses: 'Online Courses',                // Certificate Names
+                humanResourcesCert: 'Human Resources Certification',
+                fullStackDev: 'Full Stack Web Development',
+                digitalMarketingExpert: 'Digital Marketing Expert',
+                professionalEnglish: 'Professional English Network',
+                machineLearningSpec: 'Machine Learning Specialization',
+                digitalSkillsCourse: 'Digital Skills Course',
+                onlineLearningCert: 'Online Learning Certificate',
+                professionalDevelopment: 'Professional Development',
+                universityDegree: 'Bachelor\'s Degree in Earth Sciences & Remote Sensing',
+                forDisplayOnly: 'For Display Only',
                 
-                // Project Categories
-                'categories-subtitle': 'Project Categories',
-                'categories-title': 'Browse by Specialization',
-                'category-web-title': 'Web Development',
-                'category-web-desc': 'Professional websites and interactive web applications',
-                'category-web-count': '15 Projects',
-                'category-mobile-title': 'Mobile Applications',
-                'category-mobile-desc': 'Smart applications for Android & iOS',
-                'category-mobile-count': '8 Projects',
-                'category-ai-title': 'Artificial Intelligence',
-                'category-ai-desc': 'Smart solutions and advanced machine learning systems',
-                'category-ai-count': '10 Projects',
-                'category-design-title': 'Design & Identity',
-                'category-design-desc': 'Visual identity design and marketing materials',
-                'category-design-count': '12 Projects',
-                'category-dashboard-title': 'Dashboards',
-                'category-dashboard-desc': 'Management and data analysis systems',
-                'category-dashboard-count': '9 Projects',
-                'category-system-title': 'Integrated Systems',
-                'category-system-desc': 'Comprehensive technical solutions for enterprises',
-                'category-system-count': '7 Projects',
-                
-                // Featured Projects Section
-                'featured-subtitle': 'Featured Projects',
-                'featured-title': 'My Best Work',
-                
-                // Individual Projects
-                'project-ecommerce-title': 'Advanced E-commerce Platform',
-                'project-ecommerce-desc': 'Comprehensive e-commerce system including product management, order processing, and multiple payment systems',
-                'project-ecommerce-overlay-title': 'Comprehensive E-commerce Platform',
-                'project-ecommerce-overlay-desc': 'Integrated platform for e-commerce with advanced management system and electronic payment support',
-                'project-ai-title': 'Smart Prediction System',
-                'project-ai-desc': 'Smart system for predicting trends and data using advanced machine learning techniques',
-                'project-ai-overlay-title': 'Smart Prediction System',
-                'project-ai-overlay-desc': 'Smart system for predicting trends and data using advanced machine learning techniques',
-                'project-dashboard-title': 'Advanced Analytics Dashboard',
-                'project-dashboard-desc': 'Interactive dashboard for data analysis and business intelligence with real-time reporting',
-                'project-mobile-title': 'Multi-Platform Mobile App',
-                'project-mobile-desc': 'Cross-platform mobile application with modern UI and comprehensive features',
-                'project-gis-title': 'GIS Mapping System',
-                'project-gis-desc': 'Advanced Geographic Information System with interactive mapping and spatial analysis',
-                'project-hr-title': 'HR Management System',
-                'project-hr-desc': 'Comprehensive human resources management system with employee tracking and analytics',
+                // Certificate Issuers
+                hrciInstitute: 'HR Certification Institute',
+                specializedInstitute: 'Specialized Institute',
+                alephAcademy: 'Aleph Academy',
+                usDepartmentState: 'US Department of State',
+                coursera: 'Coursera',
+                edraak: 'Edraak',
+                easytonline: 'Easyt.online',
+                mindLuster: 'Mind Luster',
+                universityKarkh: 'University of Karkh for Science',
                 
                 // Contact Section
-                'contact-subtitle': 'Get In Touch',
-                'contact-title': 'Contact Me',
-                'contact-description': "I'm always open to discussing new opportunities and exciting projects. Let's connect and create something amazing together!",
-                'contact-name': 'Your Name',
-                'contact-email': 'Your Email',
-                'contact-subject': 'Subject',
-                'contact-message': 'Your Message',
-                'contact-send': 'Send Message',
-                'contact-info-title': 'Contact Information',
-                'contact-email-label': 'Email',
-                'contact-phone-label': 'Phone',                'contact-location-label': 'Location',
-                'contact-availability-label': 'Availability',
-                
-                // Footer Brand
-                'footer-brand-welcome': 'Welcome to my digital world… where value is created and impact is made',
-                
-                // Additional UI Elements
-                'modal-close': 'Close',
-                'modal-view-project': 'View Project',
-                'modal-view-code': 'View Code',
-                'modal-technologies': 'Technologies Used',
-                'modal-features': 'Key Features',
-                'modal-challenges': 'Challenges & Solutions',
-                
-                // CTA Features
-                'cta-feature-consultation': 'Free Consultation',
-                'cta-feature-delivery': 'On-Time Delivery',
-                'cta-feature-quality': 'Quality Guarantee',
-                'cta-feature-support': 'Continuous Support',
-                
-                // Portfolio Gallery Specific
-                'gallery-start-project': 'Start Your Project Now',
-                'gallery-direct-contact': 'Direct Contact',
+                contactTitle: 'Get In Touch',
+                contactSubtitle: 'Let\'s discuss your next project',
+                email: 'Email',
+                location: 'Location',
+                availableRemote: 'Available for Remote Work',
+                yourName: 'Your Name',
+                yourEmail: 'Your Email',
+                subject: 'Subject',
+                yourMessage: 'Your Message',
+                sendMessage: 'Send Message',
                 
                 // Footer
-                'footer-description': 'Passionate about modern technologies and creating innovative solutions that make a real impact',
-                'footer-tagline': 'Welcome to my digital world… where value is created and impact is made',
-                'footer-quick-links': 'Quick Links',
-                'footer-services': 'Services',
-                'footer-follow': 'Follow Me',
-                'footer-copyright': 'All rights reserved.',
+                footerDescription: 'Creating innovative digital solutions that make a real impact.',
+                quickLinks: 'Quick Links',
+                services: 'Services',
+                contactInfo: 'Contact Info',
+                allRightsReserved: 'All rights reserved.',
+                availableWorldwide: 'Available Worldwide',
                 
-                // Portfolio Gallery Specific
-                'gallery-footer-brand': 'Abdullah Mohammed Hamad',
-                'gallery-footer-tagline': 'Welcome to my digital world… where value is created and impact is made',
+                // Services
+                webDevelopmentService: 'Web Development',
+                aiSolutions: 'AI Solutions',
+                cybersecurityService: 'Cybersecurity',
+                uiuxService: 'UI/UX Design',
                 
-                // Loading & UI Elements
-                'loading': 'Loading...',
-                'scroll-down': 'Scroll Down',
-                'back-to-top': 'Back to Top',
-                  // Additional UI
-                'view-project': 'View Project',
-                'view-code': 'View Code',
-                'free-consultation': 'Free Consultation',
-                'on-time-delivery': 'On-Time Delivery',
-                'quality-guarantee': 'Quality Guarantee',
-                'continuous-support': 'Continuous Support',
-                'start-project-now': 'Start Your Project Now',
-                'direct-contact': 'Direct Contact',
+                // Loading and Messages
+                loading: 'Loading...',
+                messageSent: 'Message sent successfully!',
+                fillField: 'Please fill in the {field} field.',
+                validEmail: 'Please enter a valid email address.',
                 
-                // Portfolio Gallery - Additional Projects
-                'project-smart-assistant': 'Interactive Smart Assistant',
-                'project-smart-assistant-desc': 'Smart chatbot for customer service',
-                'project-brand-identity': 'Complete Brand Identity', 
-                'project-brand-identity-desc': 'Comprehensive identity design for companies',
-                'project-interactive-dashboard': 'Interactive Dashboard',
-                'project-interactive-dashboard-desc': 'Data management and analysis system with modern interface',
-                'project-hr-management': 'HR Management System',
-                'project-hr-management-desc': 'Comprehensive human resource management solution',
-                'project-hospital-management': 'Hospital Management System',
-                'project-hospital-management-desc': 'Integrated medical management solution',
-                
-                // Footer Links Translation
-                'footer-home': 'Home',
-                'footer-about': 'About Me',
-                'footer-skills': 'Skills',
-                'footer-portfolio': 'Portfolio',
-                'footer-web-dev': 'Web Development',
-                'footer-mobile-apps': 'Mobile Apps',
-                'footer-ai': 'Artificial Intelligence',                'footer-design': 'Design',
-                'footer-email': 'Email',
-                'footer-contact-form': 'Contact Form',
-                
-                // Modal and Form Elements
-                'modal-project-details': 'Project Details',
-                'form-full-name': 'Full Name',
-                'form-email-address': 'Email Address',
-                'form-company': 'Company / Organization',
-                'form-subject': 'Subject',
-                'form-project-details': 'Project Details',
-                'form-budget': 'Expected Budget',
-                'form-send-message': 'Send Message',
-                'form-submit': 'Submit',
-                'form-cancel': 'Cancel',
-                'form-required': 'Required',
-                'form-optional': 'Optional',
-                
-                // Status and Availability
-                'status-available': 'Available for new projects',
-                'status-busy': 'Currently busy',
-                'status-offline': 'Offline',
-                'availability-full-time': 'Full-time',
-                'availability-part-time': 'Part-time',
-                'availability-freelance': 'Freelance',
-                
-                // Certificate Tabs
-                'tab-academic': 'Academic Certificates',
-                'tab-professional': 'Professional Certificates', 
-                'tab-courses': 'Training Courses',
-                
-                // Features and Benefits
-                'feature-consultation': 'Free Consultation',
-                'feature-delivery': 'On-Time Delivery',
-                'feature-quality': 'Quality Guarantee',
-                'feature-support': 'Continuous Support',
-                
-                // Button Actions
-                'btn-view-live': 'View Live',
-                'btn-view-code': 'View Code',
-                'btn-view-demo': 'View Demo',
-                'btn-more-info': 'More Info',
-                'btn-close': 'Close',
-                'btn-back': 'Back',
-                'btn-next': 'Next',
-                'btn-previous': 'Previous'
+                // Specializations
+                humanResources: 'Human Resources',
+                talentManagement: 'Talent Management and Recruitment',
+                policyDevelopment: 'Policy and Procedure Development',
+                hrAnalytics: 'HR Data Analysis',
+                socialMediaMarketing: 'Social Media Marketing',
+                marketingAnalytics: 'Marketing Data Analysis',
+                campaignManagement: 'Digital Campaign Management',
+                interactiveWebApps: 'Interactive Web Applications',
+                responsiveWebsites: 'Professional Responsive Websites',
+                cmsystems: 'Content Management Systems',
+                riskAssessment: 'Security Risk Assessment',
+                securitySolutions: 'Security Solutions Development',
+                systemMonitoring: 'System Monitoring',
+                spatialAnalysis: 'Spatial Data Analysis',
+                interactiveMaps: 'Interactive Maps',
+                environmentalMonitoring: 'Environmental Monitoring Systems',
+                userInterface: 'User Interface Design',
+                userExperience: 'User Experience Development',
+                interactivePrototypes: 'Interactive Prototyping'
             },
             ar: {
                 // Navigation
-                'nav-home': 'الرئيسية',
-                'nav-about': 'نبذة عني',
-                'nav-skills': 'المهارات',
-                'nav-portfolio': 'أعمالي',
-                'nav-certificates': 'الشهادات',
-                'nav-contact': 'تواصل معي',
+                home: 'الرئيسية',
+                about: 'نبذة عني',
+                skills: 'المهارات',
+                projects: 'المشاريع',
+                certificates: 'الشهادات',
+                contact: 'التواصل',
                 
                 // Hero Section
-                'hero-greeting': 'مرحباً، أنا',
-                'hero-name': 'عبد الله محمد حمد',
-                'hero-description': 'شغوف بالتقنيات الحديثة، متمرس في تطوير المهارات، وأسعى لصنع أثر حقيقي في كل فريق أعمل معه',
-                'hero-view-work': 'مشاهدة أعمالي',
-                'hero-contact': 'تواصل معي',
-                
-                // Typing Effect
-                'typing-texts': [
-                    'أخصائي موارد بشرية',
-                    'خبير تسويق رقمي',
-                    'مطوّر ويب',
-                    'محلل أمن سيبراني',
-                    'أخصائي GIS',
-                    'مصمم UI/UX'
-                ],
+                greeting: 'مرحباً، أنا',
+                heroSubtitle: 'مطور متكامل | متخصص ذكاء اصطناعي | خبير أمن سيبراني',
+                heroDescription: 'شغوف بإنشاء حلول رقمية مبتكرة تحدث أثراً حقيقياً. دعنا نبني شيئاً رائعاً معاً.',
+                viewMyWork: 'مشاهدة أعمالي',
+                getInTouch: 'تواصل معي',
+                scrollDown: 'مرر للأسفل',
                 
                 // About Section
-                'about-subtitle': 'تعرف عليّ أكثر',
-                'about-title': 'نبذة عني',
-                'about-intro-title': 'أبحث عن بيئة أحقق فيها نتائج حقيقية… لا مجرد وظيفة',
-                'about-intro-text': 'أنا عبد الله محمد حمد، خريج جامعة الكرخ للعلوم – بغداد، بتخصص علوم الأرض والتحسس النائي. جمعت بين خلفيتي الأكاديمية ومهاراتي التقنية والإدارية لتكوين مزيج احترافي يخدمني في عالم الأعمال، التكنولوجيا، والتحليل.',
-                'about-education-title': 'التعليم',
-                'about-education-text': 'بكالوريوس علوم الأرض والتحسس النائي<br>جامعة الكرخ للعلوم - بغداد',
-                'about-specializations-title': 'التخصصات',
-                'about-specializations-text': 'موارد بشرية، تسويق رقمي، تطوير ويب،<br>أمن سيبراني، وأنظمة المعلومات الجغرافية',
-                'about-goal-title': 'الهدف',
-                'about-goal-text': 'صنع أثر حقيقي في بيئة تقنية متقدمة<br>والمساهمة في نجاح الفرق والمشاريع',
-                'stat-projects': 'مشروع منجز',
-                'stat-certificates': 'شهادة معتمدة',
-                'stat-specializations': 'مجال تخصص',
-                'stat-commitment': '% التزام',
+                aboutTitle: 'نبذة عني',
+                aboutSubtitle: 'اكتشف رحلتي وخبرتي',
+                professionalBackground: 'الخلفية المهنية',
+                aboutDescription: 'أنا محترف تقني متعدد الاختصاصات بخبرة تمتد عبر مجالات متعددة بما في ذلك تطوير الويب والذكاء الاصطناعي والأمن السيبراني والتسويق الرقمي. شغفي يكمن في إنشاء حلول مبتكرة تربط بين التكنولوجيا واحتياجات الأعمال الحقيقية.',
+                projectsCompleted: 'مشروع مكتمل',
+                certificatesEarned: 'شهادة حاصل عليها',
+                yearsExperience: 'سنوات خبرة',
+                aboutQuote: 'لا أبحث عن وظيفة فقط... أبحث عن بيئة أحقق فيها نتائج حقيقية.',
                 
                 // Skills Section
-                'skills-subtitle': 'ما أجيده',
-                'skills-title': 'المهارات والخبرات',
-                  // Skills Card Titles
-                'skill-hr-title': 'الموارد البشرية',
-                'skill-marketing-title': 'التسويق الرقمي',
-                'skill-web-title': 'تطوير الويب',
-                'skill-cyber-title': 'الأمن السيبراني',
-                'skill-gis-title': 'أنظمة GIS',
-                'skill-design-title': 'تصميم UI/UX',
+                skillsTitle: 'مهاراتي',
+                skillsSubtitle: 'خبرة عبر مجالات متعددة',
+                webDevelopment: 'تطوير الويب',
+                artificialIntelligence: 'الذكاء الاصطناعي',
+                cybersecurity: 'الأمن السيبراني',
+                digitalMarketing: 'التسويق الرقمي',
+                gisMapping: 'نظم المعلومات الجغرافية',
+                uiuxDesign: 'تصميم واجهات المستخدم',
                 
-                // Portfolio Section
-                'portfolio-subtitle': 'أعمالي',
-                'portfolio-title': 'المشاريع المميزة',
-                'portfolio-all-projects': 'مشاهدة جميع المشاريع',
+                // Projects Section
+                projectsTitle: 'المشاريع المميزة',
+                projectsSubtitle: 'عرض أحدث أعمالي وإنجازاتي',
+                allProjects: 'جميع المشاريع',
+                webDev: 'تطوير الويب',
+                aiMl: 'الذكاء الاصطناعي',
+                mobileApps: 'تطبيقات الهاتف',
+                design: 'تصميم واجهات',
+                viewAllProjects: 'مشاهدة جميع المشاريع',
                 
-                // Featured Projects
-                'project-view-live': 'معاينة حية',
-                'project-view-code': 'مشاهدة الكود',
-                'project-details': 'تفاصيل أكثر',
-                'project-web-category': 'تطوير ويب',
-                'project-mobile-category': 'تطبيقات الجوال',
-                'project-ai-category': 'ذكاء اصطناعي',
-                'project-design-category': 'تصميم',
-                'project-system-category': 'أنظمة',
+                // Project Descriptions
+                ecommerceTitle: 'منصة تجارة إلكترونية',
+                ecommerceDesc: 'حل تجارة إلكترونية متكامل مع ميزات متقدمة تشمل تكامل الدفع وإدارة المخزون ولوحة تحليلات.',
+                aiSystemTitle: 'نظام التنبؤ بالذكاء الاصطناعي',
+                aiSystemDesc: 'نموذج تعلم آلي للتحليل التنبؤي مع قدرات معالجة البيانات في الوقت الفعلي والتصور.',
+                healthAppTitle: 'تطبيق الرعاية الصحية',
+                healthAppDesc: 'تطبيق جوال متعدد المنصات لإدارة المرضى وجدولة المواعيد ومراقبة الصحة.',
+                corporateWebsiteTitle: 'تصميم موقع الشركة',
+                corporateWebsiteDesc: 'تصميم موقع شركة حديث ومهني مع التركيز على تجربة المستخدم وهوية العلامة التجارية.',
+                bankingUITitle: 'نظام واجهة البنك',
+                bankingUIDesc: 'واجهة بنكية آمنة وسهلة الاستخدام مع ميزات أمان متقدمة ومراقبة المعاملات في الوقت الفعلي.',
+                chatbotTitle: 'روبوت الدردشة الذكي',
+                chatbotDesc: 'روبوت دردشة ذكي مع قدرات معالجة اللغة الطبيعية لدعم العملاء والمشاركة.',
                 
-                // Portfolio Gallery Page
-                'gallery-breadcrumb-home': 'الرئيسية',
-                'gallery-breadcrumb-portfolio': 'معرض الأعمال',
-                'gallery-hero-title': 'معرض أعمالي',
-                'gallery-hero-description': 'استكشف مجموعة شاملة من مشاريعي في مختلف المجالات التقنية، من تطوير الويب والتطبيقات إلى الذكاء الاصطناعي والتصميم',
-                'gallery-stat-projects': 'مشروع منجز',
-                'gallery-stat-specializations': 'مجال تخصص',
-                'gallery-stat-clients': 'عميل راضٍ',
-                'gallery-stat-success': '% نجاح',
+                // Certificates Section
+                certificatesTitle: 'الشهادات والإنجازات',
+                certificatesSubtitle: 'الشهادات المهنية ورحلة التعلم المستمر',
+                academic: 'أكاديمية',
+                professional: 'مهنية',
+                onlineCourses: 'دورات أونلاين',                // Certificate Names
+                humanResourcesCert: 'شهادة الموارد البشرية',
+                fullStackDev: 'تطوير الويب الكامل',
+                digitalMarketingExpert: 'خبير التسويق الرقمي',
+                professionalEnglish: 'شبكة الإنجليزية المهنية',                machineLearningSpec: 'تخصص التعلم الآلي',
+                employeeDevelopmentSpec: 'تخصص تطوير الموظفين',
+                digitalSkillsCourse: 'دورة المهارات الرقمية',
+                cybersecuritySpec2023: 'تخصص الأمن السيبراني 2023',
+                onlineLearningCert: 'شهادة التعلم الإلكتروني',
+                cybersecurity2023: 'الأمن السيبراني 2023',
+                professionalDevelopment: 'التطوير المهني',
+                universityDegree: 'بكالوريوس في علوم الأرض والتحسس النائي',
+                forDisplayOnly: 'للعرض فقط',
                 
-                // Project Categories
-                'categories-subtitle': 'فئات المشاريع',
-                'categories-title': 'تصفح حسب التخصص',
-                'category-web-title': 'تطوير الويب',
-                'category-web-desc': 'مواقع ويب احترافية وتطبيقات ويب تفاعلية',
-                'category-web-count': '15 مشروع',
-                'category-mobile-title': 'تطبيقات الجوال',
-                'category-mobile-desc': 'تطبيقات ذكية للأندرويد و iOS',
-                'category-mobile-count': '8 مشاريع',
-                'category-ai-title': 'الذكاء الاصطناعي',
-                'category-ai-desc': 'حلول ذكية وأنظمة تعلم آلي متقدمة',
-                'category-ai-count': '10 مشاريع',
-                'category-design-title': 'التصميم والهوية',
-                'category-design-desc': 'تصميم هويات بصرية ومواد تسويقية',
-                'category-design-count': '12 مشروع',
-                'category-dashboard-title': 'لوحات التحكم',
-                'category-dashboard-desc': 'أنظمة إدارة وتحليل البيانات',
-                'category-dashboard-count': '9 مشاريع',
-                'category-system-title': 'الأنظمة المتكاملة',
-                'category-system-desc': 'حلول تقنية شاملة للمؤسسات',
-                'category-system-count': '7 مشاريع',
-                
-                // Featured Projects Section
-                'featured-subtitle': 'مشاريع مميزة',
-                'featured-title': 'أبرز أعمالي',
-                
-                // Individual Projects
-                'project-ecommerce-title': 'منصة التجارة الإلكترونية المتقدمة',
-                'project-ecommerce-desc': 'نظام شامل للتجارة الإلكترونية يشمل إدارة المنتجات، معالجة الطلبات، وأنظمة الدفع المتعددة',
-                'project-ecommerce-overlay-title': 'منصة تجارة إلكترونية شاملة',
-                'project-ecommerce-overlay-desc': 'منصة متكاملة للتجارة الإلكترونية مع نظام إدارة متقدم ودعم للدفع الإلكتروني',
-                'project-ai-title': 'نظام التنبؤ الذكي',
-                'project-ai-desc': 'نظام ذكي للتنبؤ بالاتجاهات والبيانات باستخدام تقنيات التعلم الآلي المتقدمة',
-                'project-ai-overlay-title': 'نظام التنبؤ الذكي',
-                'project-ai-overlay-desc': 'نظام ذكي للتنبؤ بالاتجاهات والبيانات باستخدام تقنيات التعلم الآلي المتقدمة',
-                'project-dashboard-title': 'لوحة تحليلات متقدمة',
-                'project-dashboard-desc': 'لوحة تحكم تفاعلية لتحليل البيانات وذكاء الأعمال مع تقارير في الوقت الفعلي',
-                'project-mobile-title': 'تطبيق جوال متعدد المنصات',
-                'project-mobile-desc': 'تطبيق جوال متعدد المنصات بواجهة حديثة وميزات شاملة',
-                'project-gis-title': 'نظام خرائط GIS',
-                'project-gis-desc': 'نظام معلومات جغرافية متقدم مع خرائط تفاعلية وتحليل مكاني',
-                'project-hr-title': 'نظام إدارة الموارد البشرية',
-                'project-hr-desc': 'نظام شامل لإدارة الموارد البشرية مع تتبع الموظفين والتحليلات',
+                // Certificate Issuers
+                hrciInstitute: 'معهد شهادات الموارد البشرية',
+                specializedInstitute: 'معهد متخصص',
+                alephAcademy: 'أكاديمية أليف',
+                usDepartmentState: 'وزارة الخارجية الأمريكية',
+                coursera: 'كورسيرا',
+                edraak: 'إدراك',
+                easytonline: 'إيزي تي أونلاين',
+                mindLuster: 'مايند لستر',
+                universityKarkh: 'جامعة الكرخ للعلوم',
                 
                 // Contact Section
-                'contact-subtitle': 'تواصل معي',
-                'contact-title': 'اتصل بي',
-                'contact-description': 'أنا متاح دائماً لمناقشة الفرص الجديدة والمشاريع المثيرة. دعنا نتواصل ونصنع شيئاً رائعاً معاً!',
-                'contact-name': 'اسمك',
-                'contact-email': 'بريدك الإلكتروني',
-                'contact-subject': 'الموضوع',
-                'contact-message': 'رسالتك',
-                'contact-send': 'إرسال الرسالة',
-                'contact-info-title': 'معلومات الاتصال',
-                'contact-email-label': 'البريد الإلكتروني',
-                'contact-phone-label': 'الهاتف',
-                'contact-location-label': 'الموقع',
-                'contact-availability-label': 'التوفر',
+                contactTitle: 'تواصل معي',
+                contactSubtitle: 'دعنا نناقش مشروعك القادم',
+                email: 'البريد الإلكتروني',
+                location: 'الموقع',
+                availableRemote: 'متاح للعمل عن بُعد',
+                yourName: 'اسمك',
+                yourEmail: 'بريدك الإلكتروني',
+                subject: 'الموضوع',
+                yourMessage: 'رسالتك',
+                sendMessage: 'إرسال الرسالة',
                 
                 // Footer
-                'footer-description': 'شغوف بالتقنيات الحديثة وإنشاء حلول مبتكرة تصنع أثراً حقيقياً',
-                'footer-quick-links': 'روابط سريعة',
-                'footer-services': 'الخدمات',
-                'footer-follow': 'تابعني',
-                'footer-copyright': 'جميع الحقوق محفوظة.',                // Call to Action
-                'cta-title': 'مستعد لبدء مشروعك القادم؟',
-                'cta-description': 'دعنا نعمل معاً لتحويل أفكارك إلى واقع بالتقنيات الحديثة والحلول المبتكرة',
-                'cta-button': 'ابدأ المشروع',
+                footerDescription: 'إنشاء حلول رقمية مبتكرة تحدث أثراً حقيقياً.',
+                quickLinks: 'روابط سريعة',
+                services: 'الخدمات',
+                contactInfo: 'معلومات التواصل',
+                allRightsReserved: 'جميع الحقوق محفوظة.',
+                availableWorldwide: 'متاح عالمياً',
                 
-                // Footer Brand
-                'footer-brand-welcome': 'أهلاً بك في عالمي الرقمي… حيث تُصنع القيمة ويُترك الأثر',
+                // Services
+                webDevelopmentService: 'تطوير الويب',
+                aiSolutions: 'حلول الذكاء الاصطناعي',
+                cybersecurityService: 'الأمن السيبراني',
+                uiuxService: 'تصميم واجهات المستخدم',
                 
-                // Additional UI Elements
-                'modal-close': 'إغلاق',
-                'modal-view-project': 'مشاهدة المشروع',
-                'modal-view-code': 'مشاهدة الكود',
-                'modal-technologies': 'التقنيات المستخدمة',
-                'modal-features': 'المميزات الرئيسية',
-                'modal-challenges': 'التحديات والحلول',
+                // Loading and Messages
+                loading: 'جاري التحميل...',
+                messageSent: 'تم إرسال الرسالة بنجاح!',
+                fillField: 'يرجى ملء حقل {field}.',
+                validEmail: 'يرجى إدخال عنوان بريد إلكتروني صحيح.',
                 
-                // CTA Features
-                'cta-feature-consultation': 'استشارة مجانية',
-                'cta-feature-delivery': 'تسليم في المواعيد',
-                'cta-feature-quality': 'ضمان الجودة',
-                'cta-feature-support': 'دعم مستمر',
-                
-                // Portfolio Gallery Specific                'gallery-start-project': 'ابدأ مشروعك الآن',
-                'gallery-direct-contact': 'تواصل مباشر',
-                
-                // Loading & UI Elements
-                'loading': 'جاري التحميل...',
-                'scroll-down': 'مرر للأسفل',
-                'back-to-top': 'العودة للأعلى',
-                  // Additional UI
-                'view-project': 'مشاهدة المشروع',
-                'view-code': 'مشاهدة الكود',
-                'free-consultation': 'استشارة مجانية',
-                'on-time-delivery': 'تسليم في المواعيد',
-                'quality-guarantee': 'ضمان الجودة',
-                'continuous-support': 'دعم مستمر',
-                'start-project-now': 'ابدأ مشروعك الآن',
-                'direct-contact': 'تواصل مباشر',
-                
-                // Portfolio Gallery - Additional Projects
-                'project-smart-assistant': 'مساعد ذكي تفاعلي',
-                'project-smart-assistant-desc': 'شات بوت ذكي لخدمة العملاء',
-                'project-brand-identity': 'هوية بصرية متكاملة',
-                'project-brand-identity-desc': 'تصميم هوية شاملة للشركات',
-                'project-interactive-dashboard': 'لوحة تحكم تفاعلية',
-                'project-interactive-dashboard-desc': 'نظام إدارة وتحليل البيانات مع واجهة عصرية',
-                'project-hr-management': 'نظام الموارد البشرية',
-                'project-hr-management-desc': 'حل شامل لإدارة الموارد البشرية',
-                'project-hospital-management': 'نظام إدارة المستشفيات',
-                'project-hospital-management-desc': 'حل متكامل للإدارة الطبية',
-                
-                // Footer Links Translation
-                'footer-home': 'الرئيسية',
-                'footer-about': 'نبذة عني',
-                'footer-skills': 'المهارات',
-                'footer-portfolio': 'معرض الأعمال',
-                'footer-web-dev': 'تطوير الويب',
-                'footer-mobile-apps': 'تطبيقات الجوال',
-                'footer-ai': 'الذكاء الاصطناعي',                'footer-design': 'التصميم',
-                'footer-email': 'البريد الإلكتروني',
-                'footer-contact-form': 'نموذج التواصل',
-                
-                // Modal and Form Elements
-                'modal-project-details': 'تفاصيل المشروع',
-                'form-full-name': 'الاسم الكامل',
-                'form-email-address': 'البريد الإلكتروني',
-                'form-company': 'الشركة / المؤسسة',
-                'form-subject': 'الموضوع',
-                'form-project-details': 'تفاصيل المشروع',
-                'form-budget': 'الميزانية المتوقعة',
-                'form-send-message': 'إرسال الرسالة',
-                'form-submit': 'إرسال',
-                'form-cancel': 'إلغاء',
-                'form-required': 'مطلوب',
-                'form-optional': 'اختياري',
-                
-                // Status and Availability
-                'status-available': 'متاح للمشاريع الجديدة',
-                'status-busy': 'مشغول حالياً',
-                'status-offline': 'غير متصل',
-                'availability-full-time': 'دوام كامل',
-                'availability-part-time': 'دوام جزئي',
-                'availability-freelance': 'عمل حر',
-                  // Certificate Tabs
-                'tab-academic': 'الشهادات الأكاديمية',
-                'tab-professional': 'الشهادات المهنية',
-                'tab-courses': 'الدورات التدريبية',
-                
-                // Features and Benefits
-                'feature-consultation': 'استشارة مجانية',
-                'feature-delivery': 'تسليم في المواعيد',
-                'feature-quality': 'ضمان الجودة',
-                'feature-support': 'دعم مستمر',
-                
-                // Button Actions
-                'btn-view-live': 'معاينة حية',
-                'btn-view-code': 'مشاهدة الكود',
-                'btn-view-demo': 'مشاهدة العرض',
-                'btn-more-info': 'معلومات أكثر',
-                'btn-close': 'إغلاق',
-                'btn-back': 'رجوع',
-                'btn-next': 'التالي',
-                'btn-previous': 'السابق'
+                // Specializations
+                humanResources: 'الموارد البشرية',
+                talentManagement: 'إدارة المواهب والتوظيف',
+                policyDevelopment: 'تطوير السياسات والإجراءات',
+                hrAnalytics: 'تحليل البيانات HR',
+                socialMediaMarketing: 'استراتيجيات وسائل التواصل',
+                marketingAnalytics: 'تحليل البيانات التسويقية',
+                campaignManagement: 'إدارة الحملات الرقمية',
+                interactiveWebApps: 'تطبيقات ويب تفاعلية',
+                responsiveWebsites: 'مواقع احترافية متجاوبة',
+                cmsystems: 'أنظمة إدارة محتوى',
+                riskAssessment: 'تقييم المخاطر الأمنية',
+                securitySolutions: 'تطوير حلول الأمان',
+                systemMonitoring: 'مراقبة الأنظمة',
+                spatialAnalysis: 'تحليل البيانات المكانية',
+                interactiveMaps: 'خرائط تفاعلية',
+                environmentalMonitoring: 'نظم رصد بيئية',
+                userInterface: 'تصميم واجهات المستخدم',
+                userExperience: 'تطوير تجربة المستخدم',
+                interactivePrototypes: 'النماذج الأولية التفاعلية'
             }
         };
         
@@ -505,119 +295,408 @@ class LanguageTranslator {
     }
     
     init() {
-        this.createLanguageToggle();
-        this.applyLanguage(this.currentLanguage);
-        this.bindEvents();
+        // Check for saved language preference
+        const savedLanguage = localStorage.getItem('portfolio-language') || 'en';
+        this.setLanguage(savedLanguage);
+        
+        // Add language toggle functionality
+        this.addLanguageToggleListener();
     }
     
-    createLanguageToggle() {
-        const languageToggle = document.getElementById('languageToggle');
-        if (languageToggle) {
-            languageToggle.addEventListener('click', () => {
-                this.toggleLanguage();
-            });
+    setLanguage(language) {
+        if (!this.translations[language]) {
+            console.warn(`Language ${language} not supported, falling back to English`);
+            language = 'en';
         }
-    }
-    
-    toggleLanguage() {
-        const newLanguage = this.currentLanguage === 'ar' ? 'en' : 'ar';
-        this.currentLanguage = newLanguage;
-        localStorage.setItem('language', newLanguage);
-        this.applyLanguage(newLanguage);
-    }
-    
-    applyLanguage(language) {
-        // Update HTML lang and dir attributes
+        
+        this.currentLanguage = language;
+        
+        // Update HTML attributes
         document.documentElement.lang = language;
         document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-        document.body.setAttribute('lang', language);
         
-        // Update all elements with translation attributes
-        const elementsWithTranslation = document.querySelectorAll('[data-en], [data-ar]');
-        elementsWithTranslation.forEach(element => {
-            const translation = element.getAttribute(`data-${language}`);
+        // Save language preference
+        localStorage.setItem('portfolio-language', language);
+        
+        // Update all translatable elements
+        this.updateTranslatableElements();
+        
+        // Update language toggle button
+        this.updateLanguageToggleButton();
+        
+        // Dispatch language change event
+        this.dispatchLanguageChangeEvent();
+    }
+    
+    updateTranslatableElements() {
+        // Update elements with data attributes
+        const translatableElements = document.querySelectorAll('[data-translate]');
+        translatableElements.forEach(element => {
+            const key = element.getAttribute('data-translate');
+            const translation = this.getTranslation(key);
+            
             if (translation) {
-                element.textContent = translation;
-            }
-        });
-        
-        // Update language toggle button text
-        const langText = document.querySelector('.lang-text');
-        if (langText) {
-            langText.textContent = language === 'ar' ? 'English' : 'عربي';
-        }
-        
-        // Update typing effect
-        this.updateTypingEffect(language);
-        
-        // Update page title and meta description
-        this.updatePageMeta(language);
-        
-        // Trigger custom event for other components
-        document.dispatchEvent(new CustomEvent('languageChanged', { 
-            detail: { language: language } 
-        }));
-    }
-    
-    updateTypingEffect(language) {
-        const typingTexts = this.translations[language]['typing-texts'];
-        if (window.typingEffect && typingTexts) {
-            window.typingEffect.updateTexts(typingTexts);
-        }
-    }
-    
-    updatePageMeta(language) {
-        if (language === 'en') {
-            document.title = 'Abdullah Mohammed Hamad - Personal Portfolio';
-            const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) {
-                metaDesc.content = 'Professional Portfolio of Abdullah Mohammed Hamad - HR Specialist, Digital Marketing Expert, Web Developer, Cybersecurity Analyst, and GIS Specialist';
-            }
-        } else {
-            document.title = 'عبد الله محمد حمد - Portfolio الشخصي';
-            const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) {
-                metaDesc.content = 'Portfolio احترافي لعبد الله محمد حمد - مختص موارد بشرية، تسويق رقمي، مطوّر ويب، أمن سيبراني، وGIS';
-            }
-        }
-    }
-    
-    bindEvents() {
-        // Listen for DOM changes to translate new content
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'childList') {
-                    mutation.addedNodes.forEach((node) => {
-                        if (node.nodeType === Node.ELEMENT_NODE) {
-                            const elementsWithTranslation = node.querySelectorAll('[data-en], [data-ar]');
-                            elementsWithTranslation.forEach(element => {
-                                const translation = element.getAttribute(`data-${this.currentLanguage}`);
-                                if (translation) {
-                                    element.textContent = translation;
-                                }
-                            });
-                        }
-                    });
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = translation;
+                } else {
+                    element.textContent = translation;
                 }
-            });
+            }
         });
         
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
+        // Update elements with data-en and data-ar attributes (legacy support)
+        const legacyElements = document.querySelectorAll('[data-en][data-ar]');
+        legacyElements.forEach(element => {
+            const text = element.getAttribute(`data-${this.currentLanguage}`);
+            if (text) {
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = text;
+                } else {
+                    element.textContent = text;
+                }
+            }
         });
+        
+        // Update dynamic content
+        this.updateDynamicContent();
     }
     
+    updateDynamicContent() {
+        // Update page title
+        document.title = this.getTranslation('pageTitle') || 'Abdullah Mohammed Hamad - Portfolio';
+        
+        // Update meta description
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+            metaDescription.content = this.getTranslation('metaDescription') || 
+                'Professional portfolio showcasing expertise in web development, AI, cybersecurity, and digital solutions';
+        }
+        
+        // Update typing effect if it exists
+        this.updateTypingEffect();
+    }
+    
+    updateTypingEffect() {
+        const typingElement = document.querySelector('.typing-text');
+        if (typingElement) {
+            const subtitleText = this.getTranslation('heroSubtitle');
+            if (subtitleText) {
+                typingElement.textContent = subtitleText;
+            }
+        }
+    }
+    
+    updateLanguageToggleButton() {
+        const langToggle = document.getElementById('lang-toggle');
+        if (langToggle) {
+            const langText = langToggle.querySelector('.lang-text');
+            if (langText) {
+                langText.textContent = this.currentLanguage === 'en' ? 'عربي' : 'English';
+            }
+            
+            // Update title attribute
+            langToggle.title = this.currentLanguage === 'en' ? 'التبديل إلى العربية' : 'Switch to English';
+        }
+    }
+    
+    addLanguageToggleListener() {
+        const langToggle = document.getElementById('lang-toggle');
+        if (langToggle) {
+            langToggle.addEventListener('click', () => {
+                const newLanguage = this.currentLanguage === 'en' ? 'ar' : 'en';
+                this.setLanguage(newLanguage);
+            });
+        }
+    }
+    
+    getTranslation(key) {
+        const keys = key.split('.');
+        let translation = this.translations[this.currentLanguage];
+        
+        for (const k of keys) {
+            if (translation && typeof translation === 'object') {
+                translation = translation[k];
+            } else {
+                return null;
+            }
+        }
+        
+        return translation || this.translations.en[key] || key;
+    }
+    
+    translate(key, placeholders = {}) {
+        let translation = this.getTranslation(key);
+        
+        // Replace placeholders
+        Object.keys(placeholders).forEach(placeholder => {
+            const value = placeholders[placeholder];
+            translation = translation.replace(`{${placeholder}}`, value);
+        });
+        
+        return translation;
+    }
+    
+    dispatchLanguageChangeEvent() {
+        const event = new CustomEvent('languageChanged', {
+            detail: {
+                language: this.currentLanguage,
+                isRTL: this.currentLanguage === 'ar'
+            }
+        });
+        document.dispatchEvent(event);
+    }
+    
+    // Method to add new translations dynamically
+    addTranslations(language, translations) {
+        if (!this.translations[language]) {
+            this.translations[language] = {};
+        }
+        
+        this.translations[language] = { ...this.translations[language], ...translations };
+    }
+    
+    // Method to get current language
     getCurrentLanguage() {
         return this.currentLanguage;
     }
     
-    translate(key) {
-        return this.translations[this.currentLanguage][key] || key;
+    // Method to check if current language is RTL
+    isRTL() {
+        return this.currentLanguage === 'ar';
+    }
+    
+    // Method to format numbers based on language
+    formatNumber(number) {
+        if (this.currentLanguage === 'ar') {
+            // Convert to Arabic-Indic numerals if needed
+            return number.toString();
+        }
+        return number.toString();
+    }
+    
+    // Method to format dates based on language
+    formatDate(date) {
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        
+        if (this.currentLanguage === 'ar') {
+            return new Intl.DateTimeFormat('ar-SA', options).format(date);
+        }
+        
+        return new Intl.DateTimeFormat('en-US', options).format(date);
     }
 }
 
-// Initialize translation system
-document.addEventListener('DOMContentLoaded', function() {
-    window.translator = new LanguageTranslator();
+// Initialize translation manager
+const translationManager = new TranslationManager();
+
+// Export for global access
+window.translationManager = translationManager;
+
+// Utility functions for easy translation access
+window.t = function(key, placeholders) {
+    return translationManager.translate(key, placeholders);
+};
+
+window.getCurrentLanguage = function() {
+    return translationManager.getCurrentLanguage();
+};
+
+window.isRTL = function() {
+    return translationManager.isRTL();
+};
+
+// Listen for language changes to update dynamic content
+document.addEventListener('languageChanged', function(event) {
+    console.log('Language changed to:', event.detail.language);
+    
+    // Update any dynamic content that needs special handling
+    updateLanguageDependentStyles(event.detail.isRTL);
+    updateLanguageDependentAnimations();
 });
+
+function updateLanguageDependentStyles(isRTL) {
+    // Update CSS custom properties for RTL/LTR
+    const root = document.documentElement;
+    
+    if (isRTL) {
+        root.style.setProperty('--text-align-start', 'right');
+        root.style.setProperty('--text-align-end', 'left');
+        root.style.setProperty('--margin-start', 'margin-right');
+        root.style.setProperty('--margin-end', 'margin-left');
+        root.style.setProperty('--padding-start', 'padding-right');
+        root.style.setProperty('--padding-end', 'padding-left');
+    } else {
+        root.style.setProperty('--text-align-start', 'left');
+        root.style.setProperty('--text-align-end', 'right');
+        root.style.setProperty('--margin-start', 'margin-left');
+        root.style.setProperty('--margin-end', 'margin-right');
+        root.style.setProperty('--padding-start', 'padding-left');
+        root.style.setProperty('--padding-end', 'padding-right');
+    }
+}
+
+function updateLanguageDependentAnimations() {
+    // Restart animations that might be affected by language change
+    const typingElement = document.querySelector('.typing-text');
+    if (typingElement) {
+        // Restart typing animation if it exists
+        const animationName = typingElement.style.animationName;
+        if (animationName) {
+            typingElement.style.animationName = 'none';
+            setTimeout(() => {
+                typingElement.style.animationName = animationName;
+            }, 10);
+        }
+    }
+}
+
+// Add CSS for language-specific styles
+const languageStyles = document.createElement('style');
+languageStyles.textContent = `
+    /* RTL specific styles */
+    [dir="rtl"] {
+        font-family: 'Cairo', sans-serif;
+    }
+    
+    [dir="rtl"] .nav-link::after {
+        right: 0;
+        left: auto;
+    }
+    
+    [dir="rtl"] .hero-buttons {
+        justify-content: flex-end;
+    }
+    
+    [dir="rtl"] .about-quote blockquote::before {
+        right: 0;
+        left: auto;
+    }
+    
+    [dir="rtl"] .about-quote blockquote::after {
+        left: 0;
+        right: auto;
+    }
+    
+    [dir="rtl"] .scroll-indicator {
+        transform: translateX(50%);
+    }
+    
+    [dir="rtl"] .back-to-top {
+        right: auto;
+        left: 30px;
+    }
+    
+    [dir="rtl"] .close {
+        right: auto;
+        left: 35px;
+    }
+    
+    [dir="rtl"] .form-group label {
+        left: auto;
+        right: var(--spacing-md);
+    }
+    
+    [dir="rtl"] .form-group input:focus + label,
+    [dir="rtl"] .form-group textarea:focus + label,
+    [dir="rtl"] .form-group input:valid + label,
+    [dir="rtl"] .form-group textarea:valid + label {
+        right: var(--spacing-sm);
+        left: auto;
+    }
+    
+    [dir="rtl"] .project-tech {
+        justify-content: flex-end;
+    }
+    
+    [dir="rtl"] .hero-buttons {
+        flex-direction: row-reverse;
+    }
+    
+    [dir="rtl"] .contact-item {
+        flex-direction: row-reverse;
+        text-align: right;
+    }
+    
+    [dir="rtl"] .social-links {
+        justify-content: flex-end;
+    }
+    
+    [dir="rtl"] .nav-controls {
+        flex-direction: row-reverse;
+    }
+    
+    /* LTR specific styles */
+    [dir="ltr"] {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Language transition animations */
+    .translate-element {
+        transition: opacity 0.3s ease;
+    }
+    
+    .translate-element.changing {
+        opacity: 0;
+    }
+    
+    /* Typography adjustments for Arabic */
+    [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+        font-weight: 600;
+        line-height: 1.4;
+    }
+    
+    [dir="rtl"] p, [dir="rtl"] li {
+        line-height: 1.8;
+    }
+    
+    [dir="rtl"] .hero-title {
+        line-height: 1.3;
+    }
+    
+    [dir="rtl"] .section-title {
+        font-weight: 700;
+    }
+    
+    /* Arabic number formatting */
+    [dir="rtl"] .stat-number {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Responsive typography for Arabic */
+    @media (max-width: 768px) {
+        [dir="rtl"] .hero-title {
+            font-size: var(--font-size-2xl);
+            line-height: 1.2;
+        }
+        
+        [dir="rtl"] .section-title {
+            font-size: var(--font-size-2xl);
+        }
+    }
+`;
+
+document.head.appendChild(languageStyles);
+
+// Enhanced notification system with translation support
+function showTranslatedNotification(messageKey, type = 'info', placeholders = {}) {
+    const message = translationManager.translate(messageKey, placeholders);
+    if (window.portfolioApp && window.portfolioApp.showNotification) {
+        window.portfolioApp.showNotification(message, type);
+    }
+}
+
+// Export translated notification function
+window.showTranslatedNotification = showTranslatedNotification;
+
+// Auto-detect browser language on first visit
+if (!localStorage.getItem('portfolio-language')) {
+    const browserLanguage = navigator.language || navigator.userLanguage;
+    const supportedLanguage = browserLanguage.startsWith('ar') ? 'ar' : 'en';
+    translationManager.setLanguage(supportedLanguage);
+}
+
+console.log('Translation system initialized with language:', translationManager.getCurrentLanguage());

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار سريع - شهادة الموارد البشرية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .test-image {
+            width: 300px;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        .status {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 اختبار سريع لشهادة الموارد البشرية</h1>
+    
+    <div class="test-card">
+        <h3>اختبار الصورة:</h3>
+        <img src="./Coursera/hrci_official_certificate.jpg" alt="شهادة الموارد البشرية" class="test-image" 
+             onload="document.getElementById('status').innerHTML = '✅ الصورة تُحمل بنجاح!'"
+             onerror="document.getElementById('status').innerHTML = '❌ فشل في تحميل الصورة!'">
+        <p id="status">جاري التحميل...</p>
+    </div>
+    
+    <div class="test-card">
+        <h3>معلومات الشهادة:</h3>
+        <p><strong>الاسم:</strong> Human Resources Certification</p>
+        <p><strong>المعهد:</strong> HR Certification Institute</p>
+        <p><strong>السنة:</strong> 2025</p>
+        <p><strong>المسار:</strong> ./Coursera/hrci_official_certificate.jpg</p>
+    </div>
+    
+    <div class="test-card">
+        <p class="status">✅ تم حذف الشهادة وإضافتها من جديد بنجاح!</p>
+        <p>الآن يمكنك العودة للموقع الأصلي والتحقق من قسم "الشهادات المهنية"</p>
+    </div>
+</body>
+</html>
